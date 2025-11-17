@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ComponentType } from "react";
+import { useEffect, useState, type ComponentType } from "react";
 import Link from "next/link";
 import { FiMenu, FiArrowRight, FiX, FiChevronDown } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
@@ -22,6 +22,24 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
 
+  useEffect(() => {
+    const { history } = window;
+    let originalScrollRestoration: History["scrollRestoration"] | null = null;
+
+    if ("scrollRestoration" in history) {
+      originalScrollRestoration = history.scrollRestoration;
+      history.scrollRestoration = "manual";
+    }
+
+    window.scrollTo({ top: 0, behavior: "auto" });
+
+    return () => {
+      if (originalScrollRestoration) {
+        history.scrollRestoration = originalScrollRestoration;
+      }
+    };
+  }, []);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 250 ? true : false);
   });
@@ -31,7 +49,7 @@ export const Navbar = () => {
       className={`fixed top-0 z-50 w-full px-6 text-white transition-all duration-300 ease-out lg:px-12 ${
         scrolled
           ? "bg-neutral-950 py-3 shadow-xl"
-          : "bg-neutral-950/0 py-6 shadow-none"
+          : "bg-black py-6 shadow-none"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between">
@@ -149,10 +167,12 @@ const CTAs = () => {
 function AboutUsContent({ onNavigate }: FlyoutContentProps) {
   return (
     <div className="grid h-fit w-full grid-cols-12 shadow-xl lg:h-72 lg:w-[600px] lg:shadow-none xl:w-[750px]">
-      <div className="col-span-12 flex flex-col justify-between bg-neutral-950 p-6 lg:col-span-4">
+      <div className="col-span-12 flex flex-col justify-between bg-[var(--secondary)] p-6 text-[var(--foreground)] lg:col-span-4">
         <div>
-          <h2 className="mb-2 text-xl font-semibold text-white">About us</h2>
-          <p className="mb-6 max-w-xs text-sm text-blue-400">
+          <h2 className="mb-2 text-xl font-semibold text-[var(--primary-dark)]">
+            About us
+          </h2>
+          <p className="mb-6 max-w-xs text-sm text-[var(--muted)]">
             Get to know how the Savaal Guide celebrates cultural hospitality
             excellence.
           </p>
@@ -160,7 +180,7 @@ function AboutUsContent({ onNavigate }: FlyoutContentProps) {
         <Link
           href="/about-us"
           onClick={onNavigate}
-          className="flex items-center gap-1 text-xs text-indigo-300 hover:underline"
+          className="flex items-center gap-1 text-xs font-semibold text-[var(--primary-dark)] hover:underline"
         >
           Learn more <FiArrowRight />
         </Link>
