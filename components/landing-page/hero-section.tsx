@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import { AiFillCompass, AiOutlineBook } from "react-icons/ai";
 import Link from "next/link";
+import RoundedSlideButton from "../rounded-slide-button";
 
 export function HeroSection() {
 	const targetRef = useRef<HTMLDivElement | null>(null);
@@ -126,13 +127,13 @@ const Copy = ({
 				across Zimbabwe and beyond—helping travelers connect with authentic
 				African luxury and local artisans.
 			</p>
-			<div className="flex flex-wrap items-center justify-center gap-4">
-				<Link
-					href="/guide"
-					className="px-6 py-3 bg-(--primary) hover:bg-(--primary-dark) transition-colors text-white font-medium rounded-full"
-				>
-					Explore Destinations
-				</Link>
+                        <div className="flex flex-wrap items-center justify-center gap-4">
+                                <RoundedSlideButton
+                                        href="/guide"
+                                        title="Explore Destinations"
+                                        hoverFillColor="var(--primary)"
+                                        defaultColor="#facc15"
+                                />
 				<Link
 					href="/about-us"
 					className="px-6 py-3 border border-white/70 hover:bg-white/10 transition-colors text-black font-medium rounded-full"
