@@ -52,5 +52,9 @@ h6 {
 }
 
 p {
-  color: var(--paragraph-color);
+  color: var(--primary);
+}
+
+.p-on-dark {
+  color: var(--secondary);
 }

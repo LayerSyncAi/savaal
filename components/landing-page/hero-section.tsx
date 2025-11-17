@@ -27,11 +27,49 @@ export function HeroSection() {
 				</div>
 			</section>
 
-			<div className="h-screen bg-(--primary) text-white flex items-center justify-center">
-				<span className="text-center text-xl font-semibold">
-					Immerse yourself in Zimbabwe&apos;s leading hotels, restaurants, and
-					cultural experiences with the Savaal Guide.
-				</span>
+			<div className="h-screen bg-(--primary) text-white flex items-center justify-center px-6">
+				<div className="max-w-4xl text-center space-y-6">
+					<p className="p-on-dark text-sm uppercase tracking-[0.4em] text-white/70">
+						Savaal Guide · 2024 Edition
+					</p>
+					<p className="p-on-dark text-3xl md:text-5xl font-semibold ">
+						Plan unforgettable culinary escapes through Zimbabwe&apos;s premier
+						hotels, rooftop bars, and chef-driven kitchens.
+					</p>
+					<p className="text-lg p-on-dark">
+						From sunrise tastings in Harare to sunset pairings in Victoria
+						Falls, the Guide maps every refined stay, table, and cultural
+						ritual—helping you book with confidence and savor each moment.
+					</p>
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+						<div className="border border-white/30 rounded-2xl px-6 py-5 space-y-1">
+							<p className="p-on-dark text-4xl font-bold">200+</p>
+							<p className="p-on-dark text-sm uppercase tracking-[0.3em] text-white/70">
+								curated stays
+							</p>
+						</div>
+						<div className="border border-white/30 rounded-2xl px-6 py-5 space-y-1">
+							<p className="p-on-dark text-4xl font-bold">140</p>
+							<p className="p-on-dark text-sm uppercase tracking-[0.3em]">
+								chef tables
+							</p>
+						</div>
+						<div className="border border-white/30 rounded-2xl px-6 py-5 space-y-1">
+							<p className="p-on-dark text-4xl font-bold">23 +</p>
+							<p className="p-on-dark text-sm uppercase tracking-[0.3em]">
+								hosted events
+							</p>
+						</div>
+					</div>
+					<div className="flex flex-wrap justify-center gap-4">
+						<button className="px-6 py-3 bg-white text-black rounded-full font-semibold hover:opacity-90 transition-opacity">
+							Start planning
+						</button>
+						<button className="px-6 py-3 border border-white/60 rounded-full font-semibold text-white/90 hover:bg-white/10 transition-colors">
+							Download the guide
+						</button>
+					</div>
+				</div>
 			</div>
 		</>
 	);
@@ -136,7 +174,7 @@ const Images = ({
 				className="col-span-2 relative z-10 rounded-3xl"
 				style={{
 					backgroundImage:
-						"url(https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1855&q=80)",
+						"url(https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1855&q=80)",
 					backgroundSize: "cover",
 					backgroundPosition: "center",
 					scale,
@@ -148,7 +186,7 @@ const Images = ({
 				className="row-span-2 relative z-10 rounded-3xl"
 				style={{
 					backgroundImage:
-						"url(https://images.unsplash.com/photo-1502904550040-7534597429ae?auto=format&fit=crop&w=607&q=80)",
+						"url(https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=870&q=80)",
 					backgroundSize: "cover",
 					backgroundPosition: "center",
 					scale,
@@ -161,7 +199,7 @@ const Images = ({
 				className="row-span-2 relative z-10 rounded-3xl"
 				style={{
 					backgroundImage:
-						"url(https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=870&q=80)",
+						"url(https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=870&q=80)",
 					backgroundSize: "cover",
 					backgroundPosition: "center",
 					scale,
@@ -173,7 +211,7 @@ const Images = ({
 				className="relative z-10 rounded-3xl"
 				style={{
 					backgroundImage:
-						"url(https://images.unsplash.com/photo-1460400355256-e87506dcec4b?auto=format&fit=crop&w=1624&q=80)",
+						"url(https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=1624&q=80)",
 					backgroundSize: "cover",
 					backgroundPosition: "center",
 					scale,
@@ -186,7 +224,7 @@ const Images = ({
 				className="relative z-10 rounded-3xl"
 				style={{
 					backgroundImage:
-						"url(https://images.unsplash.com/photo-1501117716987-c8e1ecb210cc?auto=format&fit=crop&w=1740&q=80)",
+						"url(https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1740&q=80)",
 					backgroundSize: "cover",
 					backgroundPosition: "center",
 					scale,
@@ -198,7 +236,7 @@ const Images = ({
 				className="relative z-10 rounded-3xl"
 				style={{
 					backgroundImage:
-						"url(https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=870&q=80)",
+						"url(https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=870&q=80)",
 					backgroundSize: "cover",
 					backgroundPosition: "center",
 					scale,
