@@ -152,7 +152,7 @@ function AboutUsContent({ onNavigate }: FlyoutContentProps) {
       <div className="col-span-12 flex flex-col justify-between bg-neutral-950 p-6 lg:col-span-4">
         <div>
           <h2 className="mb-2 text-xl font-semibold text-white">About us</h2>
-          <p className="mb-6 max-w-xs text-sm text-neutral-400">
+          <p className="mb-6 max-w-xs text-sm text-blue-400">
             Get to know how the Savaal Guide celebrates cultural hospitality
             excellence.
           </p>
@@ -176,12 +176,6 @@ function AboutUsContent({ onNavigate }: FlyoutContentProps) {
           title="Testimonials"
           description="See what our community says about us."
           href="/about-us/testimonials"
-          onNavigate={onNavigate}
-        />
-        <LinkCard
-          title="Press"
-          description="Latest coverage and media kits."
-          href="/about-us"
           onNavigate={onNavigate}
         />
         <LinkCard
