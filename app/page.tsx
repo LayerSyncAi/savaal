@@ -1,49 +1,24 @@
+import fs from "node:fs";
+import path from "node:path";
 import Link from "next/link";
 
+import type { FAQ, Pillar } from "@/types/content";
+
 const navigation = [
-	{ label: "Guide", href: "#guide" },
-	{ label: "Judging", href: "#judging" },
-	{ label: "Consultancy/Training", href: "#consultancy" },
-	{ label: "Events", href: "#events" },
-	{ label: "Partnerships", href: "#partnerships" },
+        { label: "Guide", href: "#guide" },
+        { label: "Judging", href: "#judging" },
+        { label: "Consultancy/Training", href: "#consultancy" },
+        { label: "Events", href: "#events" },
+        { label: "Partnerships", href: "#partnerships" },
 ];
+const getContent = <T,>(filename: string): T => {
+        const filePath = path.join(process.cwd(), "content", filename);
+        const fileContents = fs.readFileSync(filePath, "utf-8");
+        return JSON.parse(fileContents) as T;
+};
 
-const pillars = [
-	{
-		title: "The Guide",
-		items: ["Curated listings", "Savaal Scorecard", "Certification"],
-		description:
-			"Explore verified restaurants, hotels, and lifestyle spaces that meet our experiential benchmarks.",
-		anchor: "guide",
-	},
-	{
-		title: "The Consultants",
-		items: ["Training", "Audits", "Hospitality consultancy"],
-		description:
-			"Upskill teams with bespoke coaching, operational audits, and cultural hospitality playbooks.",
-		anchor: "consultancy",
-	},
-	{
-		title: "The Curators",
-		items: ["Pop-up events", "Cultural festivals", "Collaborative showcases"],
-		description:
-			"Design immersive events that celebrate Zimbabwean art, cuisine, music, and community.",
-		anchor: "events",
-	},
-];
-
-const faqs = [
-	{
-		question: "Who can be listed?",
-		answer:
-			"Any Zimbabwean restaurant, hotel, bar, vendor, or lifestyle brand that demonstrates commitment to authentic African hospitality can apply for consideration.",
-	},
-	{
-		question: "How do I become a Judge?",
-		answer:
-			"Judges are hospitality, culinary, or culture experts vetted by Savaal. Share your credentials via partners@savaalguide.com to be considered for upcoming judging panels.",
-	},
-];
+const pillars = getContent<Pillar[]>("pillars.txt");
+const faqs = getContent<FAQ[]>("faqs.txt");
 
 export default function Home() {
 	return (

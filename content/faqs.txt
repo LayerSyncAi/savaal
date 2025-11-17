@@ -1,0 +1,10 @@
+[
+  {
+    "question": "Who can be listed?",
+    "answer": "Any Zimbabwean restaurant, hotel, bar, vendor, or lifestyle brand that demonstrates commitment to authentic African hospitality can apply for consideration."
+  },
+  {
+    "question": "How do I become a Judge?",
+    "answer": "Judges are hospitality, culinary, or culture experts vetted by Savaal. Share your credentials via partners@savaalguide.com to be considered for upcoming judging panels."
+  }
+]
