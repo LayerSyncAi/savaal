@@ -1,0 +1,26 @@
+import Link from "next/link";
+
+export default function AboutUsFeaturesPage() {
+  return (
+    <section className="mx-auto flex max-w-4xl flex-col gap-6 px-6 py-24">
+      <div>
+        <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
+          About us · Features
+        </p>
+        <h1 className="text-4xl font-bold text-neutral-900">
+          Program features placeholder
+        </h1>
+      </div>
+      <p className="text-lg text-neutral-700">
+        Content coming soon that details the core features, benefits, and
+        differentiators of the Savaal Guide platform.
+      </p>
+      <Link
+        href="/about-us"
+        className="inline-flex w-fit items-center text-indigo-600 underline-offset-4 hover:underline"
+      >
+        Back to About us
+      </Link>
+    </section>
+  );
+}
