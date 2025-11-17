@@ -3,7 +3,7 @@ import Link from "next/link";
 export function HeroSection() {
         return (
                 <section
-                        className="relative isolate overflow-hidden bg-(--hero-background)"
+                        className="relative isolate -mt-28 overflow-hidden bg-(--hero-background)"
                         aria-labelledby="hero-title"
                 >
                         <div
