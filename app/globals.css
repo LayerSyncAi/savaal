@@ -1,10 +1,32 @@
 @import "tailwindcss";
 
 :root {
+  /* Brand palette */
   --background: #fdf9f3;
+  --background-rgb: 253 249 243;
   --foreground: #2c1a12;
+  --foreground-rgb: 44 26 18;
+  --hero-background: #0f0906;
+  --hero-background-rgb: 15 9 6;
   --primary: #5a3a2d;
+  --primary-rgb: 90 58 45;
+  --primary-dark: #40261d;
   --secondary: #efe2d2;
+  --secondary-rgb: 239 226 210;
+  --secondary-light: #f8ecdf;
+  --border: #efe2d2;
+  --border-light: #f2d7c2;
+  --accent: #c08f6f;
+  --accent-strong: #b77b5f;
+  --muted: #826555;
+  --muted-dark: #6f4c3c;
+  --sand: #f4e4d4;
+  --peach: #f5d7c0;
+  --peach-light: #fcefe1;
+
+  /* Typography */
+  --heading-color: var(--primary);
+  --paragraph-color: var(--foreground);
 }
 
 @theme inline {
@@ -15,7 +37,20 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--paragraph-color);
   font-family: var(--font-poppins), "Poppins", -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+}
+
+p {
+  color: var(--paragraph-color);
 }
