@@ -4,33 +4,39 @@ import Link from "next/link";
 import { type ReactNode, type CSSProperties } from "react";
 
 interface RoundedSlideButtonProps {
-	href: string;
-	title: string;
-	hoverFillColor?: string;
-	defaultColor?: string;
-	icon?: ReactNode;
+        href: string;
+        title: string;
+        hoverFillColor?: string;
+        defaultColor?: string;
+        icon?: ReactNode;
+        hoverScale?: number;
+        className?: string;
 }
 
 export const RoundedSlideButtonDark = ({
-	href,
-	title,
-	hoverFillColor = "var(--primary)",
-	defaultColor = "var(--background)",
-	icon = null,
+        href,
+        title,
+        hoverFillColor = "var(--primary)",
+        defaultColor = "var(--background)",
+        icon = null,
+        hoverScale = 1.15,
+        className = "",
 }: RoundedSlideButtonProps) => {
-	const customProperties: CSSProperties & {
-		"--hover-color"?: string;
-		"--default-color"?: string;
-	} = {
-		"--hover-color": hoverFillColor,
-		"--default-color": defaultColor,
-	};
+        const customProperties: CSSProperties & {
+                "--hover-color"?: string;
+                "--default-color"?: string;
+                "--hover-scale"?: string;
+        } = {
+                "--hover-color": hoverFillColor,
+                "--default-color": defaultColor,
+                "--hover-scale": hoverScale.toString(),
+        };
 
-	return (
-		<Link
-			href={href}
-			style={customProperties}
-			className={`
+        return (
+                <Link
+                        href={href}
+                        style={customProperties}
+                        className={`
                                 relative z-0 flex items-center gap-2 overflow-hidden border border-(--hover-color)]
                                 px-4 py-2 font-semibold uppercase text-(--secondary) transition-all duration-500 rounded-full
                                 bg-(--default-color)]
@@ -40,15 +46,16 @@ export const RoundedSlideButtonDark = ({
                                 before:bg-[var(--hover-color)] before:transition-transform before:duration-1000
                                 before:content-['']
 
-                                hover:scale-115 hover:text-black hover:before:translate-x-[0%]
+                                hover:scale-[var(--hover-scale)] hover:text-black hover:before:translate-x-[0%]
                                 hover:before:translate-y-[0%]
                                 active:scale-95
+                                ${className}
                         `}
-		>
-			{icon && <span className="icon-wrapper">{icon}</span>}
-			<span>{title}</span>
-		</Link>
-	);
+                >
+                        {icon && <span className="icon-wrapper">{icon}</span>}
+                        <span>{title}</span>
+                </Link>
+        );
 };
 
 export default RoundedSlideButtonDark;
