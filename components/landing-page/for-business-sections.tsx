@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { ReactNode, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import RoundedSlideButtonDark from "../rounded-slide-button-dark";
 import { FiArrowRight } from "react-icons/fi";
 import RoundedSlideButtonLight from "../rounded-slide-button-light";
 
@@ -46,13 +44,14 @@ const sections = [
 					<p className="mt-2 text-sm text-(--muted-dark)]">
 						Choose on-site or virtual formats across Zimbabwe and the region.
 					</p>
-					<RoundedSlideButtonLight
-						href="/services/consultancy"
-						title="View Consultancy Services"
-						hoverFillColor="var(--primary)"
-						icon={<FiArrowRight />}
-						defaultColor="var(--foreground)"
-					/>
+                                        <RoundedSlideButtonLight
+                                               href="/services/consultancy"
+                                               title="View Consultancy Services"
+                                               hoverFillColor="var(--primary)"
+                                               icon={<FiArrowRight />}
+                                               defaultColor="var(--foreground)"
+                                               hoverScale={1.05}
+                                        />
 				</div>
 			</div>
 		),
@@ -117,13 +116,14 @@ const sections = [
 					meets the promise of elevated service, cuisine, and cultural
 					immersion.
 				</p>
-				<RoundedSlideButtonLight
-					href="/judging/prospective-judges"
-					title="Apply to Judge"
-					hoverFillColor="var(--primary)"
-					icon={<FiArrowRight />}
-					defaultColor="var(--foreground)"
-				/>
+                                <RoundedSlideButtonLight
+                                       href="/judging/prospective-judges"
+                                       title="Apply to Judge"
+                                       hoverFillColor="var(--primary)"
+                                       icon={<FiArrowRight />}
+                                       defaultColor="var(--foreground)"
+                                       className="mx-auto px-3 text-sm"
+                                />
 			</div>
 		),
 	},
