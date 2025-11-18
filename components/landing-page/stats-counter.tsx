@@ -69,11 +69,11 @@ const StatCard = ({ value, suffix, label, decimals = 0 }: StatCardProps) => {
 
         return (
                 <div className="rounded-2xl border border-white/25 bg-white/5 px-6 py-5 text-center text-white backdrop-blur">
-                        <p className="text-4xl font-bold tracking-tight md:text-5xl">
+                        <p className="p-on-dark text-4xl font-bold tracking-tight md:text-5xl">
                                 <span ref={ref} />
                                 {suffix}
                         </p>
-                        <p className="mt-2 text-sm uppercase tracking-[0.3em] text-white/70">{label}</p>
+                        <p className="p-on-dark mt-2 text-sm uppercase tracking-[0.3em] text-white/70">{label}</p>
                 </div>
         );
 };
