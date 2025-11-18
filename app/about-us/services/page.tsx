@@ -80,7 +80,7 @@ export default function AboutUsServicesPage() {
 
 				<Link
 					href="/about-us"
-					className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-(--primary) transition hover:text-(--secondary)"
+					className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-(--primary) transition hover:text-(--foreground)"
 				>
 					Back to About us
 					<FiArrowUpRight />
