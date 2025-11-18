@@ -1,95 +1,106 @@
+import { scrollingTestimonials, type Testimonial, type TestimonialRows } from "@/content/testimonials";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
-
-const testimonials = [
-  {
-    quote:
-      "Savaal helped our boutique riad overhaul operations in weeks. The templates and playbooks meant we stopped reinventing the wheel every season.",
-    name: "Karima Tazi",
-    role: "Founder, Maison Safra",
-    location: "Marrakesh, Morocco",
-  },
-  {
-    quote:
-      "We finally have a single source of truth for policies and staff onboarding. That clarity keeps our guest experience consistent across properties.",
-    name: "Luis Aparicio",
-    role: "Director of Experience, Casa del Mar",
-    location: "San Juan, Puerto Rico",
-  },
-  {
-    quote:
-      "Savaal's cultural lens is invaluable. Their guidance respects local traditions while still giving us modern systems to scale responsibly.",
-    name: "Amina Rahman",
-    role: "General Manager, The Crescent Collective",
-    location: "Doha, Qatar",
-  },
-  {
-    quote:
-      "Our investor updates went from guesswork to confident storytelling. The benchmarking data made it easy to show traction to stakeholders.",
-    name: "Theo Mensah",
-    role: "Managing Partner, Akwaaba Retreats",
-    location: "Accra, Ghana",
-  },
-  {
-    quote:
-      "Savaal kept our remote team aligned during a complicated renovation. The cadence rituals and documentation saved us from endless meetings.",
-    name: "Naya Ellis",
-    role: "Operations Lead, Coast & Current",
-    location: "Oakland, California",
-  },
-  {
-    quote:
-      "We now launch pop-up experiences twice as fast. The resource library gives our producers the confidence to experiment without chaos.",
-    name: "Gustavo Pinto",
-    role: "Experience Designer, Festival Atlas",
-    location: "Lisbon, Portugal",
-  },
-];
 
 export default function AboutUsTestimonialsPage() {
   return (
-    <section className="mx-auto flex max-w-5xl flex-col gap-10 px-6 py-24">
-      <div className="space-y-3">
-        <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
-          About us · Testimonials
-        </p>
-        <div className="space-y-4">
-          <h1 className="text-4xl font-bold text-neutral-900">
-            Stories from our community
-          </h1>
-          <p className="text-lg text-neutral-700">
-            Cultural hospitality leaders across the globe use Savaal to design,
-            operate, and scale meaningful guest experiences. Here are a few of
-            their reflections on the partnership.
-          </p>
-        </div>
+    <div className="bg-slate-950 text-slate-50">
+      <ScrollingTestimonials testimonials={scrollingTestimonials} />
+      <div className="mx-auto max-w-5xl px-6 pb-16">
+        <Link
+          href="/about-us"
+          className="inline-flex items-center text-sm font-semibold text-indigo-300 underline-offset-4 hover:text-indigo-200 hover:underline"
+        >
+          Back to About us
+        </Link>
       </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        {testimonials.map((testimonial) => (
-          <figure
-            key={testimonial.name}
-            className="flex h-full flex-col gap-4 rounded-2xl border border-indigo-100 bg-white p-6 shadow-sm"
-          >
-            <blockquote className="text-lg text-neutral-800">
-              “{testimonial.quote}”
-            </blockquote>
-            <figcaption className="flex flex-col text-sm font-medium text-neutral-600">
-              <span className="text-base font-semibold text-neutral-900">
-                {testimonial.name}
-              </span>
-              <span>{testimonial.role}</span>
-              <span>{testimonial.location}</span>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-
-      <Link
-        href="/about-us"
-        className="inline-flex w-fit items-center text-indigo-600 underline-offset-4 hover:underline"
-      >
-        Back to About us
-      </Link>
-    </section>
+    </div>
   );
 }
+
+const ScrollingTestimonials = ({ testimonials }: { testimonials: TestimonialRows }) => {
+  return (
+    <section className="mx-auto max-w-6xl space-y-10 px-4 py-16">
+      <div className="space-y-4 text-center">
+        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-indigo-300">
+          About us · Testimonials
+        </p>
+        <h1 className="text-4xl font-bold">Stories from our community</h1>
+        <p className="mx-auto max-w-2xl text-base text-slate-300">
+          Cultural hospitality leaders across the globe use Savaal to design,
+          operate, and scale meaningful guest experiences. Hear how they embed
+          our playbooks into everyday rituals.
+        </p>
+      </div>
+
+      <div className="relative overflow-x-hidden rounded-3xl border border-slate-900/60 bg-slate-900/40 p-6 shadow-2xl">
+        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-950 to-transparent" />
+        <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-950 to-transparent" />
+
+        <div className="flex items-center gap-4">
+          <TestimonialList list={testimonials.top} duration={125} />
+          <TestimonialList list={testimonials.top} duration={125} />
+          <TestimonialList list={testimonials.top} duration={125} />
+        </div>
+        <div className="mt-6 flex items-center gap-4">
+          <TestimonialList list={testimonials.middle} duration={85} reverse />
+          <TestimonialList list={testimonials.middle} duration={85} reverse />
+          <TestimonialList list={testimonials.middle} duration={85} reverse />
+        </div>
+        <div className="mt-6 flex items-center gap-4">
+          <TestimonialList list={testimonials.bottom} duration={165} />
+          <TestimonialList list={testimonials.bottom} duration={165} />
+          <TestimonialList list={testimonials.bottom} duration={165} />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const TestimonialList = ({
+  list,
+  reverse = false,
+  duration = 50,
+}: {
+  list: Testimonial[];
+  reverse?: boolean;
+  duration?: number;
+}) => {
+  return (
+    <motion.div
+      initial={{ translateX: reverse ? "-100%" : "0%" }}
+      animate={{ translateX: reverse ? "0%" : "-100%" }}
+      transition={{ duration, repeat: Infinity, ease: "linear" }}
+      className="flex gap-4 px-2"
+    >
+      {list.map((testimonial) => (
+        <article
+          key={testimonial.id}
+          className="shrink-0 w-[420px] overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/80"
+        >
+          <div className="grid grid-cols-[7rem,_1fr]">
+            <Image
+              src={testimonial.img}
+              alt={testimonial.name}
+              width={280}
+              height={160}
+              className="h-40 w-full object-cover"
+              sizes="120px"
+            />
+            <div className="relative bg-slate-950/60 p-4">
+              <span className="block text-lg font-semibold text-white">
+                {testimonial.name}
+              </span>
+              <span className="block text-xs font-medium uppercase tracking-wider text-indigo-200">
+                {testimonial.title}
+              </span>
+              <p className="mt-3 text-sm text-slate-300">{testimonial.info}</p>
+              <span className="absolute right-3 top-2 text-5xl font-serif text-slate-800">“</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </motion.div>
+  );
+};
