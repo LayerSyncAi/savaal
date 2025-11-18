@@ -55,8 +55,8 @@ export default function AboutUsPage() {
 					</div>
 					<div className="flex flex-wrap gap-4">
 						<RoundedSlideButtonLight
-							href="/about-us/features"
-							title="Explore our approach"
+							href="/about-us/services"
+							title="Explore our services"
 							hoverFillColor="var(--primary)"
 							icon={<FiArrowRight />}
 							defaultColor="var(--foreground)"
