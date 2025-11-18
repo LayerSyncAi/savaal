@@ -41,17 +41,17 @@ const sections = [
 					<p className="text-sm font-semibold text-(--heading-color)]">
 						Book a training intensive
 					</p>
-					<p className="mt-2 text-sm text-(--muted-dark)]">
+					<p className="mt-2 text-sm text-(--muted-dark)] mb-4">
 						Choose on-site or virtual formats across Zimbabwe and the region.
 					</p>
-                                        <RoundedSlideButtonLight
-                                               href="/services/consultancy"
-                                               title="View Consultancy Services"
-                                               hoverFillColor="var(--primary)"
-                                               icon={<FiArrowRight />}
-                                               defaultColor="var(--foreground)"
-                                               hoverScale={1.05}
-                                        />
+					<RoundedSlideButtonLight
+						href="/services/consultancy"
+						title="View Consultancy Services"
+						hoverFillColor="var(--primary)"
+						icon={<FiArrowRight />}
+						defaultColor="var(--foreground)"
+						hoverScale={1.05}
+					/>
 				</div>
 			</div>
 		),
@@ -80,7 +80,7 @@ const sections = [
 					</p>
 				</div>
 				<div className="rounded-2xl bg-[rgb(var(--secondary-rgb)/0.6)] p-6">
-					<ul className="space-y-2 text-sm font-medium text-(--heading-color)]">
+					<ul className="space-y-2 text-sm font-medium text-(--heading-color)] mb-4">
 						<li>• Seasonal pop-up restaurants</li>
 						<li>• Collaborative chef residences</li>
 						<li>• Art, fashion, and sound pairings</li>
@@ -91,6 +91,7 @@ const sections = [
 						hoverFillColor="var(--primary)"
 						icon={<FiArrowRight />}
 						defaultColor="var(--foreground)"
+						hoverScale={1.05}
 					/>
 				</div>
 			</div>
@@ -110,20 +111,20 @@ const sections = [
 				<h2 className="text-2xl font-semibold text-(--heading-color)]">
 					Judging
 				</h2>
-				<p className="mt-4 text-(--paragraph-color)]">
+				<p className="mt-4 text-(--paragraph-color)] mb-8">
 					Savaal Judges are cultural tastemakers who discreetly assess venues
 					via the Savaal Scorecard. Their evaluations ensure that every listing
 					meets the promise of elevated service, cuisine, and cultural
 					immersion.
 				</p>
-                                <RoundedSlideButtonLight
-                                       href="/judging/prospective-judges"
-                                       title="Apply to Judge"
-                                       hoverFillColor="var(--primary)"
-                                       icon={<FiArrowRight />}
-                                       defaultColor="var(--foreground)"
-                                       className="mx-auto px-3 text-sm"
-                                />
+				<RoundedSlideButtonLight
+					href="/judging/prospective-judges"
+					title="Apply to Judge"
+					hoverFillColor="var(--primary)"
+					icon={<FiArrowRight />}
+					defaultColor="var(--foreground)"
+					className="mx-auto px-3 text-sm"
+				/>
 			</div>
 		),
 	},
@@ -151,21 +152,22 @@ const sections = [
 					continent&apos;s most trusted hospitality guide.
 				</p>
 				<div className="mt-8 flex flex-wrap justify-center gap-4">
-					
-                                        <RoundedSlideButtonLight
-					href="/contact"
-					title="Request Consultancy"
-					hoverFillColor="var(--primary)"
-					icon={<FiArrowRight />}
-					defaultColor="var(--foreground)"
-				/>
-                                        <RoundedSlideButtonLight
-					href="/partnerships"
-					title="Explore Partnerships"
-					hoverFillColor="var(--primary)"
-					icon={<FiArrowRight />}
-					defaultColor="var(--foreground)"
-				/>
+					<RoundedSlideButtonLight
+						href="/contact"
+						title="Request Consultancy"
+						hoverFillColor="var(--primary)"
+						icon={<FiArrowRight />}
+						defaultColor="var(--foreground)"
+						hoverScale={1.05}
+					/>
+					<RoundedSlideButtonLight
+						href="/partnerships"
+						title="Explore Partnerships"
+						hoverFillColor="var(--primary)"
+						icon={<FiArrowRight />}
+						defaultColor="var(--foreground)"
+						hoverScale={1.05}
+					/>
 				</div>
 			</div>
 		),
