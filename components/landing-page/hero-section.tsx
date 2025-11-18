@@ -12,6 +12,7 @@ import Link from "next/link";
 import { RoundedSlideButtonLight } from "../rounded-slide-button-light";
 import { FiArrowRight } from "react-icons/fi";
 import RoundedSlideButtonDark from "../rounded-slide-button-dark";
+import { StatsCounter } from "./stats-counter";
 
 export function HeroSection() {
 	const targetRef = useRef<HTMLDivElement | null>(null);
@@ -44,26 +45,7 @@ export function HeroSection() {
 						Falls, the Guide maps every refined stay, table, and cultural
 						ritual—helping you book with confidence and savor each moment.
 					</p>
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-						<div className="border border-white/30 rounded-2xl px-6 py-5 space-y-1">
-							<p className="p-on-dark text-4xl font-bold">200+</p>
-							<p className="p-on-dark text-sm uppercase tracking-[0.3em] text-white/70">
-								curated stays
-							</p>
-						</div>
-						<div className="border border-white/30 rounded-2xl px-6 py-5 space-y-1">
-							<p className="p-on-dark text-4xl font-bold">140</p>
-							<p className="p-on-dark text-sm uppercase tracking-[0.3em]">
-								chef tables
-							</p>
-						</div>
-						<div className="border border-white/30 rounded-2xl px-6 py-5 space-y-1">
-							<p className="p-on-dark text-4xl font-bold">23 +</p>
-							<p className="p-on-dark text-sm uppercase tracking-[0.3em]">
-								hosted events
-							</p>
-						</div>
-					</div>
+                                        <StatsCounter />
 					<div className="flex flex-wrap justify-center gap-4 text-black">
 						<RoundedSlideButtonDark
 							href="/guide"
