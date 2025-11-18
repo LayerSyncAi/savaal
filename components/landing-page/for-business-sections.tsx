@@ -98,7 +98,7 @@ export function ForBusinessSections() {
                                                 the continent&apos;s most trusted hospitality guide.
                                         </p>
                                         <div className="mt-8 flex flex-wrap justify-center gap-4">
-                                                <Link href="/consultancy" className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-(--primary) shadow-lg">
+                                                <Link href="/contact" className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-(--primary) shadow-lg">
                                                         Request Consultancy
                                                 </Link>
                                                 <Link

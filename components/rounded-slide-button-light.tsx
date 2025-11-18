@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { FiLogIn } from "react-icons/fi";
 import { type ReactNode, type CSSProperties } from "react";
 
 interface RoundedSlideButtonProps {

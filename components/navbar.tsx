@@ -3,7 +3,6 @@
 import { useEffect, useState, type ComponentType } from "react";
 import Link from "next/link";
 import { FiMenu, FiArrowRight, FiX, FiChevronDown } from "react-icons/fi";
-import { FaUserCircle } from "react-icons/fa";
 import {
   useMotionValueEvent,
   AnimatePresence,
@@ -147,19 +146,14 @@ const NavLink = ({
 const CTAs = () => {
   return (
     <div className="flex items-center gap-3">
-      <Link
-        href="/guide"
-        className="flex items-center gap-2 rounded-lg border-2 border-white px-4 py-2 font-semibold text-white transition-colors hover:bg-white hover:text-black"
-      >
-        <FaUserCircle />
-        <span>Sign in</span>
-      </Link>
-      <Link
-        href="/partnerships"
-        className="rounded-lg border-2 border-indigo-300 bg-indigo-300 px-4 py-2 font-semibold text-black transition-colors hover:border-indigo-600 hover:bg-indigo-600 hover:text-white"
-      >
-        Schedule a Demo
-      </Link>
+      <div className="flex flex-col gap-1 text-left">
+        <Link
+          href="/contact"
+          className="rounded-lg border-2 border-(--secondary) bg-(--secondary) px-4 py-2 font-semibold text-black transition-colors hover:border-(--primary) hover:bg-(--primary) hover:text-white"
+        >
+          Get in touch
+        </Link>
+      </div>
     </div>
   );
 };
