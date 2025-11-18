@@ -43,7 +43,7 @@ const sections = [
 					<p className="text-sm font-semibold text-(--heading-color)]">
 						Book a training intensive
 					</p>
-					<p className="mt-2 text-sm text-(--muted-dark)]">
+					<p className="mt-2 mb-4 text-sm text-(--muted-dark)]">
 						Choose on-site or virtual formats across Zimbabwe and the region.
 					</p>
 					<RoundedSlideButtonLight
@@ -81,7 +81,7 @@ const sections = [
 					</p>
 				</div>
 				<div className="rounded-2xl bg-[rgb(var(--secondary-rgb)/0.6)] p-6">
-					<ul className="space-y-2 text-sm font-medium text-(--heading-color)]">
+					<ul className="space-y-2 mb-4 text-sm font-medium text-(--heading-color)]">
 						<li>• Seasonal pop-up restaurants</li>
 						<li>• Collaborative chef residences</li>
 						<li>• Art, fashion, and sound pairings</li>
@@ -111,7 +111,7 @@ const sections = [
 				<h2 className="text-2xl font-semibold text-(--heading-color)]">
 					Judging
 				</h2>
-				<p className="mt-4 text-(--paragraph-color)]">
+				<p className="mt-4 mb-6 text-(--paragraph-color)]">
 					Savaal Judges are cultural tastemakers who discreetly assess venues
 					via the Savaal Scorecard. Their evaluations ensure that every listing
 					meets the promise of elevated service, cuisine, and cultural
