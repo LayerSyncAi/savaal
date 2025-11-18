@@ -149,11 +149,10 @@ const CTAs = () => {
       <div className="flex flex-col gap-1 text-left">
         <Link
           href="/contact"
-          className="rounded-lg border-2 border-indigo-300 bg-indigo-300 px-4 py-2 font-semibold text-black transition-colors hover:border-indigo-600 hover:bg-indigo-600 hover:text-white"
+          className="rounded-lg border-2 border-(--secondary) bg-(--secondary) px-4 py-2 font-semibold text-black transition-colors hover:border-(--primary) hover:bg-(--primary) hover:text-white"
         >
           Get in touch
         </Link>
-        <p className="text-xs text-neutral-300">partners@savaalguide.com</p>
       </div>
     </div>
   );
