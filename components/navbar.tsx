@@ -181,9 +181,9 @@ function AboutUsContent({ onNavigate }: FlyoutContentProps) {
       </div>
       <div className="col-span-12 grid grid-cols-2 grid-rows-2 gap-3 bg-white p-6 lg:col-span-8">
         <LinkCard
-          title="Features"
-          description="Explore the pillars that power our ecosystem."
-          href="/about-us/features"
+          title="Services"
+          description="Explore the programs that power our ecosystem."
+          href="/about-us/services"
           onNavigate={onNavigate}
         />
         <LinkCard
@@ -238,17 +238,6 @@ function JudgingContent({ onNavigate }: FlyoutContentProps) {
   );
 };
 
-function ServicesContent({ onNavigate }: FlyoutContentProps) {
-  return (
-    <InfoPanel
-      title="Services"
-      description="Consultancy, training, and tailored cultural hospitality programs for teams."
-      href="/services"
-      onNavigate={onNavigate}
-    />
-  );
-}
-
 function EventsContent({ onNavigate }: FlyoutContentProps) {
   return (
     <InfoPanel
@@ -285,11 +274,6 @@ const LINKS: { text: string; href: string; component?: FlyoutContent }[] = [
     text: "Judging",
     href: "/judging",
     component: JudgingContent,
-  },
-  {
-    text: "Services",
-    href: "/services",
-    component: ServicesContent,
   },
   {
     text: "Events",
