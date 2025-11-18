@@ -89,11 +89,11 @@ export function ForBusinessSections() {
 
                         <section id="partnerships" className="bg-(--primary) px-6 py-16 text-white" aria-label="Business Call to Action">
                                 <div className="mx-auto max-w-4xl text-center">
-                                        <p className="text-sm uppercase tracking-[0.4em] text-(--peach)]">For Businesses</p>
-                                        <h2 className="mt-4 text-3xl font-semibold">
+                                        <p className="p-on-dark text-sm uppercase tracking-[0.4em] text-(--peach)]">For Businesses</p>
+                                        <h2 className="p-on-dark mt-4 text-3xl font-semibold">
                                                 Elevate Your Business. Request a Savaal Certification Audit or Partnership.
                                         </h2>
-                                        <p className="mt-4 text-(--peach-light)]">
+                                        <p className="p-on-dark mt-4 text-(--peach-light)]">
                                                 Engage with our consultancy team for training, audits, or bespoke cultural collaborations that spotlight your venue on
                                                 the continent&apos;s most trusted hospitality guide.
                                         </p>
