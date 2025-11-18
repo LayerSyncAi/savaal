@@ -104,7 +104,7 @@ const ServiceCard = ({
 					className="absolute inset-0 scale-100 bg-cover bg-center bg-no-repeat opacity-100 transition duration-500 group-hover:scale-105 group-hover:blur-0"
 					style={{ backgroundImage: `url(${image})` }}
 				/>
-				<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+				<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/10 transition duration-500 group-hover:from-black/90 group-hover:via-black/70 group-hover:to-black/40" />
 			</div>
 			<div className="relative z-10 flex flex-col gap-3">
 				<span className="inline-flex w-fit items-center rounded-full border border-white/30 px-3 py-1 text-[10px] uppercase tracking-[0.35em] text-white/70">
