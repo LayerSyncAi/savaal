@@ -1,3 +1,5 @@
+'use client'
+
 import { scrollingTestimonials, type Testimonial, type TestimonialRows } from "@/content/testimonials";
 import { motion } from "framer-motion";
 import Image from "next/image";
