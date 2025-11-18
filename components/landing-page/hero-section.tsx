@@ -9,7 +9,9 @@ import {
 } from "framer-motion";
 import { AiFillCompass, AiOutlineBook } from "react-icons/ai";
 import Link from "next/link";
-import RoundedSlideButton from "../rounded-slide-button";
+import { RoundedSlideButtonLight } from "../rounded-slide-button-light";
+import { FiArrowRight } from "react-icons/fi";
+import RoundedSlideButtonDark from "../rounded-slide-button-dark";
 
 export function HeroSection() {
 	const targetRef = useRef<HTMLDivElement | null>(null);
@@ -62,13 +64,14 @@ export function HeroSection() {
 							</p>
 						</div>
 					</div>
-					<div className="flex flex-wrap justify-center gap-4">
-						<button className="px-6 py-3 bg-white text-black rounded-full font-semibold hover:opacity-90 transition-opacity">
-							Start planning
-						</button>
-						<button className="px-6 py-3 border border-white/60 rounded-full font-semibold text-white/90 hover:bg-white/10 transition-colors">
-							Download the guide
-						</button>
+					<div className="flex flex-wrap justify-center gap-4 text-black">
+						<RoundedSlideButtonDark
+							href="/guide"
+							title="Start planning"
+							hoverFillColor="var(--secondary)"
+							icon={<FiArrowRight />}
+							defaultColor="var(--foreground)"
+						/>
 					</div>
 				</div>
 			</div>
@@ -127,13 +130,14 @@ const Copy = ({
 				across Zimbabwe and beyond—helping travelers connect with authentic
 				African luxury and local artisans.
 			</p>
-                        <div className="flex flex-wrap items-center justify-center gap-4">
-                                <RoundedSlideButton
-                                        href="/guide"
-                                        title="Explore Destinations"
-                                        hoverFillColor="var(--primary)"
-                                        defaultColor="#facc15"
-                                />
+			<div className="flex flex-wrap items-center justify-center gap-4">
+				<RoundedSlideButtonLight
+					href="/guide"
+					title="Explore Destinations"
+					hoverFillColor="var(--primary)"
+					icon={<FiArrowRight />}
+					defaultColor="var(--background)"
+				/>
 				<Link
 					href="/about-us"
 					className="px-6 py-3 border border-white/70 hover:bg-white/10 transition-colors text-black font-medium rounded-full"
