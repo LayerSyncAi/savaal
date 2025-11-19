@@ -107,7 +107,7 @@ const SelectBtns = ({
 					<button
 						key={n}
 						onClick={() => setSelected(n)}
-						className="relative h-1.5 w-full bg-(--foreground)"
+						className="relative h-1.5 w-full bg-gray-300"
 					>
 						{selected === n ? (
 							<motion.span
@@ -183,7 +183,7 @@ const Card = ({
 	const offset = position <= selected ? 0 : 95 + (position - selected) * 3;
         const isEvenCard = (position + 1) % 2 === 0;
         const background = isEvenCard ? "bg-(--primary)" : "bg-slate-50";
-        const color = isEvenCard ? "text-red-600" : "text-slate-900";
+        const color = isEvenCard ? "p-on-dark" : "text-slate-900";
 
 	return (
 		<motion.div
