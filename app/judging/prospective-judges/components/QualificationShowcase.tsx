@@ -94,19 +94,16 @@ function BounceCard({
 
 			<p className="mt-4 max-w-2xl text-slate-600">{step.description}</p>
 
-			<div
-				className={`absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-6 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]`}
-			>
-				<span className="block text-center text-lg font-semibold text-indigo-50">
-					Step {step.id}: {step.title}
-				</span>
-				<p className="mt-3 text-center text-sm text-indigo-50/90">
-					Follow the instructions in order—each number keeps you on track as you
-					move closer to judging live.
-				</p>
-			</div>
-		</motion.div>
-	);
+                        <div
+                                className={`absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-6 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]`}
+                        >
+                                <span className="block text-center text-lg font-semibold text-indigo-50">
+                                        Step {step.id}: {step.title}
+                                </span>
+                                <p className="mt-3 text-center text-sm text-indigo-50/90">{step.highlight}</p>
+                        </div>
+                </motion.div>
+        );
 }
 
 function CardTitle({ children }: { children: ReactNode }) {
@@ -122,8 +119,8 @@ function StepArrow() {
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                         className="scale-50 sm:scale-75"
-                        initial={{ scale: 0.7, rotate: 5 }}
-                        animate={{ scale: 0.75, rotate: 0 }}
+                        initial={{ scale: 0.7, rotate: 185 }}
+                        animate={{ scale: 0.75, rotate: 180 }}
                         transition={{
                                 repeat: Infinity,
                                 repeatType: "mirror",
