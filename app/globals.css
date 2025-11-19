@@ -64,3 +64,6 @@ p {
   color: var(--tertiary);
 }
 
+.p-white {
+  color: var(--background);
+}

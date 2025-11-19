@@ -100,7 +100,7 @@ function BounceCard({
                                 <span className="block text-center text-lg font-semibold text-indigo-50">
                                         Step {step.id}: {step.title}
                                 </span>
-                                <p className="mt-3 text-center text-sm text-indigo-50/90">{step.highlight}</p>
+                                <p className="mt-3 text-center text-sm p-white">{step.highlight}</p>
                         </div>
                 </motion.div>
         );
