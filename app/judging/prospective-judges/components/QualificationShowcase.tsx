@@ -2,50 +2,8 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { FiCheckCircle, FiClipboard, FiMapPin, FiShield, FiUsers } from "react-icons/fi";
 
-const qualificationSteps = [
-  {
-    id: 1,
-    callout: "Step 1 · 5 minutes",
-    title: "Tell us how you judge",
-    description:
-      "Share your hospitality experience, cuisines you know well, and the neighborhoods you can cover.",
-    Icon: FiClipboard,
-  },
-  {
-    id: 2,
-    callout: "Step 2 · Online check",
-    title: "Complete the integrity screen",
-    description:
-      "Answer scenario-based prompts focused on discretion, conflict-of-interest, and fair scoring.",
-    Icon: FiShield,
-  },
-  {
-    id: 3,
-    callout: "Step 3 · Shadow visit",
-    title: "Practice with a sample scorecard",
-    description:
-      "Review a past restaurant visit, apply our 100-point rubric, and compare your notes with a senior judge.",
-    Icon: FiUsers,
-  },
-  {
-    id: 4,
-    callout: "Step 4 · Matchmaking",
-    title: "Get assigned to locations",
-    description:
-      "Once approved, you are scheduled for anonymous visits in the areas you selected so you can start scoring immediately.",
-    Icon: FiMapPin,
-  },
-  {
-    id: 5,
-    callout: "Always on",
-    title: "Support & accountability",
-    description:
-      "Every judge has a direct contact for questions, plus regular calibration sessions to keep standards consistent.",
-    Icon: FiCheckCircle,
-  },
-];
+import { qualificationSteps } from "@/content/qualificationSteps";
 
 const gradients = [
   "from-violet-400 to-indigo-400",
@@ -66,14 +24,6 @@ export function QualificationShowcase() {
             exactly what to expect, from your first intro to ongoing support.
           </p>
         </div>
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <a
-            href="/judging#faq"
-            className="inline-block whitespace-nowrap rounded-lg bg-slate-900 px-5 py-3 font-medium text-white shadow-xl transition-colors hover:bg-slate-700"
-          >
-            See judging FAQ
-          </a>
-        </motion.div>
       </div>
 
       <div className="mb-4 grid grid-cols-12 gap-4">
@@ -105,6 +55,17 @@ export function QualificationShowcase() {
           gradient={gradients[4]}
         />
       </div>
+
+      <div className="mt-8 flex justify-center">
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <a
+            href="/judging#faq"
+            className="inline-block whitespace-nowrap rounded-lg bg-slate-900 px-5 py-3 font-medium text-white shadow-xl transition-colors hover:bg-slate-700"
+          >
+            See judging FAQ
+          </a>
+        </motion.div>
+      </div>
     </section>
   );
 }
@@ -121,7 +82,7 @@ function BounceCard({
   return (
     <motion.div
       whileHover={{ scale: 0.97, rotate: "-1deg" }}
-      className={`group relative min-h-[320px] cursor-pointer overflow-hidden rounded-2xl bg-slate-100 p-8 shadow-lg transition-shadow hover:shadow-xl ${className}`}
+      className={`group relative flex min-h-[380px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-slate-100 p-8 pb-40 shadow-lg transition-shadow hover:shadow-xl ${className}`}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -141,14 +102,12 @@ function BounceCard({
       <p className="mt-4 max-w-2xl text-slate-600">{step.description}</p>
 
       <div
-        className={`absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-6 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]`}
+        className={`pointer-events-none absolute bottom-6 left-6 right-6 rounded-2xl bg-gradient-to-br ${gradient} p-6 transition-transform duration-[250ms] group-hover:translate-y-2 group-hover:rotate-[2deg]`}
       >
         <span className="block text-center text-lg font-semibold text-indigo-50">
           Step {step.id}: {step.title}
         </span>
-        <p className="mt-3 text-center text-sm text-indigo-50/90">
-          Follow the instructions in order—each number keeps you on track as you move closer to judging live.
-        </p>
+        <p className="mt-3 text-center text-sm text-indigo-50/90">{step.highlight}</p>
       </div>
     </motion.div>
   );
