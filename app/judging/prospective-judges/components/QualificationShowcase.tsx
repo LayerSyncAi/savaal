@@ -66,13 +66,14 @@ export function QualificationShowcase() {
             exactly what to expect, from your first intro to ongoing support.
           </p>
         </div>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="whitespace-nowrap rounded-lg bg-slate-900 px-5 py-3 font-medium text-white shadow-xl transition-colors hover:bg-slate-700"
-        >
-          See judging FAQ
-        </motion.button>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <a
+            href="/judging#faq"
+            className="inline-block whitespace-nowrap rounded-lg bg-slate-900 px-5 py-3 font-medium text-white shadow-xl transition-colors hover:bg-slate-700"
+          >
+            See judging FAQ
+          </a>
+        </motion.div>
       </div>
 
       <div className="mb-4 grid grid-cols-12 gap-4">
