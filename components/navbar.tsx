@@ -187,6 +187,12 @@ function AboutUsContent({ onNavigate }: FlyoutContentProps) {
           onNavigate={onNavigate}
         />
         <LinkCard
+          title="Consulting"
+          description="See our hospitality consulting packages and support."
+          href="/about-us/services/consulting"
+          onNavigate={onNavigate}
+        />
+        <LinkCard
           title="Testimonials"
           description="See what our community says about us."
           href="/about-us/testimonials"
@@ -251,12 +257,57 @@ function EventsContent({ onNavigate }: FlyoutContentProps) {
 
 function PartnershipsContent({ onNavigate }: FlyoutContentProps) {
   return (
-    <InfoPanel
-      title="Partnerships"
-      description="Work with us to amplify cultural hospitality across Africa."
-      href="/partnerships"
-      onNavigate={onNavigate}
-    />
+    <div className="w-full bg-white p-6 shadow-none lg:w-[380px] lg:shadow-xl">
+      <div className="space-y-5">
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold">Partnerships</h3>
+          <p className="text-sm text-neutral-500">
+            Work with us to amplify cultural hospitality across Africa.
+          </p>
+          <Link
+            href="/partnerships"
+            onClick={onNavigate}
+            className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:underline"
+          >
+            Overview <FiArrowRight />
+          </Link>
+        </div>
+        <div className="space-y-4 rounded-lg border border-neutral-200 p-4">
+          <div className="space-y-1">
+            <div className="flex items-center justify-between">
+              <h4 className="font-semibold">Businesses</h4>
+              <span className="text-xs text-neutral-500">Tailored activations</span>
+            </div>
+            <p className="text-sm text-neutral-600">
+              Sponsorships, collaborations, and data-backed campaigns for brands.
+            </p>
+            <Link
+              href="/partnerships?tab=business"
+              onClick={onNavigate}
+              className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:underline"
+            >
+              Explore business options <FiArrowRight />
+            </Link>
+          </div>
+          <div className="space-y-1 border-t border-neutral-200 pt-4">
+            <div className="flex items-center justify-between">
+              <h4 className="font-semibold">Personal</h4>
+              <span className="text-xs text-neutral-500">Creators & hosts</span>
+            </div>
+            <p className="text-sm text-neutral-600">
+              Collaborations for tastemakers, event hosts, and community champions.
+            </p>
+            <Link
+              href="/partnerships?tab=personal"
+              onClick={onNavigate}
+              className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:underline"
+            >
+              See personal opportunities <FiArrowRight />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

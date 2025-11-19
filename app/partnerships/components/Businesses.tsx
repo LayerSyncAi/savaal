@@ -8,10 +8,19 @@ export const Businesses = () => {
         the Savaal community and align with your business goals.
       </p>
       <ul className="list-disc space-y-2 pl-5 text-neutral-700">
-        <li>Curated brand integrations and co-marketing</li>
-        <li>Tailored programming for launches and events</li>
-        <li>Long-term partnerships with measurable outcomes</li>
+        <li>Brand association with excellence in hospitality.</li>
+        <li>Advertising and sponsor placement across high-traffic guide pages.</li>
+        <li>Co-hosted culinary events, travel features, and media exposure.</li>
+        <li>Access to our vendor network and cultural data insights.</li>
+        <li>Quarterly performance recaps with clear ROI metrics.</li>
+        <li>Dedicated partnership manager and bespoke activation planning.</li>
+        <li>Priority invitations to Savaal showcases and award seasons.</li>
       </ul>
+      <p className="text-sm text-neutral-600">
+        Every collaboration is built to be low-lift for your team and high-impact
+        for your brand, with transparent reporting and rapid setup to help you
+        launch confidently.
+      </p>
     </div>
   );
 };

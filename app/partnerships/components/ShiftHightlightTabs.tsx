@@ -1,6 +1,7 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { useMemo } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Businesses } from "./Businesses";
 import { Personal } from "./Personal";
@@ -17,7 +18,22 @@ const TAB_DATA = [
 ];
 
 export const ShiftHightlightTabs = () => {
-  const [selected, setSelected] = useState(1);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const selected = useMemo(() => {
+    const tab = searchParams.get("tab")?.toLowerCase();
+    if (tab === "personal") return 2;
+    return 1;
+  }, [searchParams]);
+
+  const handleSelect = (id: number) => {
+    const tab = id === 1 ? "business" : "personal";
+    const query = new URLSearchParams(searchParams.toString());
+    query.set("tab", tab);
+    router.replace(`${pathname}?${query.toString()}`, { scroll: false });
+  };
   return (
     <div className="bg-zinc-50">
       <div className="mx-auto grid max-w-3xl grid-cols-2 gap-4 px-6 py-10">
@@ -26,7 +42,7 @@ export const ShiftHightlightTabs = () => {
             key={t.id}
             id={t.id}
             selected={selected}
-            setSelected={setSelected}
+            setSelected={handleSelect}
           >
             {t.title}
           </ToggleButton>
@@ -47,7 +63,7 @@ const ToggleButton = ({
 }: {
   children: string;
   selected: number;
-  setSelected: Dispatch<SetStateAction<number>>;
+  setSelected: (value: number) => void;
   id: number;
 }) => {
   return (
