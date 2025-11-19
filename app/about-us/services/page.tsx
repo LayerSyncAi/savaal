@@ -10,7 +10,7 @@ export default function AboutUsServicesPage() {
 					<p className="text-sm font-semibold uppercase tracking-[0.3em]">
 						About us · Services
 					</p>
-					<h1 className="text-4xl font-bold">The Savaal Ecosystem</h1>
+					<h1 className=" text-4xl font-bold">The Savaal Ecosystem</h1>
 					<p className="text-lg text-white/80">
 						Explore the programs and touchpoints that make Savaal more than a
 						guide. Each service strengthens the hospitality community, creates

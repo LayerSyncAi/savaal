@@ -41,7 +41,7 @@ export default function AboutUsTestimonialsPage() {
 	}, []);
 
 	return (
-		<div className="bg-(--background) text-slate-50">
+		<div className="bg-background) text-slate-50">
 			<StackedCardTestimonials testimonials={stackedTestimonials} />
 			<div className="mx-auto max-w-5xl px-6 pb-16">
 				<Link
@@ -111,7 +111,7 @@ const SelectBtns = ({
 					>
 						{selected === n ? (
 							<motion.span
-								className="absolute inset-y-0 left-0 bg-(--primary)"
+								className="absolute inset-y-0 left-0 bg-[#7F2B0A]"
 								initial={{
 									width: "0%",
 								}}
@@ -127,7 +127,7 @@ const SelectBtns = ({
 							/>
 						) : (
 							<span
-								className="absolute inset-y-0 left-0 bg-(--primary)"
+								className="absolute inset-y-0 left-0 bg-[#C44614]"
 								style={{
 									width: selected > n ? "100%" : "0%",
 								}}
@@ -150,7 +150,7 @@ const Cards = ({
 	setSelected: Dispatch<SetStateAction<number>>;
 }) => {
 	return (
-		<div className="relative h-[450px] w-full shadow-2xl shadow-slate-900/30">
+		<div className="relative h-[450px] w-full overflow-hidden rounded-3xl shadow-2xl shadow-slate-900/30">
 			{testimonials.map((testimonial, index) => {
 				return (
 					<Card
