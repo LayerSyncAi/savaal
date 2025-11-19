@@ -1,8 +1,12 @@
 import Link from "next/link";
 
+import { businessCriteria } from "@/content/judgingBusinesses";
+
+import { QualificationShowcase } from "./components/QualificationShowcase";
+
 export default function JudgingProspectiveJudgesPage() {
   return (
-    <section className="mx-auto flex max-w-4xl flex-col gap-6 px-6 py-24">
+    <section className="mx-auto flex max-w-5xl flex-col gap-10 px-6 py-24">
       <div className="space-y-2">
         <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
           Judging · Prospective Judges
@@ -17,32 +21,66 @@ export default function JudgingProspectiveJudgesPage() {
         </p>
       </div>
 
-      <div className="grid gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-        <h2 className="text-2xl font-semibold text-neutral-900">How it works</h2>
-        <ul className="space-y-3 text-neutral-700">
-          <li>
-            <span className="font-semibold text-neutral-900">Sign up freely:</span>{" "}
-            Registration is open to everyone. After you share your contact
-            details and preferred locations, you will receive an email with the
-            next steps.
-          </li>
-          <li>
-            <span className="font-semibold text-neutral-900">Pass the qualification test:</span>{" "}
-            We assess credibility, commitment to fairness and confidentiality,
-            ability to judge according to our published criteria, and your
-            promise to integrity and honesty.
-          </li>
-          <li>
-            <span className="font-semibold text-neutral-900">Stay informed:</span>{" "}
-            You will be emailed about your progress at each stage of the
-            process.
-          </li>
-          <li>
-            <span className="font-semibold text-neutral-900">Receive assignments:</span>{" "}
-            If you pass, we will assign you to institution(s) that match the
-            preferred locations you provided, so you can begin on-site judging.
-          </li>
-        </ul>
+      <div className="grid gap-3 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+        <h2 className="text-2xl font-semibold text-neutral-900">
+          Who makes a great Savaal judge
+        </h2>
+        <p className="text-neutral-700">
+          We look for people who know great food and hospitality, are comfortable
+          staying anonymous in dining rooms, and can clearly explain why they
+          gave the score they did. The best judges balance curiosity with
+          discipline, keep strict confidentiality, and respect the businesses
+          they visit.
+        </p>
+      </div>
+
+      <div className="grid gap-4 rounded-3xl border border-neutral-200 bg-neutral-50 p-6 shadow-sm">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div className="space-y-1">
+            <h2 className="text-2xl font-semibold text-neutral-900">
+              How qualification works
+            </h2>
+            <p className="text-neutral-700">
+              A transparent, guided experience that mirrors the same discipline
+              we expect from you in the field.
+            </p>
+          </div>
+          <span className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-indigo-700 shadow-sm ring-1 ring-indigo-100">
+            Built for light + dark backgrounds
+          </span>
+        </div>
+        <QualificationShowcase />
+      </div>
+
+      <div className="grid gap-4 rounded-2xl border border-indigo-100 bg-indigo-50 p-6 text-neutral-800 shadow-sm">
+        <h2 className="text-xl font-semibold text-neutral-900">
+          Judging criteria and maximum scores
+        </h2>
+        <p>
+          Every score you submit uses the same 100-point rubric our business team
+          relies on. Knowing the weighting keeps judges focused on what matters
+          most during each anonymous visit.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {businessCriteria.map(({ category, maxScore, description }) => (
+            <div
+              key={category}
+              className="rounded-2xl border border-indigo-100 bg-white/70 p-4 shadow-sm"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-lg font-semibold text-neutral-900">{category}</p>
+                <span className="rounded-full bg-indigo-100 px-3 py-1 text-sm font-bold text-indigo-800">
+                  {maxScore} pts
+                </span>
+              </div>
+              <p className="mt-2 text-sm text-neutral-700">{description}</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-sm font-semibold text-neutral-700">
+          Total possible score: 100 points. Judges submit a full scorecard after
+          each visit, and panel reviews confirm the final star level.
+        </p>
       </div>
 
       <div className="grid gap-3 rounded-2xl border border-indigo-100 bg-indigo-50 p-6 text-neutral-800">
