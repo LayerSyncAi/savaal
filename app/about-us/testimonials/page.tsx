@@ -1,108 +1,219 @@
-'use client'
+"use client";
 
-import { scrollingTestimonials, type Testimonial, type TestimonialRows } from "@/content/testimonials";
+import {
+	scrollingTestimonials,
+	type Testimonial,
+} from "@/content/testimonials";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { IconType } from "react-icons";
+import { FiArrowUpRight } from "react-icons/fi";
+import {
+	SiAtlassian,
+	SiDribbble,
+	SiGrubhub,
+	SiKaggle,
+	SiNike,
+	SiSlack,
+} from "react-icons/si";
 
 export default function AboutUsTestimonialsPage() {
-  return (
-    <div className="bg-slate-950 text-slate-50">
-      <ScrollingTestimonials testimonials={scrollingTestimonials} />
-      <div className="mx-auto max-w-5xl px-6 pb-16">
-        <Link
-          href="/about-us"
-          className="inline-flex items-center text-sm font-semibold text-indigo-300 underline-offset-4 hover:text-indigo-200 hover:underline"
-        >
-          Back to About us
-        </Link>
-      </div>
-    </div>
-  );
+	const stackedTestimonials = useMemo(() => {
+		const icons = [
+			SiNike,
+			SiAtlassian,
+			SiDribbble,
+			SiGrubhub,
+			SiKaggle,
+			SiSlack,
+		];
+		const allTestimonials = [
+			...scrollingTestimonials.top,
+			...scrollingTestimonials.middle,
+			...scrollingTestimonials.bottom,
+		];
+
+		return allTestimonials.map((testimonial, index) => ({
+			...testimonial,
+			Icon: icons[index % icons.length],
+		}));
+	}, []);
+
+	return (
+		<div className="bg-(--background) text-slate-50">
+			<StackedCardTestimonials testimonials={stackedTestimonials} />
+			<div className="mx-auto max-w-5xl px-6 pb-16">
+				<Link
+					href="/about-us"
+					className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-(--primary) transition hover:text-(--foreground)"
+				>
+					Back to About us
+					<FiArrowUpRight />
+				</Link>
+			</div>
+		</div>
+	);
 }
 
-const ScrollingTestimonials = ({ testimonials }: { testimonials: TestimonialRows }) => {
-  return (
-    <section className="mx-auto max-w-6xl space-y-10 px-4 py-16">
-      <div className="space-y-4 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-indigo-300">
-          About us · Testimonials
-        </p>
-        <h1 className="text-4xl font-bold">Stories from our community</h1>
-        <p className="mx-auto max-w-2xl text-base text-slate-300">
-          Cultural hospitality leaders across the globe use Savaal to design,
-          operate, and scale meaningful guest experiences. Hear how they embed
-          our playbooks into everyday rituals.
-        </p>
-      </div>
-
-      <div className="relative overflow-x-hidden rounded-3xl border border-slate-900/60 bg-slate-900/40 p-6 shadow-2xl">
-        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-950 to-transparent" />
-        <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-950 to-transparent" />
-
-        <div className="flex items-center gap-4">
-          <TestimonialList list={testimonials.top} duration={125} />
-          <TestimonialList list={testimonials.top} duration={125} />
-          <TestimonialList list={testimonials.top} duration={125} />
-        </div>
-        <div className="mt-6 flex items-center gap-4">
-          <TestimonialList list={testimonials.middle} duration={85} reverse />
-          <TestimonialList list={testimonials.middle} duration={85} reverse />
-          <TestimonialList list={testimonials.middle} duration={85} reverse />
-        </div>
-        <div className="mt-6 flex items-center gap-4">
-          <TestimonialList list={testimonials.bottom} duration={165} />
-          <TestimonialList list={testimonials.bottom} duration={165} />
-          <TestimonialList list={testimonials.bottom} duration={165} />
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const TestimonialList = ({
-  list,
-  reverse = false,
-  duration = 50,
+const StackedCardTestimonials = ({
+	testimonials,
 }: {
-  list: Testimonial[];
-  reverse?: boolean;
-  duration?: number;
+	testimonials: StackedTestimonial[];
 }) => {
-  return (
-    <motion.div
-      initial={{ translateX: reverse ? "-100%" : "0%" }}
-      animate={{ translateX: reverse ? "0%" : "-100%" }}
-      transition={{ duration, repeat: Infinity, ease: "linear" }}
-      className="flex gap-4 px-2"
-    >
-      {list.map((testimonial) => (
-        <article
-          key={testimonial.id}
-          className="shrink-0 w-[420px] overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/80"
-        >
-          <div className="grid grid-cols-[7rem,_1fr]">
-            <Image
-              src={testimonial.img}
-              alt={testimonial.name}
-              width={280}
-              height={160}
-              className="h-40 w-full object-cover"
-              sizes="120px"
-            />
-            <div className="relative bg-slate-950/60 p-4">
-              <span className="block text-lg font-semibold text-white">
-                {testimonial.name}
-              </span>
-              <span className="block text-xs font-medium uppercase tracking-wider text-indigo-200">
-                {testimonial.title}
-              </span>
-              <p className="mt-3 text-sm text-slate-300">{testimonial.info}</p>
-              <span className="absolute right-3 top-2 text-5xl font-serif text-slate-800">“</span>
-            </div>
-          </div>
-        </article>
-      ))}
-    </motion.div>
-  );
+	const [selected, setSelected] = useState(0);
+
+	return (
+		<section className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 py-16 lg:grid-cols-2">
+			<div className="space-y-5">
+				<p className="text-xs font-semibold uppercase tracking-[0.35em]">
+					About us · Testimonials
+				</p>
+				<h1 className="text-4xl font-bold">Stories from our community</h1>
+				<p className="text-base ">
+					Cultural hospitality leaders across the globe use Savaal to design,
+					operate, and scale meaningful guest experiences. Hear how they embed
+					our playbooks into everyday rituals.
+				</p>
+				<SelectBtns
+					numTracks={testimonials.length}
+					setSelected={setSelected}
+					selected={selected}
+				/>
+			</div>
+
+			<Cards
+				testimonials={testimonials}
+				setSelected={setSelected}
+				selected={selected}
+			/>
+		</section>
+	);
 };
+
+const SelectBtns = ({
+	numTracks,
+	setSelected,
+	selected,
+}: {
+	numTracks: number;
+	setSelected: Dispatch<SetStateAction<number>>;
+	selected: number;
+}) => {
+	return (
+		<div className="mt-8 flex gap-1">
+			{Array.from(Array(numTracks).keys()).map((n) => {
+				return (
+					<button
+						key={n}
+						onClick={() => setSelected(n)}
+						className="relative h-1.5 w-full bg-gray-300"
+					>
+						{selected === n ? (
+							<motion.span
+								className="absolute inset-y-0 left-0 bg-(--primary)"
+								initial={{
+									width: "0%",
+								}}
+								animate={{
+									width: "100%",
+								}}
+								transition={{
+									duration: 5,
+								}}
+								onAnimationComplete={() => {
+									setSelected(selected === numTracks - 1 ? 0 : selected + 1);
+								}}
+							/>
+						) : (
+							<span
+								className="absolute inset-y-0 left-0 bg-(--primary)"
+								style={{
+									width: selected > n ? "100%" : "0%",
+								}}
+							/>
+						)}
+					</button>
+				);
+			})}
+		</div>
+	);
+};
+
+const Cards = ({
+	testimonials,
+	selected,
+	setSelected,
+}: {
+	testimonials: StackedTestimonial[];
+	selected: number;
+	setSelected: Dispatch<SetStateAction<number>>;
+}) => {
+	return (
+		<div className="relative h-[450px] w-full shadow-2xl shadow-slate-900/30">
+			{testimonials.map((testimonial, index) => {
+				return (
+					<Card
+						{...testimonial}
+						key={testimonial.id}
+						position={index}
+						selected={selected}
+						setSelected={setSelected}
+					/>
+				);
+			})}
+		</div>
+	);
+};
+
+const Card = ({
+	Icon,
+	info,
+	name,
+	title,
+	position,
+	selected,
+	setSelected,
+}: StackedTestimonial & {
+	position: number;
+	selected: number;
+	setSelected: Dispatch<SetStateAction<number>>;
+}) => {
+	const scale = position <= selected ? 1 : 1 + 0.015 * (position - selected);
+	const offset = position <= selected ? 0 : 95 + (position - selected) * 3;
+        const isEvenCard = (position + 1) % 2 === 0;
+        const background = isEvenCard ? "bg-(--primary)" : "bg-slate-50";
+        const color = isEvenCard ? "p-on-dark" : "text-slate-900";
+
+	return (
+		<motion.div
+			initial={false}
+			style={{
+				zIndex: position,
+				transformOrigin: "left bottom",
+			}}
+			animate={{
+				x: `${offset}%`,
+				scale,
+			}}
+			whileHover={{
+				translateX: position === selected ? 0 : -3,
+			}}
+			transition={{
+				duration: 0.25,
+				ease: "easeOut",
+			}}
+			onClick={() => setSelected(position)}
+			className={`absolute left-0 top-0 w-full min-h-full p-8 lg:p-12 ${background} ${color} cursor-pointer rounded-3xl border border-slate-800/40`}
+		>
+			<Icon className="mx-auto text-6xl" />
+			<p className="my-8 text-lg font-light italic lg:text-xl">“{info}”</p>
+			<div>
+				<span className="block text-lg font-semibold">{name}</span>
+				<span className="block text-sm">{title}</span>
+			</div>
+		</motion.div>
+	);
+};
+
+type StackedTestimonial = Testimonial & { Icon: IconType };
