@@ -107,7 +107,7 @@ const SelectBtns = ({
 					<button
 						key={n}
 						onClick={() => setSelected(n)}
-						className="relative h-1.5 w-full bg-(--foreground)"
+						className="relative h-1.5 w-full bg-gray-300"
 					>
 						{selected === n ? (
 							<motion.span
