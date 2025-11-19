@@ -118,15 +118,7 @@ function StepArrow() {
                         viewBox="0 0 95 62"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="scale-50 sm:scale-75"
-                        initial={{ scale: 0.7, rotate: 185 }}
-                        animate={{ scale: 0.75, rotate: 180 }}
-                        transition={{
-                                repeat: Infinity,
-                                repeatType: "mirror",
-                                duration: 1,
-                                ease: "easeOut",
-                        }}
+                        className="scale-50 rotate-90 sm:scale-75"
                 >
                         <path
                                 d="M14.7705 15.8619C33.2146 15.2843 72.0772 22.1597 79.9754 54.2825"
