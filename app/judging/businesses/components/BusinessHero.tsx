@@ -13,10 +13,10 @@ export function BusinessHero() {
         </p>
       </div>
       <div className="flex flex-wrap gap-3 text-sm text-neutral-700">
-        <span className="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-4 py-2 font-semibold text-indigo-700">
+        <span className="inline-flex items-center gap-2 rounded-full bg-(--sand) px-4 py-2 font-semibold text-(--primary)">
           Savaal Elite Audit required
         </span>
-        <span className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-2 font-semibold text-amber-700">
+        <span className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 font-semibold text-(--secondary)">
           3-star certification · 100-point scale
         </span>
       </div>

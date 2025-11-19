@@ -6,11 +6,11 @@ type ScoringCriteriaProps = {
 
 export function ScoringCriteria({ criteria }: ScoringCriteriaProps) {
   return (
-    <section className="grid gap-8 rounded-3xl bg-gradient-to-br from-indigo-50 via-white to-amber-50 p-10 shadow-sm">
+    <section className="grid gap-8 rounded-3xl bg-(--primary) p-10 shadow-sm">
       <div className="space-y-2">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-indigo-700">Scoring criteria</p>
-        <h2 className="text-3xl font-semibold text-neutral-900">Weighted categories we assess</h2>
-        <p className="text-base text-neutral-700">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] p-on-dark">Scoring criteria</p>
+        <h1 className="text-3xl font-semibold p-on-dark">Weighted categories we assess</h1>
+        <p className="text-base p-on-dark">
           Each establishment is evaluated on the following internationally aligned criteria.
         </p>
       </div>
@@ -22,8 +22,8 @@ export function ScoringCriteria({ criteria }: ScoringCriteriaProps) {
           >
             <div className="flex items-center justify-between gap-3">
               <h3 className="text-lg font-semibold text-neutral-900">{item.category}</h3>
-              <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-700">
-                Max {item.maxScore}/100
+              <span className="rounded-full bg-(--peach) px-3 py-1 text-xs font-semibold text-(--tertiary)">
+                Max {item.maxScore}
               </span>
             </div>
             <p className="text-sm leading-relaxed text-neutral-700">{item.description}</p>

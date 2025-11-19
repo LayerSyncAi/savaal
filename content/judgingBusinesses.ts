@@ -51,17 +51,17 @@ export const businessCriteria: BusinessCriteria[] = [
 export const businessStarLevels: BusinessStarLevel[] = [
   {
     level: "⭐ 1 Star",
-    scoreRange: "70–79 out of 100",
+    scoreRange: "70–79",
     meaning: "Consistently good with unique local flavor, worth visiting.",
   },
   {
     level: "⭐⭐ 2 Stars",
-    scoreRange: "80–89 out of 100",
+    scoreRange: "80–89",
     meaning: "Excellent execution and memorable service, with elevated classics.",
   },
   {
     level: "⭐⭐⭐ 3 Stars",
-    scoreRange: "90–100 out of 100",
+    scoreRange: "90–100",
     meaning: "Exceptional. World-class food, service, and cultural innovation. A destination.",
   },
 ];
