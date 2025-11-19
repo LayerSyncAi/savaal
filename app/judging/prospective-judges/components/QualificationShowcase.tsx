@@ -1,14 +1,8 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import {
-  FiCheckCircle,
-  FiClipboard,
-  FiMapPin,
-  FiShield,
-  FiUsers,
-} from "react-icons/fi";
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
+import { FiCheckCircle, FiClipboard, FiMapPin, FiShield, FiUsers } from "react-icons/fi";
 
 const qualificationSteps = [
   {
@@ -17,7 +11,6 @@ const qualificationSteps = [
     title: "Tell us how you judge",
     description:
       "Share your hospitality experience, cuisines you know well, and the neighborhoods you can cover.",
-    contentPosition: "r" as const,
     Icon: FiClipboard,
   },
   {
@@ -26,7 +19,6 @@ const qualificationSteps = [
     title: "Complete the integrity screen",
     description:
       "Answer scenario-based prompts focused on discretion, conflict-of-interest, and fair scoring.",
-    contentPosition: "l" as const,
     Icon: FiShield,
   },
   {
@@ -35,7 +27,6 @@ const qualificationSteps = [
     title: "Practice with a sample scorecard",
     description:
       "Review a past restaurant visit, apply our 100-point rubric, and compare your notes with a senior judge.",
-    contentPosition: "r" as const,
     Icon: FiUsers,
   },
   {
@@ -44,7 +35,6 @@ const qualificationSteps = [
     title: "Get assigned to locations",
     description:
       "Once approved, you are scheduled for anonymous visits in the areas you selected so you can start scoring immediately.",
-    contentPosition: "l" as const,
     Icon: FiMapPin,
   },
   {
@@ -53,151 +43,116 @@ const qualificationSteps = [
     title: "Support & accountability",
     description:
       "Every judge has a direct contact for questions, plus regular calibration sessions to keep standards consistent.",
-    contentPosition: "r" as const,
     Icon: FiCheckCircle,
   },
 ];
 
-type QualificationStep = (typeof qualificationSteps)[number];
+const gradients = [
+  "from-violet-400 to-indigo-400",
+  "from-amber-400 to-orange-400",
+  "from-green-400 to-emerald-400",
+  "from-pink-400 to-red-400",
+  "from-blue-400 to-cyan-400",
+];
 
 export function QualificationShowcase() {
-  const [featureInView, setFeatureInView] = useState<QualificationStep>(
-    qualificationSteps[0],
-  );
-
   return (
-    <section className="relative mx-auto max-w-6xl">
-      <SlidingFeatureDisplay featureInView={featureInView} />
-
-      <div className="-mt-[90vh] hidden md:block" />
-
-      {qualificationSteps.map((step) => (
-        <Content
-          key={step.id}
-          featureInView={step}
-          setFeatureInView={setFeatureInView}
-        />
-      ))}
-    </section>
-  );
-}
-
-function SlidingFeatureDisplay({
-  featureInView,
-}: {
-  featureInView: QualificationStep;
-}) {
-  return (
-    <div
-      style={{
-        justifyContent:
-          featureInView.contentPosition === "l" ? "flex-end" : "flex-start",
-      }}
-      className="pointer-events-none sticky top-16 z-10 hidden h-[86vh] w-full items-center justify-center md:flex"
-    >
-      <motion.div
-        layout
-        transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 30,
-        }}
-        className="h-fit w-3/5 rounded-2xl bg-white/90 p-6 shadow-2xl ring-1 ring-neutral-200 backdrop-blur"
-      >
-        <FeatureCard featureInView={featureInView} />
-      </motion.div>
-    </div>
-  );
-}
-
-function Content({
-  setFeatureInView,
-  featureInView,
-}: {
-  setFeatureInView: (step: QualificationStep) => void;
-  featureInView: QualificationStep;
-}) {
-  const ref = useRef<HTMLElement | null>(null);
-  const isInView = useInView(ref, {
-    margin: "-160px",
-  });
-
-  useEffect(() => {
-    if (isInView) {
-      setFeatureInView(featureInView);
-    }
-  }, [isInView, featureInView, setFeatureInView]);
-
-  return (
-    <section
-      ref={ref}
-      className="relative z-0 flex h-fit md:h-[86vh]"
-      style={{
-        justifyContent:
-          featureInView.contentPosition === "l" ? "flex-start" : "flex-end",
-      }}
-    >
-      <div className="grid h-full w-full place-content-center px-4 py-12 md:w-2/5 md:px-8 md:py-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="space-y-3"
-        >
-          <span className="rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-700">
-            {featureInView.callout}
-          </span>
-          <p className="text-3xl font-bold text-neutral-900">
-            {featureInView.title}
-          </p>
-          <p className="text-neutral-600">{featureInView.description}</p>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="mt-8 block md:hidden"
-        >
-          <FeatureCard featureInView={featureInView} />
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function FeatureCard({
-  featureInView,
-}: {
-  featureInView: QualificationStep;
-}) {
-  return (
-    <div className="relative h-80 w-full rounded-2xl bg-white shadow-lg ring-1 ring-neutral-200">
-      <div className="flex w-full items-center gap-1.5 rounded-t-2xl bg-neutral-100 p-3">
-        <div className="h-3 w-3 rounded-full bg-rose-400" />
-        <div className="h-3 w-3 rounded-full bg-amber-300" />
-        <div className="h-3 w-3 rounded-full bg-emerald-400" />
-        <span className="ml-auto text-sm font-medium text-neutral-600">Savaal Live</span>
-      </div>
-      <div className="flex h-full flex-col justify-between p-4">
+    <section className="mx-auto max-w-7xl px-4 py-12 text-slate-800">
+      <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end md:px-4">
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600">
-            {featureInView.callout}
+          <h2 className="text-4xl font-bold md:text-5xl">Follow the path to join</h2>
+          <p className="max-w-2xl text-lg text-slate-600">
+            We make it simple to become a trusted Savaal judge. Each numbered step below shows
+            exactly what to expect, from your first intro to ongoing support.
           </p>
-          <p className="text-xl font-bold text-neutral-900">{featureInView.title}</p>
-          <p className="text-sm text-neutral-600">{featureInView.description}</p>
         </div>
-        <div className="flex items-center justify-between rounded-xl bg-indigo-50 px-4 py-3 text-indigo-900">
-          <div className="space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-wide">Judge toolkit</p>
-            <p className="text-sm text-neutral-700">
-              Confidential scorecards, guidance notes, and a direct line to the judging team.
-            </p>
-          </div>
-          <span className="text-5xl text-indigo-300">
-            <featureInView.Icon />
-          </span>
-        </div>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="whitespace-nowrap rounded-lg bg-slate-900 px-5 py-3 font-medium text-white shadow-xl transition-colors hover:bg-slate-700"
+        >
+          See judging FAQ
+        </motion.button>
       </div>
-    </div>
+
+      <div className="mb-4 grid grid-cols-12 gap-4">
+        {qualificationSteps.slice(0, 2).map((step, index) => (
+          <BounceCard
+            key={step.id}
+            className={index === 0 ? "col-span-12 md:col-span-4" : "col-span-12 md:col-span-8"}
+            gradient={gradients[index]}
+            step={step}
+          />
+        ))}
+      </div>
+
+      <div className="mb-4 grid grid-cols-12 gap-4">
+        {qualificationSteps.slice(2, 4).map((step, index) => (
+          <BounceCard
+            key={step.id}
+            className={index === 0 ? "col-span-12 md:col-span-8" : "col-span-12 md:col-span-4"}
+            gradient={gradients[index + 2]}
+            step={step}
+          />
+        ))}
+      </div>
+
+      <div className="grid grid-cols-12 gap-4">
+        <BounceCard
+          step={qualificationSteps[4]}
+          className="col-span-12"
+          gradient={gradients[4]}
+        />
+      </div>
+    </section>
   );
+}
+
+function BounceCard({
+  className,
+  gradient,
+  step,
+}: {
+  className: string;
+  gradient: string;
+  step: (typeof qualificationSteps)[number];
+}) {
+  return (
+    <motion.div
+      whileHover={{ scale: 0.97, rotate: "-1deg" }}
+      className={`group relative min-h-[320px] cursor-pointer overflow-hidden rounded-2xl bg-slate-100 p-8 shadow-lg transition-shadow hover:shadow-xl ${className}`}
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-lg font-bold text-white">
+            {step.id}
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-700">{step.callout}</p>
+            <CardTitle>{step.title}</CardTitle>
+          </div>
+        </div>
+        <span className="text-3xl text-slate-500">
+          <step.Icon />
+        </span>
+      </div>
+
+      <p className="mt-4 max-w-2xl text-slate-600">{step.description}</p>
+
+      <div
+        className={`absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-6 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]`}
+      >
+        <span className="block text-center text-lg font-semibold text-indigo-50">
+          Step {step.id}: {step.title}
+        </span>
+        <p className="mt-3 text-center text-sm text-indigo-50/90">
+          Follow the instructions in order—each number keeps you on track as you move closer to judging live.
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+function CardTitle({ children }: { children: ReactNode }) {
+  return <h3 className="text-2xl font-semibold text-slate-900">{children}</h3>;
 }
