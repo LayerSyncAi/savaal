@@ -181,8 +181,9 @@ const Card = ({
 }) => {
 	const scale = position <= selected ? 1 : 1 + 0.015 * (position - selected);
 	const offset = position <= selected ? 0 : 95 + (position - selected) * 3;
-	const background = position % 2 ? "bg-slate-900" : "bg-slate-50";
-	const color = position % 2 ? "text-white" : "text-slate-900";
+        const isEvenCard = (position + 1) % 2 === 0;
+        const background = isEvenCard ? "bg-(--primary)" : "bg-slate-50";
+        const color = isEvenCard ? "p-on-dark" : "text-slate-900";
 
 	return (
 		<motion.div

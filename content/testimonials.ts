@@ -17,94 +17,94 @@ export const scrollingTestimonials: TestimonialRows = {
     {
       id: 1,
       img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80",
-      name: "Karima Tazi",
-      title: "Founder, Maison Safra · Marrakesh, Morocco",
+      name: "Ruvarashe Nyoni",
+      title: "Culinary Director, Ngoma House Dining Club · Harare, Zimbabwe",
       info:
-        "Savaal helped our boutique riad overhaul operations in weeks. The templates and playbooks meant we stopped reinventing the wheel every season.",
+        "Savaal mapped every touchpoint of our chef's table, from sourcing to storytelling. Guests now talk about the experience long after the last course.",
     },
     {
       id: 2,
       img: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=80",
-      name: "Luis Aparicio",
-      title: "Director of Experience, Casa del Mar · San Juan, Puerto Rico",
+      name: "Tendai Chikafu",
+      title: "Head of Cabin Experience, Mosi Luxe Airways · Harare, Zimbabwe",
       info:
-        "We finally have a single source of truth for policies and staff onboarding. That clarity keeps our guest experience consistent across properties.",
+        "Their cabin service rituals keep our airline dining consistent even on double-rotation weeks. Crews finally have clear playbooks for every route.",
     },
     {
       id: 3,
       img: "https://images.unsplash.com/photo-1525130413817-d45c1d127c42?auto=format&fit=crop&w=900&q=80",
-      name: "Amina Rahman",
-      title: "General Manager, The Crescent Collective · Doha, Qatar",
+      name: "Naledi Chawira",
+      title: "Experiential Lead, Victoria Falls Gourmet Trails · Victoria Falls, Zimbabwe",
       info:
-        "Savaal's cultural lens is invaluable. Their guidance respects local traditions while still giving us modern systems to scale responsibly.",
+        "The platform connected chefs, guides, and storytellers under one shared calendar. Our progressive dinners now feel choreographed, not improvised.",
     },
     {
       id: 4,
       img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
-      name: "Theo Mensah",
-      title: "Managing Partner, Akwaaba Retreats · Accra, Ghana",
+      name: "Kudzanai Mhlanga",
+      title: "Creative Producer, Zambezi Night Markets · Victoria Falls, Zimbabwe",
       info:
-        "Our investor updates went from guesswork to confident storytelling. The benchmarking data made it easy to show traction to stakeholders.",
+        "Vendor onboarding, sponsor decks, and artist hospitality all live in one workspace. It freed our team to focus on guest immersion and not logistics.",
     },
   ],
   middle: [
     {
       id: 5,
       img: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80",
-      name: "Naya Ellis",
-      title: "Operations Lead, Coast & Current · Oakland, USA",
+      name: "Nyasha Manyika",
+      title: "Operations Lead, Highlands Tasting Room · Harare, Zimbabwe",
       info:
-        "Savaal kept our remote team aligned during a complicated renovation. The cadence rituals and documentation saved us from endless meetings.",
+        "Renovations usually derail our service culture. With Savaal, every SOP lived alongside the build schedule, so training never stopped.",
     },
     {
       id: 6,
       img: "https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=900&q=80",
-      name: "Gustavo Pinto",
-      title: "Experience Designer, Festival Atlas · Lisbon, Portugal",
+      name: "Farai Ncube",
+      title: "Experience Designer, Kariba Sunset Events · Kariba, Zimbabwe",
       info:
-        "We now launch pop-up experiences twice as fast. The resource library gives our producers the confidence to experiment without chaos.",
+        "We now stage lakeside receptions in half the time. Templates cover everything from marine logistics to VIP tasting notes.",
     },
     {
       id: 7,
       img: "https://images.unsplash.com/photo-1544723795-432537f480ea?auto=format&fit=crop&w=900&q=80",
       name: "Imani Rugare",
-      title: "Program Director, Ubuntu House · Harare, Zimbabwe",
+      title: "Hospitality Director, Ubuntu House Residences · Harare, Zimbabwe",
       info:
-        "Their operations sprint turned our historic property into a modern hospitality lab. The team finally sees how daily rituals ladder up to strategy.",
+        "Their sprint made our serviced apartments feel as curated as a five-star lodge. Daily rituals now ladder directly into brand promises.",
     },
     {
       id: 8,
       img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
-      name: "Carlos Mendes",
-      title: "Culinary Director, Bairro 28 · Porto, Portugal",
+      name: "Tariro Mutsvairo",
+      title: "Culinary Director, Matombo Sky Lounge · Harare, Zimbabwe",
       info:
-        "Menu tastings now sit inside a broader storytelling arc. Savaal helped us translate sourcing philosophies into guest-facing experiences.",
+        "Pairing notes, supplier stories, and DJ briefs are synced in Savaal. Our rooftop supper clubs finally feel seamless.",
     },
   ],
   bottom: [
     {
       id: 9,
       img: "https://images.unsplash.com/photo-1545996124-0501ebae84d0?auto=format&fit=crop&w=900&q=80",
-      name: "Selam Bekele",
-      title: "Experience Director, Lalibela Hideaway · Addis Ababa, Ethiopia",
+      name: "Rutendo Hove",
+      title: "Experience Director, Hwange Heritage Lodges · Hwange, Zimbabwe",
       info:
-        "The partnership gave our frontline team language for service moments rooted in Ethiopian hospitality instead of generic luxury standards.",
+        "Frontline teams finally have language for service rooted in Zimbabwean hospitality, not copy-pasted luxury scripts.",
     },
     {
       id: 10,
       img: "https://images.unsplash.com/photo-1544723795-432537f480ea?auto=format&fit=crop&w=900&q=80",
-      name: "Farah Kamal",
-      title: "Co-founder, Dune & Dhow · Muscat, Oman",
+      name: "Chiedza Mataranyika",
+      title: "Executive Producer, Harare International Food Festival · Harare, Zimbabwe",
       info:
-        "Savaal built a launch plan for our desert retreat that aligned marketing, culinary, and guest operations into a single narrative.",
+        "Ticketing partners, chefs, and sponsors operate from one shared production tracker. Our host city partners noticed the difference immediately.",
     },
     {
       id: 11,
       img: "https://images.unsplash.com/photo-1545996123-8509ee3daffd?auto=format&fit=crop&w=900&q=80",
-      name: "Mateus Silva",
-      title: "Resident Curator, Selva Collective · São Paulo, Brazil",
+      name: "Takudzwa Bvute",
+      title: "Resident Curator, The Umbo Gallery & Suites · Bulawayo, Zimbabwe",
       info:
-        "Their storytelling workshops unlocked collaborations between our chefs, DJs, and resident artists—now every stay feels like a festival.",
+        "Storytelling workshops unlocked new collaborations between our mixologists and resident artists—now every stay feels like an exhibition opening.",
     },
     {
       id: 12,
@@ -112,7 +112,7 @@ export const scrollingTestimonials: TestimonialRows = {
       name: "Mira Dube",
       title: "Head of Hospitality, Matobo Reserves · Bulawayo, Zimbabwe",
       info:
-        "Savaal's benchmarks keep our conservation lodges accountable to both guests and the communities who steward the land with us.",
+        "Savaal's benchmarks keep our conservation lodges accountable to both discerning guests and the communities stewarding the land with us.",
     },
   ],
 };
