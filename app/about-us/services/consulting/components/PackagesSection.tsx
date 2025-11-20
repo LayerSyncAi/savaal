@@ -42,7 +42,7 @@ const Heading = ({ selected, setSelected }: HeadingProps) => {
           className={selected === "M" ? SELECTED_STYLES : DESELECTED_STYLES}
         >
           Monthly
-          {selected === "M" && <BackgroundShift />}
+          {selected === "M" && <BackgroundShift variant="monthly" />}
         </button>
         <div className="relative">
           <button
@@ -50,7 +50,7 @@ const Heading = ({ selected, setSelected }: HeadingProps) => {
             className={selected === "A" ? SELECTED_STYLES : DESELECTED_STYLES}
           >
             Annual
-            {selected === "A" && <BackgroundShift />}
+            {selected === "A" && <BackgroundShift variant="annual" />}
           </button>
           <CTAArrow />
         </div>
@@ -59,10 +59,16 @@ const Heading = ({ selected, setSelected }: HeadingProps) => {
   );
 };
 
-const BackgroundShift = () => (
+const BackgroundShift = ({
+  variant,
+}: {
+  variant: "monthly" | "annual";
+}) => (
   <motion.span
     layoutId="bg-shift"
-    className="absolute inset-0 bg-black rounded-lg -z-10"
+    className={`absolute inset-0 rounded-lg -z-10 ${
+      variant === "annual" ? "bg-(--sage-green)" : "bg-black"
+    }`}
   />
 );
 
@@ -111,6 +117,10 @@ const PriceCards = ({ selected }: PriceCardProps) => (
     {consultingPackages.map((pkg) => {
       const priceValue =
         selected === "A" && pkg.price.annual ? pkg.price.annual : pkg.price.monthly;
+      const hasAnnualPrice = Boolean(pkg.price.annual);
+      const shouldHighlightAnnualPrice =
+        selected === "A" &&
+        (pkg.id === "growth-partner" || pkg.id === "transformation-plan");
 
       return (
         <div
@@ -122,12 +132,20 @@ const PriceCards = ({ selected }: PriceCardProps) => (
           <div className="overflow-hidden mb-8">
             <AnimatePresence mode="wait">
               <motion.p
-                key={`${pkg.id}-${selected}`}
+                key={hasAnnualPrice ? `${pkg.id}-${selected}` : pkg.id}
                 initial={{ y: -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 50, opacity: 0 }}
                 transition={{ ease: "linear", duration: 0.25 }}
-                className={`text-6xl font-bold ${pkg.price.className ?? ""}`.trim()}
+                className={
+                  [
+                    "text-6xl font-bold",
+                    pkg.price.className,
+                    shouldHighlightAnnualPrice ? "p-green" : undefined,
+                  ]
+                    .filter(Boolean)
+                    .join(" ")
+                }
               >
                 <span>{priceValue}</span>
                 <span className="font-normal text-xl">{pkg.price.suffix}</span>
