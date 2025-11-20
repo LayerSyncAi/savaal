@@ -4,6 +4,7 @@ export type EventDetails = {
   title: string;
   host: string;
   theme: string;
+  image: string;
   description: string[];
   date: string;
   time: string;
@@ -27,6 +28,8 @@ export const events: EventDetails[] = [
     title: "The Table That Got Erased",
     host: "Chef Al",
     theme: "A poetic reclamation of memory, taste, and identity.",
+    image:
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: [
       "This dinner experience tells the story of what was once silenced—now brought to the table. Rooted in heritage and designed for remembrance.",
       "Five courses of fire, soul, and celebration—each paired with wine, wisdom, and spirit. You are invited to sit at the table they tried to erase. We gather not just to dine, but to restore.",
