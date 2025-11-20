@@ -112,7 +112,7 @@ export const restaurants: RestaurantInfo[] = [
     country: "Seychelles",
     location: "Victoria, Seychelles",
     coverImage:
-      "https://images.unsplash.com/photo-1501117716987-c8e1ecb210af?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
     rating: 4.7,
     description:
       "Private villas spill onto powdery sands with butler-led service, reef-to-table dining, and sunset cruises across the Seychelles' turquoise waters.",
@@ -133,7 +133,7 @@ export const restaurants: RestaurantInfo[] = [
     country: "Tanzania",
     location: "Arusha, Tanzania",
     coverImage:
-      "https://images.unsplash.com/photo-1505764706515-aa95265c5abb?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
     rating: 4.8,
     description:
       "Canvas suites overlook acacia-dotted plains where sunrise game drives, Maasai-led bush walks, and farm-to-table feasts define the stay.",
@@ -175,7 +175,7 @@ export const restaurants: RestaurantInfo[] = [
     country: "Ghana",
     location: "Accra, Ghana",
     coverImage:
-      "https://images.unsplash.com/photo-1468070970162-6970676c9a66?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1200&q=80",
     rating: 4.6,
     description:
       "Vintage vinyl, velvet banquettes, and nightly jazz trios set the tone for expertly stirred classics and small bites inspired by coastal Ghana.",
@@ -196,7 +196,7 @@ export const restaurants: RestaurantInfo[] = [
     country: "Morocco",
     location: "Essaouira, Morocco",
     coverImage:
-      "https://images.unsplash.com/photo-1501117716987-c8e1ecb210af?auto=format&fit=crop&w=900&q=90",
+      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=85",
     rating: 4.6,
     description:
       "Sun-washed terraces, locally woven textiles, and hammam-inspired suites create a serene escape steps from Essaouira's Atlantic waves.",
@@ -238,7 +238,7 @@ export const restaurants: RestaurantInfo[] = [
     country: "South Africa",
     location: "Johannesburg, South Africa",
     coverImage:
-      "https://images.unsplash.com/photo-1523362628745-0c100150b05f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=1200&q=80",
     rating: 4.4,
     description:
       "Neon-lit stalls serve wood-fired skewers and sorghum bao alongside cocktails built with marula, rooibos, and foraged botanicals.",

@@ -72,8 +72,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             </div>
 
             <p className="text-sm leading-relaxed p-on-dark">
-              Curated picks from the Savaal judges showcasing standout venues
-              across the continent. Hover or tap to view how each score stacks up.
+              {restaurant.description}
             </p>
 
             <div className="group/cta mt-auto inline-flex w-full items-center justify-between rounded-xl bg-white/15 px-4 py-3 text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/20 hover:shadow-[0_12px_35px_-12px_rgba(0,0,0,0.45)] group-hover:scale-[1.015] group-hover:bg-white/20 group-hover:shadow-[0_12px_35px_-12px_rgba(0,0,0,0.45)]">
