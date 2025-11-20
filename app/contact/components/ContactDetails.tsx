@@ -141,7 +141,7 @@ const LinkBox = ({
       onMouseLeave={(e) => {
         handleMouseLeave(e);
       }}
-      className="relative grid h-24 w-full place-content-center bg-(--secondary-light) transition sm:h-32"
+      className="relative grid h-24 w-full place-content-center bg-white transition sm:h-32"
     >
       <Icon className="text-2xl sm:text-3xl lg:text-4xl text-[var(--primary-dark)]" />
 
