@@ -24,6 +24,7 @@
   --sand: #f4e4d4;
   --peach: #f5d7c0;
   --peach-light: #fcefe1;
+  --sage-green: #60935D;
 
   /* Typography */
   --heading-color: var(--primary);
@@ -66,4 +67,8 @@ p {
 
 .p-white {
   color: var(--background);
+}
+
+.p-green {
+  color: var(--sage-green);
 }
