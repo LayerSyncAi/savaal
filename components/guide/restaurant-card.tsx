@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import type { RestaurantInfo } from "@/content/restaurant-info";
 import { FaArrowRight, FaLocationDot } from "react-icons/fa6";
@@ -14,6 +15,17 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleToggle = () => setIsFlipped((prev) => !prev);
+
+  const featuredCategoryOrder = [
+    "Taste & Technique",
+    "Service",
+    "Beverage Experience",
+    "Menu Composition",
+  ];
+
+  const featuredScores = featuredCategoryOrder
+    .map((label) => restaurant.scores.find((score) => score.label === label))
+    .filter((score): score is RestaurantInfo["scores"][number] => Boolean(score));
 
   return (
     <div
@@ -75,10 +87,14 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
               {restaurant.description}
             </p>
 
-            <div className="group/cta mt-auto inline-flex w-full items-center justify-between rounded-xl bg-white/15 px-4 py-3 text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/20 hover:shadow-[0_12px_35px_-12px_rgba(0,0,0,0.45)] group-hover:scale-[1.015] group-hover:bg-white/20 group-hover:shadow-[0_12px_35px_-12px_rgba(0,0,0,0.45)]">
+            <Link
+              href={`/guide/${restaurant.id}`}
+              onClick={(event) => event.stopPropagation()}
+              className="group/cta mt-auto inline-flex w-full items-center justify-between rounded-xl bg-white/15 px-4 py-3 text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/20 hover:shadow-[0_12px_35px_-12px_rgba(0,0,0,0.45)] group-hover:scale-[1.015] group-hover:bg-white/20 group-hover:shadow-[0_12px_35px_-12px_rgba(0,0,0,0.45)]"
+            >
               <span className="text-sm font-semibold">Explore {restaurant.category.toLowerCase()}</span>
               <FaArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:scale-110" />
-            </div>
+            </Link>
           </div>
         </article>
 
@@ -102,7 +118,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
           </div>
 
           <div className="mt-4 flex-1 space-y-3">
-            {restaurant.scores.map((item, index) => (
+            {featuredScores.map((item, index) => (
               <div
                 key={item.label}
                 className="flex items-center justify-between rounded-xl bg-orange-50/70 px-4 py-3 text-sm text-neutral-800 shadow-sm transition-all duration-300 group-hover:-translate-y-[1px]"
@@ -114,10 +130,14 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             ))}
           </div>
 
-          <div className="group/cta mt-4 inline-flex w-full items-center justify-between rounded-xl border border-orange-100 bg-amber-50 px-4 py-3 text-amber-800 transition-transform duration-300 hover:scale-[1.02]">
+          <Link
+            href={`/guide/${restaurant.id}`}
+            onClick={(event) => event.stopPropagation()}
+            className="group/cta mt-4 inline-flex w-full items-center justify-between rounded-xl border border-orange-100 bg-amber-50 px-4 py-3 text-amber-800 transition-transform duration-300 hover:scale-[1.02]"
+          >
             <span className="text-sm font-semibold">Explore {restaurant.category.toLowerCase()}</span>
             <FaArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:scale-110" />
-          </div>
+          </Link>
         </article>
       </div>
     </div>
