@@ -28,7 +28,7 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
             <span className="inline-flex h-2 w-2 rounded-full bg-amber-400" aria-hidden />
             {restaurant.category}
           </div>
-          <h1 className="text-3xl font-bold sm:text-4xl lg:text-5xl">{restaurant.name}</h1>
+          <h1 className="text-3xl font-bold sm:text-4xl lg:text-5xl p-white">{restaurant.name}</h1>
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-amber-100">
             <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 font-medium text-white">
@@ -45,21 +45,21 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
             </span>
           </div>
 
-          <p className="max-w-3xl text-lg leading-relaxed text-amber-50/90">
+          <p className="max-w-3xl text-lg leading-relaxed p-on-dark">
             {restaurant.description}
           </p>
         </div>
 
         <div className="grid gap-4 rounded-2xl bg-white/10 p-6 backdrop-blur">
-          <h2 className="text-lg font-semibold text-white">Score highlights</h2>
+          <h2 className="text-lg font-semibold p-white">Score highlights</h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {restaurant.scores.map((item) => (
               <div
                 key={item.label}
                 className="rounded-xl border border-amber-200/30 bg-white/5 px-4 py-3 text-sm text-amber-50"
               >
-                <p className="text-xs uppercase tracking-[0.12em] text-amber-200">{item.label}</p>
-                <p className="text-lg font-semibold text-white">{item.score}</p>
+                <p className="text-xs uppercase tracking-[0.12em] p-white">{item.label}</p>
+                <p className="text-lg font-semibold p-white">{item.score}</p>
               </div>
             ))}
           </div>
