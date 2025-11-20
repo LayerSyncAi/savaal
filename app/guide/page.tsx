@@ -13,9 +13,10 @@ export default function GuidePage() {
           Discover the full Savaal Guide experience.
         </h1>
         <p className="text-lg text-neutral-700">
-          Explore the restaurants celebrated by our judges with mobile-first
-          cards that showcase their cuisine, location, and scoring breakdown.
-          Hover or tap each feature card to see how every venue performed.
+          Explore the restaurants, hotels, and bars celebrated by our judges
+          with mobile-first cards that showcase their signature offering,
+          location, and scoring breakdown. Hover or tap each feature card to
+          see how every venue performed.
         </p>
       </div>
 

@@ -35,52 +35,50 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
         className={`relative h-full min-h-[420px] w-full transition-transform duration-700 [transform-style:preserve-3d] ${isFlipped ? "[transform:rotateY(180deg)]" : "[transform:rotateY(0deg)]"}`}
       >
         <article
-          className={`absolute inset-0 flex h-full w-full flex-col overflow-hidden rounded-2xl border border-orange-100 bg-white shadow-md transition-opacity duration-500 [backface-visibility:hidden] ${isFlipped ? "opacity-0" : "opacity-100"}`}
+          className={`absolute inset-0 flex h-full w-full flex-col overflow-hidden rounded-2xl border border-orange-100/70 bg-neutral-900 shadow-md transition-opacity duration-500 [backface-visibility:hidden] ${isFlipped ? "opacity-0" : "opacity-100"}`}
         >
-          <div className="relative h-44 w-full overflow-hidden">
-            <Image
-              src={restaurant.coverImage}
-              alt={`${restaurant.name} cover`}
-              fill
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              priority={false}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
-            <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-sm font-semibold text-amber-700 shadow">
-              <FaStar className="h-4 w-4 text-amber-500" />
-              <span>{restaurant.rating.toFixed(1)} ★</span>
-            </div>
+          <Image
+            src={restaurant.coverImage}
+            alt={`${restaurant.name} cover`}
+            fill
+            className="absolute inset-0 h-full w-full object-cover brightness-[0.55] transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            priority={false}
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/55 to-black/35" />
+
+          <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-white/95 px-3 py-1 text-sm font-semibold text-amber-700 shadow">
+            <FaStar className="h-4 w-4 text-amber-500" />
+            <span>{restaurant.rating.toFixed(1)} ★</span>
           </div>
 
-          <div className="flex flex-1 flex-col gap-4 p-4">
+          <div className="relative flex flex-1 flex-col gap-4 p-4 text-white">
             <div className="space-y-1">
-              <p className="text-xs font-semibold uppercase tracking-[0.08em] text-amber-700">
-                Restaurant
+              <p className="text-xs font-semibold uppercase tracking-[0.08em] text-amber-200">
+                {restaurant.category}
               </p>
-              <h3 className="text-xl font-bold text-neutral-900">{restaurant.name}</h3>
+              <h3 className="text-xl font-bold text-white">{restaurant.name}</h3>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 text-sm text-neutral-700">
-              <span className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 font-medium text-amber-700">
+            <div className="flex flex-wrap items-center gap-3 text-sm text-neutral-200">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 font-medium text-white">
                 <FaUtensils className="h-4 w-4" />
                 {restaurant.cuisine}
               </span>
-              <span className="inline-flex items-center gap-2 text-neutral-700">
-                <FaLocationDot className="h-4 w-4 text-amber-500" />
+              <span className="inline-flex items-center gap-2 text-neutral-100">
+                <FaLocationDot className="h-4 w-4 text-amber-400" />
                 {restaurant.location}
               </span>
             </div>
 
-            <p className="text-sm leading-relaxed text-neutral-600">
-              Curated picks from the Savaal judges showcasing standout kitchens
-              across the continent. Hover or tap to view how each score stacks
-              up.
+            <p className="text-sm leading-relaxed text-neutral-100">
+              Curated picks from the Savaal judges showcasing standout venues
+              across the continent. Hover or tap to view how each score stacks up.
             </p>
 
-            <div className="mt-auto inline-flex w-full items-center justify-between rounded-xl bg-amber-50 px-4 py-3 text-amber-800 transition-colors duration-300 group-hover:bg-amber-100">
-              <span className="text-sm font-semibold">Explore restaurant</span>
-              <FaArrowRight className="h-4 w-4" />
+            <div className="group/cta mt-auto inline-flex w-full items-center justify-between rounded-xl bg-white/15 px-4 py-3 text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/20 hover:shadow-[0_12px_35px_-12px_rgba(0,0,0,0.45)] group-hover:scale-[1.015] group-hover:bg-white/20 group-hover:shadow-[0_12px_35px_-12px_rgba(0,0,0,0.45)]">
+              <span className="text-sm font-semibold">Explore {restaurant.category.toLowerCase()}</span>
+              <FaArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:scale-110" />
             </div>
           </div>
         </article>
@@ -117,9 +115,9 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             ))}
           </div>
 
-          <div className="mt-4 inline-flex w-full items-center justify-between rounded-xl border border-orange-100 bg-amber-50 px-4 py-3 text-amber-800">
-            <span className="text-sm font-semibold">Explore restaurant</span>
-            <FaArrowRight className="h-4 w-4" />
+          <div className="group/cta mt-4 inline-flex w-full items-center justify-between rounded-xl border border-orange-100 bg-amber-50 px-4 py-3 text-amber-800 transition-transform duration-300 hover:scale-[1.02]">
+            <span className="text-sm font-semibold">Explore {restaurant.category.toLowerCase()}</span>
+            <FaArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:scale-110" />
           </div>
         </article>
       </div>
