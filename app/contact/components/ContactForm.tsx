@@ -129,7 +129,7 @@ const Form = ({
           selected === "company"
             ? "bg-white text-[#09384F] hover:bg-[#09384F] hover:text-white"
             : "bg-white text-[#265B23] hover:bg-[#265B23] hover:text-white"
-        } transition-colors duration-[750ms] text-lg text-center rounded-lg w-full py-3 font-semibold`}
+        } transition-colors duration-[950ms] text-lg text-center rounded-lg w-full py-3 font-semibold`}
       >
         Submit
       </motion.button>
