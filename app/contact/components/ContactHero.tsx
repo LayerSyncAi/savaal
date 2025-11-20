@@ -12,13 +12,13 @@ export const ContactHero = () => {
 
       <div className="relative grid gap-8 lg:grid-cols-[1.2fr_1fr]">
         <div className="space-y-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#fcefe1]">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] p-white">
             Contact
           </p>
-          <h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl">
+          <h1 className="text-4xl font-bold leading-tight p-on-dark sm:text-5xl">
             Let&apos;s craft experiences worth remembering
           </h1>
-          <p className="max-w-2xl text-lg text-[#f8ecdf]">
+          <p className="max-w-2xl text-lg p-on-dark">
             Tell us how we can help you elevate taste, hospitality, and community
             moments. Whether it&apos;s a personal passion or a business idea, we&apos;ll
             pair you with the right people to make it happen.
@@ -42,24 +42,24 @@ export const ContactHero = () => {
               ✨
             </div>
             <div>
-              <p className="text-sm uppercase tracking-wide text-[#fcefe1]/80">
+              <p className="text-sm uppercase tracking-wide p-white">
                 Concierge Support
               </p>
-              <p className="text-xl font-semibold text-white">Tailored introductions</p>
+              <p className="text-xl font-semibold p-on-dark">Tailored introductions</p>
             </div>
           </div>
-          <p className="mt-4 text-sm text-[#f8ecdf]/90">
+          <p className="mt-4 text-sm p-on-dark">
             Share your goals and we&apos;ll route your note straight to the right
             team—consultants, judges, or Taste Hunter mentors.
           </p>
-          <div className="mt-6 grid grid-cols-2 gap-4 text-sm text-[#fcefe1]">
+          <div className="mt-6 grid grid-cols-2 gap-4 text-sm p-on-dark">
             <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-              <p className="font-semibold text-white">Response window</p>
-              <p className="text-[#f8ecdf]">Within 24 hours on weekdays</p>
+              <p className="font-semibold p-white">Response window</p>
+              <p className="p-on-dark">Within 24 hours on weekdays</p>
             </div>
             <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-              <p className="font-semibold text-white">Service zones</p>
-              <p className="text-[#f8ecdf]">Gulf region, Europe, remote</p>
+              <p className="font-semibold p-white">Service zones</p>
+              <p className="p-on-dark">Gulf region, Europe, remote</p>
             </div>
           </div>
         </div>
