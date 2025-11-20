@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { consultingPackages } from "@/content/package-info";
 
 export function PackagesSection() {
   const [selected, setSelected] = useState<"M" | "A">("M");
@@ -107,300 +108,66 @@ interface PriceCardProps {
 
 const PriceCards = ({ selected }: PriceCardProps) => (
   <div className="flex flex-col lg:flex-row gap-8 lg:gap-4 w-full max-w-6xl mx-auto relative z-10">
-    {/* FREE */}
-    <div className="w-full bg-white p-6 border-[1px] border-slate-300 rounded-xl">
-      <p className="text-2xl font-bold mb-2">Free</p>
-      <p className="text-lg mb-6">Everything to start</p>
-      <p className="text-6xl font-bold mb-8">
-        $0<span className="font-normal text-xl">/month</span>
-      </p>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">10,000 requests/month</span>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">Basic in app support</span>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">2 users on your account</span>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">1 workspace</span>
-      </div>
+    {consultingPackages.map((pkg) => {
+      const priceValue =
+        selected === "A" && pkg.price.annual ? pkg.price.annual : pkg.price.monthly;
 
-      <motion.button
-        whileHover={{ scale: 1.015 }}
-        whileTap={{ scale: 0.985 }}
-        className="w-full py-4 mt-8 font-semibold bg-black text-white rounded-lg uppercase"
-      >
-        Sign up free
-      </motion.button>
-    </div>
+      return (
+        <div
+          key={pkg.id}
+          className="w-full bg-white p-6 border-[1px] border-slate-300 rounded-xl"
+        >
+          <p className="text-2xl font-bold mb-2">{pkg.title}</p>
+          <p className="text-lg mb-6">{pkg.subtitle}</p>
+          <div className="overflow-hidden mb-8">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={`${pkg.id}-${selected}`}
+                initial={{ y: -50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 50, opacity: 0 }}
+                transition={{ ease: "linear", duration: 0.25 }}
+                className={`text-6xl font-bold ${pkg.price.className ?? ""}`.trim()}
+              >
+                <span>{priceValue}</span>
+                <span className="font-normal text-xl">{pkg.price.suffix}</span>
+              </motion.p>
+            </AnimatePresence>
+          </div>
 
-    {/* PRO  */}
-    <div className="w-full bg-white p-6 border-[1px] border-slate-300 rounded-xl">
-      <p className="text-2xl font-bold mb-2">Professional</p>
-      <p className="text-lg mb-6">Everything to launch</p>
-      <div className="overflow-hidden mb-8">
-        <AnimatePresence mode="wait">
-          {selected === "M" ? (
-            <motion.p
-              key="monthly1"
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 50, opacity: 0 }}
-              transition={{ ease: "linear", duration: 0.25 }}
-              className="text-6xl font-bold text-indigo-500"
-            >
-              <span>$49</span>
-              <span className="font-normal text-xl">/month</span>
-            </motion.p>
-          ) : (
-            <motion.p
-              key="monthly2"
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 50, opacity: 0 }}
-              transition={{ ease: "linear", duration: 0.25 }}
-              className="text-6xl font-bold text-indigo-500"
-            >
-              <span>$39</span>
-              <span className="font-normal text-xl">/month</span>
-            </motion.p>
-          )}
-        </AnimatePresence>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">100,000 requests/month</span>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">Email in app support</span>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">10 users on your account</span>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">10 work spaces</span>
-      </div>
+          {pkg.features.map((feature) => (
+            <FeatureItem key={feature} text={feature} />
+          ))}
 
-      <motion.button
-        whileHover={{ scale: 1.015 }}
-        whileTap={{ scale: 0.985 }}
-        className="w-full py-4 mt-8 font-semibold bg-indigo-500 text-white rounded-lg uppercase"
-      >
-        Sign up professional
-      </motion.button>
-    </div>
+          <motion.button
+            whileHover={{ scale: 1.015 }}
+            whileTap={{ scale: 0.985 }}
+            className={pkg.cta.className}
+          >
+            {pkg.cta.label}
+          </motion.button>
+        </div>
+      );
+    })}
+  </div>
+);
 
-    {/* ENTERPRISE */}
-    <div className="w-full bg-white p-6 border-[1px] border-slate-300 rounded-xl">
-      <p className="text-2xl font-bold mb-2">Enterprise</p>
-      <p className="text-lg mb-6">Everything to go public</p>
-      <div className="overflow-hidden mb-8">
-        <AnimatePresence mode="wait">
-          {selected === "M" ? (
-            <motion.p
-              key="yearly1"
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 50, opacity: 0 }}
-              transition={{ ease: "linear", duration: 0.25 }}
-              className="text-6xl font-bold"
-            >
-              <span>$499</span>
-              <span className="font-normal text-xl">/month</span>
-            </motion.p>
-          ) : (
-            <motion.p
-              key="yearly2"
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 50, opacity: 0 }}
-              transition={{ ease: "linear", duration: 0.25 }}
-              className="text-6xl font-bold"
-            >
-              <span>$399</span>
-              <span className="font-normal text-xl">/month</span>
-            </motion.p>
-          )}
-        </AnimatePresence>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">10,000,000 requests/month</span>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">Phone support</span>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">∞ users on your account</span>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <svg
-          width="20"
-          height="15"
-          viewBox="0 0 20 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          <path
-            d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-base">∞ work spaces</span>
-      </div>
-
-      <motion.button
-        whileHover={{ scale: 1.015 }}
-        whileTap={{ scale: 0.985 }}
-        className="w-full py-4 mt-8 font-semibold bg-black text-white rounded-lg uppercase"
-      >
-        Sign up enterprise
-      </motion.button>
-    </div>
+const FeatureItem = ({ text }: { text: string }) => (
+  <div className="flex items-center gap-2 mb-2">
+    <svg
+      width="20"
+      height="15"
+      viewBox="0 0 20 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="shrink-0"
+    >
+      <path
+        d="M6.35588 11.8345L1.61455 7.17002L0 8.7472L6.35588 15L20 1.57718L18.3968 0L6.35588 11.8345Z"
+        fill="black"
+      />
+    </svg>
+    <span className="text-base">{text}</span>
   </div>
 );
 
