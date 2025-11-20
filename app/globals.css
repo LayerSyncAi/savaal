@@ -57,6 +57,33 @@ p {
   color: var(--primary);
 }
 
+.page-fade {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: page-fade-in 650ms ease-out forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
 .p-on-dark {
   color: var(--secondary);
 }
