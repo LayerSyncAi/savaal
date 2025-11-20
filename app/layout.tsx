@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
+import { PageFade } from "@/components/page-fade";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,7 +27,7 @@ export default function RootLayout({
         className={`${poppins.variable} antialiased bg-[#040404] text-[#1f1f1f]`}
       >
         <Navbar />
-        <div className="pt-28">{children}</div>
+        <PageFade>{children}</PageFade>
       </body>
     </html>
   );
