@@ -29,26 +29,26 @@ const Form = ({
     <form
       onSubmit={(e) => e.preventDefault()}
       className={`p-8 w-full text-white transition-colors duration-[750ms] ${
-        selected === "company" ? "bg-indigo-600" : "bg-violet-600"
+        selected === "company" ? "bg-[#175676]" : "bg-(--sage-green)"
       }`}
     >
-      <h3 className="text-4xl font-bold mb-6">Contact us</h3>
+      <h3 className="text-4xl font-bold mb-6 p-white">Contact us</h3>
 
       {/* Name input */}
       <div className="mb-6">
-        <p className="text-2xl mb-2">Hi 👋! My name is...</p>
+        <p className="text-2xl mb-2 p-white">Hi 👋! My name is...</p>
         <input
           type="text"
           placeholder="Your name..."
           className={`${
-            selected === "company" ? "bg-indigo-700" : "bg-violet-700"
+            selected === "company" ? "bg-[#09384F]" : "bg-[#265B23]"
           } transition-colors duration-[750ms] placeholder-white/70 p-2 rounded-md w-full focus:outline-0`}
         />
       </div>
 
       {/* Company/individual toggle */}
       <div className="mb-6">
-        <p className="text-2xl mb-2">and I represent...</p>
+        <p className="text-2xl mb-2 p-white">and I represent...</p>
         <FormSelect selected={selected} setSelected={setSelected} />
       </div>
 
@@ -75,12 +75,12 @@ const Form = ({
             transition={BASE_TRANSITION}
             className="mb-6"
           >
-            <p className="text-2xl mb-2">by the name of...</p>
+            <p className="text-2xl mb-2 p-white">by the name of...</p>
             <input
               type="text"
               placeholder="Your company name..."
               className={`${
-                selected === "company" ? "bg-indigo-700" : "bg-violet-700"
+                selected === "company" ? "bg-[#09384F]" : "bg-[#265B23]"
               } transition-colors duration-[750ms] placeholder-white/70 p-2 rounded-md w-full focus:outline-0`}
             />
           </motion.div>
@@ -89,11 +89,11 @@ const Form = ({
 
       {/* Request selection */}
       <div className="mb-6">
-        <p className="text-2xl mb-2">Specify your request</p>
+        <p className="text-2xl mb-2 p-white">Specify your request</p>
         <select
           defaultValue=""
           className={`${
-            selected === "company" ? "bg-indigo-700" : "bg-violet-700"
+            selected === "company" ? "bg-[#09384F]" : "bg-[#265B23]"
           } transition-colors duration-[750ms] p-2 rounded-md w-full focus:outline-0`}
         >
           <option value="" disabled>
@@ -107,11 +107,11 @@ const Form = ({
 
       {/* Info */}
       <div className="mb-6">
-        <p className="text-2xl mb-2">I'd love to ask about...</p>
+        <p className="text-2xl mb-2 p-white">I'd love to ask about...</p>
         <textarea
           placeholder="Whatever your heart desires :)"
           className={`${
-            selected === "company" ? "bg-indigo-700" : "bg-violet-700"
+            selected === "company" ? "bg-[#09384F]" : "bg-[#265B23]"
           } transition-colors duration-[750ms] min-h-[150px] resize-none placeholder-white/70 p-2 rounded-md w-full focus:outline-0`}
         />
       </div>
@@ -119,7 +119,7 @@ const Form = ({
       {/* Submit */}
       <motion.button
         whileHover={{
-          scale: 1.01,
+          scale: 1.05,
         }}
         whileTap={{
           scale: 0.99,
@@ -127,8 +127,8 @@ const Form = ({
         type="submit"
         className={`${
           selected === "company"
-            ? "bg-white text-indigo-600"
-            : "bg-white text-violet-600"
+            ? "bg-white text-[#09384F] hover:bg-[#09384F] hover:text-white"
+            : "bg-white text-[#265B23] hover:bg-[#265B23] hover:text-white"
         } transition-colors duration-[750ms] text-lg text-center rounded-lg w-full py-3 font-semibold`}
       >
         Submit
@@ -148,7 +148,7 @@ const FormSelect = ({
     <div className="border-[1px] rounded border-white overflow-hidden font-medium w-fit">
       <button
         className={`${
-          selected === "individual" ? "text-violet-600" : "text-white"
+          selected === "individual" ? "text-[#265B23]" : "text-white"
         } text-sm px-3 py-1.5 transition-colors duration-[750ms] relative`}
         onClick={() => setSelected("individual")}
       >
@@ -163,7 +163,7 @@ const FormSelect = ({
       </button>
       <button
         className={`${
-          selected === "company" ? "text-indigo-600" : "text-white"
+          selected === "company" ? "text-[#09384F]" : "text-white"
         } text-sm px-3 py-1.5 transition-colors duration-[750ms] relative`}
         onClick={() => setSelected("company")}
       >
