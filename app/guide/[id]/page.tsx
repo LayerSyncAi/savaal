@@ -16,16 +16,17 @@ type RestaurantPageProps = {
 };
 
 export default function RestaurantPage({ params }: RestaurantPageProps) {
-  const restaurant = restaurants.find((item) => item.id === params.id);
+  const restaurantId = decodeURIComponent(params.id);
+  const restaurant = restaurants.find((item) => item.id === restaurantId);
 
   if (!restaurant) {
-    notFound();
+    return notFound();
   }
 
-  const details = restaurantDetails[restaurant.id];
+  const details = restaurantDetails[restaurantId];
 
   if (!details) {
-    notFound();
+    return notFound();
   }
 
   return (
