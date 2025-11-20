@@ -12,11 +12,14 @@ export function generateStaticParams() {
 }
 
 type RestaurantPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export default function RestaurantPage({ params }: RestaurantPageProps) {
-  const restaurantId = decodeURIComponent(params.id);
+export default async function RestaurantPage({
+  params,
+}: RestaurantPageProps) {
+  const { id } = await params;
+  const restaurantId = decodeURIComponent(id);
   const restaurant = restaurants.find((item) => item.id === restaurantId);
 
   if (!restaurant) {
