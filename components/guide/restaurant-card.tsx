@@ -16,6 +16,17 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
 
   const handleToggle = () => setIsFlipped((prev) => !prev);
 
+  const featuredCategoryOrder = [
+    "Taste & Technique",
+    "Service",
+    "Beverage Experience",
+    "Menu Composition",
+  ];
+
+  const featuredScores = featuredCategoryOrder
+    .map((label) => restaurant.scores.find((score) => score.label === label))
+    .filter((score): score is RestaurantInfo["scores"][number] => Boolean(score));
+
   return (
     <div
       className="group relative h-full w-full [perspective:1600px]"
@@ -107,7 +118,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
           </div>
 
           <div className="mt-4 flex-1 space-y-3">
-            {restaurant.scores.map((item, index) => (
+            {featuredScores.map((item, index) => (
               <div
                 key={item.label}
                 className="flex items-center justify-between rounded-xl bg-orange-50/70 px-4 py-3 text-sm text-neutral-800 shadow-sm transition-all duration-300 group-hover:-translate-y-[1px]"
