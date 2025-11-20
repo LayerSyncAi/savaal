@@ -41,11 +41,11 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             src={restaurant.coverImage}
             alt={`${restaurant.name} cover`}
             fill
-            className="absolute inset-0 h-full w-full object-cover brightness-[0.55] transition-transform duration-700 group-hover:scale-105"
+            className="absolute inset-0 h-full w-full object-cover brightness-[0.78] transition-transform duration-700 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             priority={false}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/55 to-black/35" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/25" />
 
           <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-white/95 px-3 py-1 text-sm font-semibold text-amber-700 shadow">
             <FaStar className="h-4 w-4 text-amber-500" />
@@ -71,9 +71,8 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
               </span>
             </div>
 
-            <p className="text-sm leading-relaxed text-neutral-100">
-              Curated picks from the Savaal judges showcasing standout venues
-              across the continent. Hover or tap to view how each score stacks up.
+            <p className="p-on-dark text-sm leading-relaxed text-neutral-100">
+              {restaurant.description}
             </p>
 
             <div className="group/cta mt-auto inline-flex w-full items-center justify-between rounded-xl bg-white/15 px-4 py-3 text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/20 hover:shadow-[0_12px_35px_-12px_rgba(0,0,0,0.45)] group-hover:scale-[1.015] group-hover:bg-white/20 group-hover:shadow-[0_12px_35px_-12px_rgba(0,0,0,0.45)]">
