@@ -51,7 +51,7 @@ export function ScoreAndComments({ restaurant }: ScoreAndCommentsProps) {
                 <FaRegCheckCircle className="h-3.5 w-3.5" />
                 {entry.judge}
               </div>
-              <p className="leading-relaxed text-amber-50/90">{entry.comment}</p>
+              <p className="leading-relaxed p-on-dark">{entry.comment}</p>
             </div>
           ))}
         </div>
