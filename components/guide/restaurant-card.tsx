@@ -6,6 +6,7 @@ import { useState } from "react";
 import type { RestaurantInfo } from "@/content/restaurant-info";
 import { FaArrowRight, FaLocationDot } from "react-icons/fa6";
 import { FaStar, FaUtensils } from "react-icons/fa";
+import { DotExpandButton } from "./dot-expand-button";
 
 type RestaurantCardProps = {
 	restaurant: RestaurantInfo;
@@ -148,18 +149,12 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
 						))}
 					</div>
 
-					<Link
-						href={`/guide/${restaurant.id}`}
-						onClick={(event) => event.stopPropagation()}
-						className="group/cta mt-4 inline-flex w-full items-center justify-between rounded-xl border border-orange-100 bg-amber-50 px-4 py-3 text-amber-800 transition-transform duration-300 hover:scale-[1.02]"
-					>
-						<span className="text-sm font-semibold">
-							Explore {restaurant.category.toLowerCase()}
-						</span>
-						<FaArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:scale-110" />
-					</Link>
-				</article>
-			</div>
-		</div>
+                                        <DotExpandButton
+                                                href={`/guide/${restaurant.id}`}
+                                                label={`Explore ${restaurant.category.toLowerCase()}`}
+                                        />
+                                </article>
+                        </div>
+                </div>
 	);
 }
