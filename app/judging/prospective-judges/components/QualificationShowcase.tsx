@@ -62,52 +62,52 @@ export function QualificationShowcase() {
 }
 
 function BounceCard({
-	className,
-	gradient,
-	step,
+        className,
+        gradient,
+        step,
 }: {
 	className: string;
 	gradient: string;
 	step: (typeof qualificationSteps)[number];
 }) {
-	return (
-		<motion.div
-			whileHover={{ scale: 0.97, rotate: "-1deg" }}
-			className={`group relative min-h-[320px] cursor-pointer overflow-hidden rounded-2xl bg-slate-100 p-8 shadow-lg transition-shadow hover:shadow-xl ${className}`}
-		>
-			<div className="flex items-center justify-between">
-				<div className="flex items-center gap-3">
-					<div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-lg font-bold text-white">
-						{step.id}
-					</div>
-					<div>
-						<p className="text-xs font-semibold uppercase tracking-wide text-indigo-700">
-							{step.callout}
-						</p>
-						<CardTitle>{step.title}</CardTitle>
-					</div>
-				</div>
+        return (
+                <motion.div
+                        whileHover={{ scale: 0.97, rotate: "-1deg" }}
+                        className={`group relative min-h-[320px] cursor-pointer overflow-hidden rounded-2xl bg-slate-900 p-8 text-white shadow-lg transition-shadow hover:shadow-xl ${className}`}
+                >
+                        <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-lg font-bold text-slate-900">
+                                                {step.id}
+                                        </div>
+                                        <div>
+                                                <p className="text-xs font-semibold uppercase tracking-wide text-white/80">
+                                                        {step.callout}
+                                                </p>
+                                                <CardTitle>{step.title}</CardTitle>
+                                        </div>
+                                </div>
 				<span className="text-3xl text-slate-500">
 					<step.Icon />
 				</span>
 			</div>
 
-			<p className="mt-4 max-w-2xl p-white">{step.description}</p>
+                        <p className="mt-4 max-w-2xl text-white/90">{step.description}</p>
 
                         <div
-                                className={`absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-6 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]`}
+                                className={`absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-6 text-white transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]`}
                         >
-                                <span className="block text-center text-lg font-semibold text-indigo-50">
+                                <span className="block text-center text-lg font-semibold">
                                         Step {step.id}: {step.title}
                                 </span>
-                                <p className="mt-3 text-center text-sm p-white">{step.highlight}</p>
+                                <p className="mt-3 text-center text-sm text-white/90">{step.highlight}</p>
                         </div>
                 </motion.div>
         );
 }
 
 function CardTitle({ children }: { children: ReactNode }) {
-        return <h3 className="text-2xl font-semibold text-slate-900">{children}</h3>;
+        return <h3 className="text-2xl font-semibold text-white">{children}</h3>;
 }
 
 function StepArrow() {
