@@ -37,7 +37,7 @@ export const RoundedSlideButtonLight = ({
                         href={href}
                         style={customProperties}
                         className={`
-                                relative z-0 flex items-center gap-2 overflow-hidden border border-(--hover-color)]
+                                relative z-0 inline-flex items-center gap-2 overflow-hidden border border-(--hover-color)]
                                 px-4 py-2 font-semibold uppercase text-neutral-900 transition-all duration-500 rounded-full
                                 bg-(--default-color)]
 
