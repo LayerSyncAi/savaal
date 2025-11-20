@@ -216,14 +216,12 @@ export default function GuidePage() {
 				))}
 			</div>
 
-			<RoundedSlideButtonLight
+			<Link
 				href="/"
-				title="Back to home"
-				hoverFillColor="var(--primary)"
-				icon={<FiArrowRight />}
-				defaultColor="var(--foreground)"
-				hoverScale={1.05}
-			/>
+				className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900 hover:bg-(--primary) hover:text-white"
+			>
+				Back to home
+			</Link>
 		</section>
 	);
 }
