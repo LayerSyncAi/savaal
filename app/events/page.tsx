@@ -91,7 +91,7 @@ const OutlineCards = ({ events }: { events: EventDetails[] }) => {
 const Card = ({ event }: { event: EventDetails }) => {
   return (
     <Link
-      href={`/event/${event.id}`}
+      href={`/events/${event.id}`}
       style={{
         backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.65) 100%), url(${event.image})`,
         backgroundPosition: "center",
