@@ -29,12 +29,12 @@ export default function EventsPage() {
         <OutlineCards events={events} />
 
         <div>
-          <Link
-            href="/"
-            className="inline-flex w-fit items-center text-indigo-600 underline-offset-4 hover:underline"
-          >
-            Back to home
-          </Link>
+         <Link
+					href="/"
+					className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900 hover:bg-(--primary) hover:text-white"
+				>
+					Back to home
+				</Link>
         </div>
       </div>
     </section>
@@ -99,16 +99,16 @@ const Card = ({ event }: { event: EventDetails }) => {
       className="outline-card flex aspect-square w-full flex-col justify-between overflow-hidden rounded-2xl bg-neutral-400 bg-[size:110%] shadow-xl shadow-neutral-900/30 transition-[background-size] duration-500 hover:bg-[size:120%]"
     >
       <div className="pointer-events-none flex items-center justify-between p-6 text-xl font-semibold text-white md:text-2xl">
-        <h3 className="max-w-[14ch] leading-tight">{event.title}</h3>
+        <h3 className="max-w-[14ch] leading-tight p-white">{event.title}</h3>
         <FiArrowRight />
       </div>
       <div className="pointer-events-none grid grid-cols-1 gap-1 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-6 text-sm font-medium text-white sm:grid-cols-3 sm:items-end">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-200 sm:col-span-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] p-on-dark sm:col-span-3">
           {event.presentedBy}
         </p>
-        <p className="sm:truncate">{event.location.venue}</p>
-        <p className="sm:text-center">{event.date}</p>
-        <p className="sm:text-right">{event.price}</p>
+        <p className="sm:truncate p-on-dark ">{event.location.venue}</p>
+        <p className="sm:text-center p-on-dark ">{event.date}</p>
+        <p className="sm:text-right p-on-dark ">{event.price}</p>
       </div>
     </Link>
   );
