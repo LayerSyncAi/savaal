@@ -90,11 +90,16 @@ const Logo = ({ color = "white" }: { color?: string }) => {
   );
 };
 
+const linkVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0 },
+};
+
 const Links = () => {
   return (
     <div className="flex items-center gap-6">
-      {LINKS.map((link) => (
-        <NavLink key={link.text} link={link} />
+      {LINKS.map((link, index) => (
+        <NavLink key={link.text} link={link} index={index} />
       ))}
     </div>
   );
@@ -102,17 +107,23 @@ const Links = () => {
 
 const NavLink = ({
   link,
+  index,
 }: {
   link: { text: string; href: string; component?: FlyoutContent };
+  index: number;
 }) => {
   const [open, setOpen] = useState(false);
   const showFlyout = Boolean(link.component) && open;
 
   return (
-    <div
+    <motion.div
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       className="relative h-fit w-fit"
+      variants={linkVariants}
+      initial="hidden"
+      animate="visible"
+      transition={{ duration: 0.4, delay: index * 0.08, ease: "easeOut" }}
     >
       <Link href={link.href} className="relative">
         {link.text}
@@ -139,7 +150,7 @@ const NavLink = ({
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
