@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { EmailTemplate } from "@/app/contact/components/EmailTemplate";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -27,6 +28,14 @@ export async function POST(request: Request) {
       to: "avdingiswayo54@gmail.com",
       subject: emailSubject,
       text: emailBody,
+      react: EmailTemplate({
+        name,
+        email,
+        contactType,
+        requestType,
+        companyName,
+        message,
+      }),
     });
 
     return NextResponse.json({ success: true });
