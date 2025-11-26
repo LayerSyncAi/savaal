@@ -19,9 +19,9 @@ export default function JudgingProspectiveJudgesPage() {
 			<RoundedSlideButtonLight
 				href="/judging"
 				title="Back to judging"
-				hoverFillColor="var(--tertiary)"
+				hoverFillColor="var(--primary)"
 				icon={<FiArrowUpRight />}
-				defaultColor="var(--foreground)"
+				defaultColor="var(--sand)"
 				className="mx-auto px-3 text-sm"
 			/>
 		</section>

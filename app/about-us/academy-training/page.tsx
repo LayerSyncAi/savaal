@@ -42,7 +42,7 @@ export default function AcademyTrainingPage() {
 					About us · Academy + Training
 				</p>
 				<h1 className="text-4xl font-bold text-neutral-900">
-					Training pathways that improve everyday lives
+					Training pathways that <span className="text-(--tertiary)">improve everyday lives</span>
 				</h1>
 				<p className="max-w-3xl text-lg text-neutral-700">
 					The Savaal Academy is built to unlock government and partner funding
@@ -165,7 +165,7 @@ export default function AcademyTrainingPage() {
                                                         <RoundedSlideButtonLight
 								href="/events"
 								title="See live training dates"
-								hoverFillColor="var(--tertiary)"
+								hoverFillColor="var(--sage-green)"
 								defaultColor="var(--sand)"
 								hoverScale={1.05}
 								icon={<FiArrowRight />}
