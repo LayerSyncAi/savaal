@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
+import RoundedSlideButtonLight from "@/components/rounded-slide-button-light";
 
 const trainingTracks = [
         {
@@ -65,12 +65,15 @@ export default function AcademyTrainingPage() {
                                                 <li>• Co-designed curricula with public sector and civic partners</li>
                                                 <li>• Safeguarding standards woven into every workshop</li>
                                         </ul>
-                                        <Link
+                                        <RoundedSlideButtonLight
                                                 href="/events#training"
-                                                className="inline-flex items-center gap-2 rounded-full bg-(--primary) px-4 py-3 text-sm font-semibold text-white transition hover:bg-(--primary-dark)]"
-                                        >
-                                                View upcoming training cohorts <FiArrowRight />
-                                        </Link>
+                                                title="View upcoming training cohorts"
+                                                hoverFillColor="var(--primary)"
+                                                defaultColor="var(--foreground)"
+                                                hoverScale={1.05}
+                                                icon={<FiArrowRight />}
+                                                className="uppercase"
+                                        />
                                 </div>
                                 <div className="space-y-4 rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 via-white to-amber-100/60 p-6">
                                         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-700">
