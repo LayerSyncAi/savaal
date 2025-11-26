@@ -129,7 +129,7 @@ const PriceCards = ({ selected }: PriceCardProps) => (
         >
           <p className="text-2xl font-bold mb-2">{pkg.title}</p>
           <p className="text-lg mb-6">{pkg.subtitle}</p>
-          <div className="overflow-hidden mb-8">
+          <div className="overflow-hidden mb-3">
             <AnimatePresence mode="wait">
               <motion.p
                 key={hasAnnualPrice ? `${pkg.id}-${selected}` : pkg.id}
@@ -152,6 +152,15 @@ const PriceCards = ({ selected }: PriceCardProps) => (
               </motion.p>
             </AnimatePresence>
           </div>
+
+          {shouldHighlightAnnualPrice && selected === "A" && (
+            <div className="mb-6 flex items-center gap-2 text-sm font-semibold text-(--sage-green)">
+              <span className="rounded-full bg-(--sage-green)/10 px-3 py-1 uppercase tracking-wide">
+                10% off annual
+              </span>
+              <span className="font-medium text-neutral-700">Save 10% when billed annually</span>
+            </div>
+          )}
 
           {pkg.features.map((feature) => (
             <FeatureItem key={feature} text={feature} />

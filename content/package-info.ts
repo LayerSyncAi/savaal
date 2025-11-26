@@ -45,12 +45,12 @@ export const consultingPackages: PackageInfo[] = [
 		id: "growth-partner",
 		title: "Growth Partner",
 		subtitle: "Consistent help without long commitment",
-		price: {
-			monthly: "$550",
-			annual: "$450",
-			suffix: "/month",
-			className: "text-indigo-500",
-		},
+                price: {
+                        monthly: "$550",
+                        annual: "$495",
+                        suffix: "/month",
+                        className: "text-indigo-500",
+                },
 		features: [
 			"3 Months Long",
 			"Includes everything in Quick Fix",
@@ -73,11 +73,11 @@ export const consultingPackages: PackageInfo[] = [
 		id: "transformation-plan",
 		title: "Transformation Plan",
 		subtitle: "Become an industry leader",
-		price: {
-			monthly: "$450",
-			annual: "$400",
-			suffix: "/month",
-		},
+                price: {
+                        monthly: "$450",
+                        annual: "$405",
+                        suffix: "/month",
+                },
 		features: [
 			"6 Months Long",
       "Everything In Growth Plan",
