@@ -1,17 +1,94 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Dispatch, SetStateAction, useState } from "react";
+import {
+  type FormEvent,
+  Dispatch,
+  SetStateAction,
+  useMemo,
+  useState,
+} from "react";
+
+type ContactType = "company" | "individual";
+type SubmissionStatus = "idle" | "success" | "error";
 
 export const ContactForm = () => {
-  const [selected, setSelected] = useState<"company" | "individual">(
-    "individual",
-  );
+  const [selected, setSelected] = useState<ContactType>("individual");
+  const [name, setName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [requestType, setRequestType] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<SubmissionStatus>("idle");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const isCompany = selected === "company";
+  const isFormValid = useMemo(() => {
+    const hasName = name.trim().length > 0;
+    const hasMessage = message.trim().length > 0;
+    const hasRequestType = requestType !== "";
+    const hasCompanyInfo = !isCompany || companyName.trim().length > 0;
+
+    return hasName && hasMessage && hasRequestType && hasCompanyInfo;
+  }, [companyName, isCompany, message, name, requestType]);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!isFormValid || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setStatus("idle");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          companyName: isCompany ? companyName : undefined,
+          requestType,
+          message,
+          contactType: selected,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      setStatus("success");
+      setName("");
+      setCompanyName("");
+      setRequestType("");
+      setMessage("");
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section className="p-4 bg-slate-100">
       <div className="w-full max-w-6xl mx-auto shadow-lg flex flex-col-reverse lg:flex-row rounded-lg overflow-hidden">
-        <Form selected={selected} setSelected={setSelected} />
+        <Form
+          selected={selected}
+          setSelected={setSelected}
+          name={name}
+          setName={setName}
+          companyName={companyName}
+          setCompanyName={setCompanyName}
+          requestType={requestType}
+          setRequestType={setRequestType}
+          message={message}
+          setMessage={setMessage}
+          status={status}
+          handleSubmit={handleSubmit}
+          isFormValid={isFormValid}
+          isSubmitting={isSubmitting}
+        />
         <Images selected={selected} />
       </div>
     </section>
@@ -21,13 +98,37 @@ export const ContactForm = () => {
 const Form = ({
   selected,
   setSelected,
+  name,
+  setName,
+  companyName,
+  setCompanyName,
+  requestType,
+  setRequestType,
+  message,
+  setMessage,
+  status,
+  handleSubmit,
+  isFormValid,
+  isSubmitting,
 }: {
-  selected: "company" | "individual";
-  setSelected: Dispatch<SetStateAction<"company" | "individual">>;
+  selected: ContactType;
+  setSelected: Dispatch<SetStateAction<ContactType>>;
+  name: string;
+  setName: Dispatch<SetStateAction<string>>;
+  companyName: string;
+  setCompanyName: Dispatch<SetStateAction<string>>;
+  requestType: string;
+  setRequestType: Dispatch<SetStateAction<string>>;
+  message: string;
+  setMessage: Dispatch<SetStateAction<string>>;
+  status: SubmissionStatus;
+  handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  isFormValid: boolean;
+  isSubmitting: boolean;
 }) => {
   return (
     <form
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={handleSubmit}
       className={`p-8 w-full text-white transition-colors duration-[750ms] ${
         selected === "company" ? "bg-[#175676]" : "bg-(--sage-green)"
       }`}
@@ -40,6 +141,8 @@ const Form = ({
         <input
           type="text"
           placeholder="Your name..."
+          value={name}
+          onChange={(event) => setName(event.target.value)}
           className={`${
             selected === "company" ? "bg-[#09384F]" : "bg-[#265B23]"
           } transition-colors duration-[750ms] placeholder-white/70 p-2 rounded-md w-full focus:outline-0`}
@@ -79,6 +182,8 @@ const Form = ({
             <input
               type="text"
               placeholder="Your company name..."
+              value={companyName}
+              onChange={(event) => setCompanyName(event.target.value)}
               className={`${
                 selected === "company" ? "bg-[#09384F]" : "bg-[#265B23]"
               } transition-colors duration-[750ms] placeholder-white/70 p-2 rounded-md w-full focus:outline-0`}
@@ -91,7 +196,8 @@ const Form = ({
       <div className="mb-6">
         <p className="text-2xl mb-2 p-white">Specify your request</p>
         <select
-          defaultValue=""
+          value={requestType}
+          onChange={(event) => setRequestType(event.target.value)}
           className={`${
             selected === "company" ? "bg-[#09384F]" : "bg-[#265B23]"
           } transition-colors duration-[750ms] p-2 rounded-md w-full focus:outline-0`}
@@ -110,6 +216,8 @@ const Form = ({
         <p className="text-2xl mb-2 p-white">I’d love to ask about...</p>
         <textarea
           placeholder="Whatever your heart desires :)"
+          value={message}
+          onChange={(event) => setMessage(event.target.value)}
           className={`${
             selected === "company" ? "bg-[#09384F]" : "bg-[#265B23]"
           } transition-colors duration-[750ms] min-h-[150px] resize-none placeholder-white/70 p-2 rounded-md w-full focus:outline-0`}
@@ -125,14 +233,33 @@ const Form = ({
           scale: 0.99,
         }}
         type="submit"
+        disabled={!isFormValid || isSubmitting}
         className={`${
           selected === "company"
             ? "bg-white text-[#09384F] hover:bg-[#09384F] hover:text-white"
             : "bg-white text-[#265B23] hover:bg-[#265B23] hover:text-white"
-        } transition-colors duration-[950ms] text-lg text-center rounded-lg w-full py-3 font-semibold`}
+        } transition-colors duration-[950ms] text-lg text-center rounded-lg w-full py-3 font-semibold disabled:opacity-60 disabled:cursor-not-allowed`}
       >
-        Submit
+        {isSubmitting ? "Sending..." : "Submit"}
       </motion.button>
+
+      <AnimatePresence>
+        {status !== "idle" && (
+          <motion.p
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={BASE_TRANSITION}
+            className={`mt-4 text-sm font-medium ${
+              status === "success" ? "text-green-200" : "text-red-200"
+            }`}
+          >
+            {status === "success"
+              ? "Thanks for reaching out! We will get back to you soon."
+              : "Something went wrong. Please try again."}
+          </motion.p>
+        )}
+      </AnimatePresence>
     </form>
   );
 };
@@ -141,12 +268,13 @@ const FormSelect = ({
   selected,
   setSelected,
 }: {
-  selected: "company" | "individual";
-  setSelected: Dispatch<SetStateAction<"company" | "individual">>;
+  selected: ContactType;
+  setSelected: Dispatch<SetStateAction<ContactType>>;
 }) => {
   return (
     <div className="border-[1px] rounded border-white overflow-hidden font-medium w-fit">
       <button
+        type="button"
         className={`${
           selected === "individual" ? "text-[#265B23]" : "text-white"
         } text-sm px-3 py-1.5 transition-colors duration-[750ms] relative`}
@@ -162,6 +290,7 @@ const FormSelect = ({
         )}
       </button>
       <button
+        type="button"
         className={`${
           selected === "company" ? "text-[#09384F]" : "text-white"
         } text-sm px-3 py-1.5 transition-colors duration-[750ms] relative`}
@@ -180,7 +309,7 @@ const FormSelect = ({
   );
 };
 
-const Images = ({ selected }: { selected: "company" | "individual" }) => {
+const Images = ({ selected }: { selected: ContactType }) => {
   return (
     <div className="bg-white relative overflow-hidden w-full min-h-[100px]">
       <motion.div
