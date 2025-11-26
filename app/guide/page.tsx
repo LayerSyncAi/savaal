@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { RestaurantCard } from "@/components/guide/restaurant-card";
 import { restaurants } from "@/content/restaurant-info";
 
@@ -15,11 +15,6 @@ export default function GuidePage() {
         );
         const [countryFilter, setCountryFilter] = useState<string>("All");
         const [cityFilter, setCityFilter] = useState<string>("All");
-
-        useEffect(() => {
-                setCountryFilter("All");
-                setCityFilter("All");
-        }, [categoryFilter]);
 
         const countryOptions = useMemo(() => {
                 const categoryRestaurants = restaurants.filter(
@@ -80,7 +75,11 @@ export default function GuidePage() {
                                                 <button
                                                         key={category}
                                                         type="button"
-                                                        onClick={() => setCategoryFilter(category)}
+                                                        onClick={() => {
+                                                                setCategoryFilter(category);
+                                                                setCountryFilter("All");
+                                                                setCityFilter("All");
+                                                        }}
                                                         className={`rounded-full border px-5 py-2 text-sm font-semibold transition ${
                                                                 categoryFilter === category
                                                                         ? "border-amber-600 bg-amber-50 text-amber-800"

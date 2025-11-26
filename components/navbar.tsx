@@ -199,9 +199,9 @@ function AboutUsContent({ onNavigate }: FlyoutContentProps) {
           onNavigate={onNavigate}
         />
         <LinkCard
-          title="Blog"
-          description="Stories and insights from across the continent."
-          href="/about-us/blog"
+          title="Academy + Training"
+          description="See how we prepare judges, taste hunters, and chefs to uplift communities."
+          href="/about-us/academy-training"
           onNavigate={onNavigate}
         />
       </div>

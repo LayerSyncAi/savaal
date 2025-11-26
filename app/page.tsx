@@ -6,6 +6,7 @@ import { CtaSection } from "@/components/landing-page/cta-section";
 import { EcosystemSection } from "@/components/landing-page/ecosystem-section";
 import { FaqsSection } from "@/components/landing-page/faqs-section";
 import { ForBusinessSections } from "@/components/landing-page/for-business-sections";
+import { FounderQuote } from "@/components/landing-page/founder-quote";
 import { HeroSection } from "@/components/landing-page/hero-section";
 import type { FAQ, Pillar } from "@/types/content";
 
@@ -24,6 +25,7 @@ export default function Home() {
                         <main className="flex-1">
                                 <HeroSection />
                                 <AboutUsSection />
+                                <FounderQuote />
                                 <EcosystemSection pillars={pillars} />
                                 <ForBusinessSections />
                                 <CtaSection />

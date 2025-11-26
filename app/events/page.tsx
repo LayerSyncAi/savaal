@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, type MutableRefObject } from "react";
+import { useMemo, useRef, useState, type MutableRefObject } from "react";
+import type React from "react";
 import { FiArrowRight } from "react-icons/fi";
 import Link from "next/link";
 
@@ -9,7 +10,36 @@ import { events, type EventDetails } from "@/content/events";
 const CURSOR_WIDTH = 32;
 const HOVER_PADDING = 24;
 
+const eventTabs = [
+  {
+    id: "gathering" as const,
+    label: "Gatherings",
+    copy: "Intimate dinners and salons that celebrate Zimbabwe's culinary heritage.",
+  },
+  {
+    id: "training" as const,
+    label: "Training",
+    copy: "Academy-led workshops that uplift judges, taste hunters, and aspiring chefs.",
+  },
+];
+
+type EventCategory = (typeof eventTabs)[number]["id"];
+
 export default function EventsPage() {
+  const [activeCategory, setActiveCategory] = useState<EventCategory>(() => {
+    if (typeof window === "undefined") {
+      return "gathering";
+    }
+
+    const hash = window.location.hash.replace("#", "");
+    return hash === "training" ? "training" : "gathering";
+  });
+
+  const filteredEvents = useMemo(
+    () => events.filter((event) => event.category === activeCategory),
+    [activeCategory],
+  );
+
   return (
     <section className="relative overflow-hidden bg-neutral-50 px-6 py-24">
       <div className="mx-auto flex max-w-5xl flex-col gap-12">
@@ -18,23 +48,49 @@ export default function EventsPage() {
             Events
           </p>
           <h1 className="text-4xl font-bold text-neutral-900">
-            Gatherings that honor food, memory, and <span className="text-(--tertiary)">community</span>
+            Gatherings and training that honor food, memory, and
+            <span className="text-(--tertiary)"> community</span>
           </h1>
           <p className="max-w-3xl text-lg text-neutral-700">
             Discover upcoming Savaal experiences rooted in storytelling, heritage,
-            and the joy of dining together.
+            and hands-on learning. Our academy programming is built to improve
+            livelihoods—training judges, taste hunters, and junior chefs to serve
+            their communities with care.
           </p>
         </header>
 
-        <OutlineCards events={events} />
+        <div className="space-y-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-wrap gap-3" id="gatherings">
+              {eventTabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveCategory(tab.id)}
+                  className={`rounded-full border px-5 py-2 text-sm font-semibold transition ${
+                    activeCategory === tab.id
+                      ? "border-amber-600 bg-amber-50 text-amber-800"
+                      : "border-amber-200 text-neutral-700 hover:border-amber-400 hover:text-neutral-900"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+            <div className="text-sm text-neutral-600" id="training">
+              {eventTabs.find((tab) => tab.id === activeCategory)?.copy}
+            </div>
+          </div>
+          <OutlineCards events={filteredEvents} />
+        </div>
 
         <div>
          <Link
-					href="/"
-					className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900 hover:bg-(--primary) hover:text-white"
-				>
-					Back to home
-				</Link>
+                                        href="/"
+                                        className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900 hover:bg-(--primary) hover:text-white"
+                                >
+                                        Back to home
+                                </Link>
         </div>
       </div>
     </section>
@@ -103,6 +159,9 @@ const Card = ({ event }: { event: EventDetails }) => {
         <FiArrowRight />
       </div>
       <div className="pointer-events-none grid grid-cols-1 gap-1 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-6 text-sm font-medium text-white sm:grid-cols-3 sm:items-end">
+        <span className="inline-flex w-fit rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]">
+          {event.category === "training" ? "Training" : "Gathering"}
+        </span>
         <p className="text-xs font-semibold uppercase tracking-[0.2em] p-on-dark sm:col-span-3">
           {event.presentedBy}
         </p>
