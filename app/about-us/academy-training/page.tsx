@@ -120,9 +120,9 @@ export default function AcademyTrainingPage() {
                         <div className="rounded-2xl bg-neutral-900 px-6 py-8 text-white">
                                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                                         <div className="space-y-2">
-                                                <p className="text-sm uppercase tracking-[0.2em] text-amber-300">Ready to collaborate</p>
-                                                <h2 className="text-2xl font-semibold">Help us expand access to safe, culturally rooted training</h2>
-                                                <p className="text-sm text-amber-100">
+                                                <p className="text-sm uppercase tracking-[0.2em] p-white">Ready to collaborate</p>
+                                                <h2 className="text-2xl font-semibold p-on-dark">Help us expand access to safe, culturally rooted training</h2>
+                                                <p className="text-sm p-on-dark">
                                                         Partner funding allows us to run more cohorts, subsidize community kitchens,
                                                         and bring world-class mentors to underserved regions.
                                                 </p>
