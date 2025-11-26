@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { Toast, type ToastMessage } from "@/components/toast";
 
 type ContactType = "company" | "individual";
 type SubmissionStatus = "idle" | "success" | "error";
@@ -15,21 +16,32 @@ type SubmissionStatus = "idle" | "success" | "error";
 export const ContactForm = () => {
   const [selected, setSelected] = useState<ContactType>("individual");
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [requestType, setRequestType] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<SubmissionStatus>("idle");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState<ToastMessage | null>(null);
 
   const isCompany = selected === "company";
   const isFormValid = useMemo(() => {
     const hasName = name.trim().length > 0;
+    const hasEmail = email.trim().length > 0;
     const hasMessage = message.trim().length > 0;
     const hasRequestType = requestType !== "";
     const hasCompanyInfo = !isCompany || companyName.trim().length > 0;
 
-    return hasName && hasMessage && hasRequestType && hasCompanyInfo;
-  }, [companyName, isCompany, message, name, requestType]);
+    return (
+      hasName &&
+      hasEmail &&
+      hasMessage &&
+      hasRequestType &&
+      hasCompanyInfo
+    );
+  }, [companyName, email, isCompany, message, name, requestType]);
+
+  const dismissToast = () => setToast(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,6 +58,7 @@ export const ContactForm = () => {
         },
         body: JSON.stringify({
           name,
+          email,
           companyName: isCompany ? companyName : undefined,
           requestType,
           message,
@@ -59,12 +72,26 @@ export const ContactForm = () => {
 
       setStatus("success");
       setName("");
+      setEmail("");
       setCompanyName("");
       setRequestType("");
       setMessage("");
+      setToast({
+        id: Date.now(),
+        type: "success",
+        action: "Email sent",
+        message: "Thanks for reaching out! We have received your message.",
+      });
     } catch (error) {
       console.error(error);
       setStatus("error");
+      setToast({
+        id: Date.now(),
+        type: "failure",
+        action: "Email failed",
+        message:
+          "We couldn't send your message right now. Please try again shortly.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -78,6 +105,8 @@ export const ContactForm = () => {
           setSelected={setSelected}
           name={name}
           setName={setName}
+          email={email}
+          setEmail={setEmail}
           companyName={companyName}
           setCompanyName={setCompanyName}
           requestType={requestType}
@@ -91,6 +120,7 @@ export const ContactForm = () => {
         />
         <Images selected={selected} />
       </div>
+      <Toast toast={toast} onDismiss={dismissToast} />
     </section>
   );
 };
@@ -100,6 +130,8 @@ const Form = ({
   setSelected,
   name,
   setName,
+  email,
+  setEmail,
   companyName,
   setCompanyName,
   requestType,
@@ -115,6 +147,8 @@ const Form = ({
   setSelected: Dispatch<SetStateAction<ContactType>>;
   name: string;
   setName: Dispatch<SetStateAction<string>>;
+  email: string;
+  setEmail: Dispatch<SetStateAction<string>>;
   companyName: string;
   setCompanyName: Dispatch<SetStateAction<string>>;
   requestType: string;
@@ -143,6 +177,19 @@ const Form = ({
           placeholder="Your name..."
           value={name}
           onChange={(event) => setName(event.target.value)}
+          className={`${
+            selected === "company" ? "bg-[#09384F]" : "bg-[#265B23]"
+          } transition-colors duration-[750ms] placeholder-white/70 p-2 rounded-md w-full focus:outline-0`}
+        />
+      </div>
+
+      <div className="mb-6">
+        <p className="text-2xl mb-2 p-white">You can reach me at...</p>
+        <input
+          type="email"
+          placeholder="Your email address..."
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
           className={`${
             selected === "company" ? "bg-[#09384F]" : "bg-[#265B23]"
           } transition-colors duration-[750ms] placeholder-white/70 p-2 rounded-md w-full focus:outline-0`}

@@ -4,10 +4,10 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
-  const { name, companyName, requestType, message, contactType } =
+  const { name, email, companyName, requestType, message, contactType } =
     await request.json();
 
-  if (!name || !requestType || !message || !contactType) {
+  if (!name || !email || !requestType || !message || !contactType) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
@@ -15,6 +15,7 @@ export async function POST(request: Request) {
     const emailSubject = `New contact form submission (${requestType})`;
     const emailBody = [
       `Name: ${name}`,
+      `Email: ${email}`,
       `Type: ${contactType}`,
       `Company: ${companyName ?? "N/A"}`,
       "",
