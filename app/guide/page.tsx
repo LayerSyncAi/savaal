@@ -56,7 +56,7 @@ export default function GuidePage() {
 					Guide
 				</p>
 				<h1 className="text-4xl font-bold text-neutral-900">
-					Discover the full Savaal Guide experience.
+					<span className="text-(--tertiary)">Discover</span> the full Savaal Guide experience.
 				</h1>
 				<p className="text-lg text-neutral-700">
 					Explore the restaurants, hotels, and bars celebrated by our judges

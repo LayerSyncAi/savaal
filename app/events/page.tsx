@@ -18,7 +18,7 @@ export default function EventsPage() {
             Events
           </p>
           <h1 className="text-4xl font-bold text-neutral-900">
-            Gatherings that honor food, memory, and community
+            Gatherings that honor food, memory, and <span className="text-(--tertiary)">community</span>
           </h1>
           <p className="max-w-3xl text-lg text-neutral-700">
             Discover upcoming Savaal experiences rooted in storytelling, heritage,

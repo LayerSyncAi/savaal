@@ -24,7 +24,7 @@ const sections = [
 						Consultancy & Training
 					</p>
 					<h2 className="mt-2 text-3xl font-semibold text-(--heading-color)]">
-						Elevate teams with Savaal Consultants
+						<span className="text-(--tertiary)">Elevate teams</span> with Savaal Consultants
 					</h2>
 					<p className="mt-4 text-(--paragraph-color)]">
 						From mystery audits to immersive workshops, our consultants
@@ -72,7 +72,7 @@ const sections = [
 						Events & Curations
 					</p>
 					<h2 className="mt-2 text-3xl font-semibold text-(--heading-color)]">
-						The Curators reimagine cultural hospitality
+						The Curators <span className="text-(--tertiary)">reimagine cultural hospitality</span>
 					</h2>
 					<p className="mt-4 text-(--paragraph-color)]">
 						Pop-up dinners, mixology showcases, and cultural festivals designed
@@ -143,7 +143,7 @@ const sections = [
 					For Businesses
 				</p>
 				<h2 className="mt-4 text-3xl font-semibold">
-					Elevate Your Business. Request a Savaal Certification Audit or
+					<span className="text-(--tertiary)">Elevate Your Business.</span> Request a Savaal Certification Audit or
 					Partnership.
 				</h2>
 				<p className="mt-4 text-(--peach-light)]">

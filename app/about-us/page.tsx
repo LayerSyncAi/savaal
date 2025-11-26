@@ -43,7 +43,7 @@ export default function AboutUsPage() {
 							About Savaal
 						</p>
 						<h1 className="text-4xl font-bold leading-tight text-neutral-900 md:text-5xl">
-							Guiding travelers to the heart of African hospitality.
+							<span className="text-(--tertiary)">Guiding travelers</span> to the heart of African hospitality.
 						</h1>
 						<p className="text-lg text-neutral-700">
 							Savaal is a cultural hospitality guide that amplifies the chefs,

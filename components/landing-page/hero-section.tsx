@@ -37,7 +37,7 @@ export function HeroSection() {
 						Savaal Guide · 2024 Edition
 					</p>
 					<p className="p-on-dark text-3xl md:text-5xl font-semibold ">
-						Plan unforgettable culinary escapes through Zimbabwe&apos;s premier
+						Plan <span className="text-(--tertiary-light)">unforgettable culinary escapes</span> through Zimbabwe&apos;s premier
 						hotels, rooftop bars, and chef-driven kitchens.
 					</p>
 					<p className="text-lg p-on-dark">
@@ -105,7 +105,7 @@ const Copy = ({
 				Zimbabwe · Africa · Hospitality
 			</p>
 			<h1 className="text-stone-50 text-4xl md:text-6xl font-bold max-w-2xl mt-6">
-				Elevating cultural hospitality experiences across Africa.
+				Elevating  <span className="text-(--tertiary)"> cultural hospitality </span> experiences across Africa.
 			</h1>
 			<p className="text-stone-200 text-base md:text-lg max-w-2xl my-6">
 				Savaal curates the most exceptional stays, dining rooms, and experiences
@@ -116,7 +116,7 @@ const Copy = ({
 				<RoundedSlideButtonLight
 					href="/guide"
 					title="Explore Destinations"
-					hoverFillColor="var(--primary)"
+					hoverFillColor="var(--tertiary)"
 					icon={<FiArrowRight />}
 					defaultColor="var(--background)"
 				/>

@@ -5,7 +5,7 @@ export function HeroSection() {
         Judging · Prospective Judges
       </p>
       <h1 className="text-4xl font-bold">
-        Join the judging collective
+        <span className="text-(--tertiary)">Join</span> the judging collective
       </h1>
       <p className="text-lg">
         Anyone can volunteer to become a judge. To keep evaluations credible and
