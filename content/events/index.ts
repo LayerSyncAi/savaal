@@ -116,7 +116,7 @@ export const events: EventDetails[] = [
     ],
     date: "10–11 March 2026",
     time: "8:30 AM – 4:30 PM",
-    price: "$75 (includes materials, meals, and accreditation exam)",
+    price: "$75 (materials, meals, and accreditation exam)",
     seating: "Capped at 18 participants",
     location: {
       venue: "Mbare Innovation Hub",

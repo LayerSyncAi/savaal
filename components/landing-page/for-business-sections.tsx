@@ -24,7 +24,8 @@ const sections = [
 						Consultancy & Training
 					</p>
 					<h2 className="mt-2 text-3xl font-semibold text-(--heading-color)]">
-						<span className="text-(--tertiary)">Elevate teams</span> with Savaal Consultants
+						<span className="text-(--tertiary)">Elevate teams</span> with Savaal
+						Consultants
 					</h2>
 					<p className="mt-4 text-(--paragraph-color)]">
 						From mystery audits to immersive workshops, our consultants
@@ -47,9 +48,9 @@ const sections = [
 					<RoundedSlideButtonLight
 						href="/services/consultancy"
 						title="View Consultancy Services"
-						hoverFillColor="var(--primary)"
+						hoverFillColor="var(--tertiary)"
 						icon={<FiArrowRight />}
-						defaultColor="var(--foreground)"
+						defaultColor="var(--sand)"
 						hoverScale={1.05}
 					/>
 				</div>
@@ -72,7 +73,10 @@ const sections = [
 						Events & Curations
 					</p>
 					<h2 className="mt-2 text-3xl font-semibold text-(--heading-color)]">
-						The Curators <span className="text-(--tertiary)">reimagine cultural hospitality</span>
+						The Curators{" "}
+						<span className="text-(--tertiary)">
+							reimagine cultural hospitality
+						</span>
 					</h2>
 					<p className="mt-4 text-(--paragraph-color)]">
 						Pop-up dinners, mixology showcases, and cultural festivals designed
@@ -88,9 +92,9 @@ const sections = [
 					<RoundedSlideButtonLight
 						href="/events"
 						title="Discover Upcoming Events"
-						hoverFillColor="var(--primary)"
+						hoverFillColor="var(--tertiary)"
 						icon={<FiArrowRight />}
-						defaultColor="var(--foreground)"
+						defaultColor="var(--sand)"
 						hoverScale={1.05}
 					/>
 				</div>
@@ -117,14 +121,16 @@ const sections = [
 					meets the promise of elevated service, cuisine, and cultural
 					immersion.
 				</p>
-				<RoundedSlideButtonLight
-					href="/judging/prospective-judges"
-					title="Apply to Judge"
-					hoverFillColor="var(--primary)"
-					icon={<FiArrowRight />}
-					defaultColor="var(--foreground)"
-					className="mx-auto px-3 text-sm"
-				/>
+				<div className="flex justify-center">
+					<RoundedSlideButtonLight
+						href="/judging/prospective-judges"
+						title="Apply to Judge"
+						hoverFillColor="var(--sage-green)"
+						icon={<FiArrowRight />}
+						defaultColor="var(--sand)"
+						className="mx-auto px-3 text-sm"
+					/>
+				</div>
 			</div>
 		),
 	},
@@ -143,8 +149,8 @@ const sections = [
 					For Businesses
 				</p>
 				<h2 className="mt-4 text-3xl font-semibold">
-					<span className="text-(--tertiary)">Elevate Your Business.</span> Request a Savaal Certification Audit or
-					Partnership.
+					<span className="text-(--tertiary)">Elevate Your Business.</span>{" "}
+					Request a Savaal Certification Audit or Partnership.
 				</h2>
 				<p className="mt-4 text-(--peach-light)]">
 					Engage with our consultancy team for training, audits, or bespoke
@@ -155,17 +161,17 @@ const sections = [
 					<RoundedSlideButtonLight
 						href="/contact"
 						title="Request Consultancy"
-						hoverFillColor="var(--primary)"
+						hoverFillColor="var(--sage-green)"
 						icon={<FiArrowRight />}
-						defaultColor="var(--foreground)"
+						defaultColor="var(--sand)"
 						hoverScale={1.05}
 					/>
 					<RoundedSlideButtonLight
 						href="/partnerships"
 						title="Explore Partnerships"
-						hoverFillColor="var(--primary)"
+						hoverFillColor="var(--sage-green)"
 						icon={<FiArrowRight />}
-						defaultColor="var(--foreground)"
+						defaultColor="var(--sand)"
 						hoverScale={1.05}
 					/>
 				</div>

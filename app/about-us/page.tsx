@@ -59,7 +59,7 @@ export default function AboutUsPage() {
 							title="Explore our services"
 							hoverFillColor="var(--primary)"
 							icon={<FiArrowRight />}
-							defaultColor="var(--foreground)"
+							defaultColor="var(--sand)"
 							hoverScale={1.05}
 						/>
 						<Link

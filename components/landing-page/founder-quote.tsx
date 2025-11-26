@@ -45,9 +45,9 @@ export function FounderQuote() {
 							<RoundedSlideButtonLight
 								href="/about-us//about-us/academy-training"
 								title="Explore the Academy & Training"
-								hoverFillColor="var(--primary)"
+								hoverFillColor="var(--sage-green)"
 								icon={<FiArrowRight />}
-								defaultColor="var(--foreground)"
+								defaultColor="var(--sand)"
 								hoverScale={1.05}
 							/>
 						</div>

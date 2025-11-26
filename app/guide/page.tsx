@@ -10,40 +10,37 @@ const categoryOptions = ["Restaurant", "Hotel", "Bar"] as const;
 type CategoryOption = (typeof categoryOptions)[number];
 
 export default function GuidePage() {
-        const [categoryFilter, setCategoryFilter] = useState<CategoryOption>(
-                "Restaurant"
-        );
-        const [countryFilter, setCountryFilter] = useState<string>("All");
-        const [cityFilter, setCityFilter] = useState<string>("All");
+	const [categoryFilter, setCategoryFilter] =
+		useState<CategoryOption>("Restaurant");
+	const [countryFilter, setCountryFilter] = useState<string>("All");
+	const [cityFilter, setCityFilter] = useState<string>("All");
 
-        const countryOptions = useMemo(() => {
-                const categoryRestaurants = restaurants.filter(
-                        (item) => item.category === categoryFilter
-                );
+	const countryOptions = useMemo(() => {
+		const categoryRestaurants = restaurants.filter(
+			(item) => item.category === categoryFilter
+		);
 
-                return [
-                        "All",
-                        ...Array.from(
-                                new Set(categoryRestaurants.map((item) => item.country))
-                        ),
-                ];
-        }, [categoryFilter]);
+		return [
+			"All",
+			...Array.from(new Set(categoryRestaurants.map((item) => item.country))),
+		];
+	}, [categoryFilter]);
 
-        const cityOptions = useMemo(() => {
-                const cities = restaurants
-                        .filter((item) => item.category === categoryFilter)
-                        .filter(
-                                (item) => countryFilter === "All" || item.country === countryFilter
-                        )
-                        .map((item) => item.city);
+	const cityOptions = useMemo(() => {
+		const cities = restaurants
+			.filter((item) => item.category === categoryFilter)
+			.filter(
+				(item) => countryFilter === "All" || item.country === countryFilter
+			)
+			.map((item) => item.city);
 
-                return ["All", ...Array.from(new Set(cities))];
-        }, [categoryFilter, countryFilter]);
+		return ["All", ...Array.from(new Set(cities))];
+	}, [categoryFilter, countryFilter]);
 
 	const filteredRestaurants = useMemo(
 		() =>
-                        restaurants.filter((restaurant) => {
-                                const matchesCategory = restaurant.category === categoryFilter;
+			restaurants.filter((restaurant) => {
+				const matchesCategory = restaurant.category === categoryFilter;
 				const matchesCountry =
 					countryFilter === "All" || restaurant.country === countryFilter;
 				const matchesCity =
@@ -56,48 +53,49 @@ export default function GuidePage() {
 
 	return (
 		<section className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20">
-                        <div className="space-y-3">
-                                <p className="text-sm font-semibold uppercase tracking-wide text-amber-700">
-                                        Guide
-                                </p>
-                                <h1 className="text-4xl font-bold text-neutral-900">
-                                        <span className="text-(--tertiary)">Discover</span> the full Savaal Guide experience.
-                                </h1>
-                                <p className="text-lg text-neutral-700">
-                                        Explore the restaurants, hotels, and bars celebrated by our judges
-                                        with mobile-first cards that showcase their signature offering,
-                                        location, and scoring breakdown. Hover or tap each feature card to see
-                                        how every venue performed.
-                                </p>
+			<div className="space-y-3">
+				<p className="text-sm font-semibold uppercase tracking-wide text-amber-700">
+					Guide
+				</p>
+				<h1 className="text-4xl font-bold text-neutral-900">
+					<span className="text-(--tertiary)">Discover</span> the full Savaal
+					Guide experience.
+				</h1>
+				<p className="text-lg text-neutral-700">
+					Explore the restaurants, hotels, and bars celebrated by our judges
+					with mobile-first cards that showcase their signature offering,
+					location, and scoring breakdown. Hover or tap each feature card to see
+					how every venue performed.
+				</p>
 
-                                <div className="flex flex-wrap gap-3 pt-2">
-                                        {categoryOptions.map((category) => (
-                                                <button
-                                                        key={category}
-                                                        type="button"
-                                                        onClick={() => {
-                                                                setCategoryFilter(category);
-                                                                setCountryFilter("All");
-                                                                setCityFilter("All");
-                                                        }}
-                                                        className={`rounded-full border px-5 py-2 text-sm font-semibold transition ${
-                                                                categoryFilter === category
-                                                                        ? "border-amber-600 bg-amber-50 text-amber-800"
-                                                                        : "border-amber-200 text-neutral-700 hover:border-amber-400 hover:text-neutral-900"
-                                                        }`}
-                                                >
-                                                        {category}
-                                                </button>
-                                        ))}
-                                </div>
-                        </div>
+				<div className="flex flex-wrap gap-3 pt-2">
+					{categoryOptions.map((category) => (
+						<button
+							key={category}
+							type="button"
+							onClick={() => {
+								setCategoryFilter(category);
+								setCountryFilter("All");
+								setCityFilter("All");
+							}}
+							className={`rounded-full border px-5 py-2 text-sm font-semibold transition ${
+								categoryFilter === category
+									? "border-amber-600 bg-amber-50 text-amber-800"
+									: "border-amber-200 text-neutral-700 hover:border-amber-400 hover:text-neutral-900"
+							}`}
+						>
+							{category}
+						</button>
+					))}
+				</div>
+			</div>
 
-                        <div className="rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 via-white to-amber-100/60 p-6 shadow-lg shadow-amber-100/60">
-                                <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                                        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 lg:gap-5">
-                                                <div className="space-y-2">
-                                                        <div className="flex items-center justify-between text-sm font-semibold text-neutral-800">
-                                                                <span>Country</span>
+			<div className="rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 via-white to-amber-100/60 p-6 shadow-lg shadow-amber-100/60">
+				<div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+					<div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 lg:gap-5">
+						<div className="space-y-2">
+							<div className="flex items-center justify-between text-sm font-semibold text-neutral-800">
+								<span>Country</span>
 								{countryFilter !== "All" && (
 									<button
 										type="button"
@@ -164,40 +162,40 @@ export default function GuidePage() {
 						</div>
 					</div>
 
-                                                <div className="flex flex-col gap-3 text-sm text-neutral-700 lg:max-w-xs">
-                                                        <div className="flex items-center gap-2 rounded-full bg-white/80 px-3 py-2 shadow-sm shadow-amber-100">
-                                                                <span
+					<div className="flex flex-col gap-3 text-sm text-neutral-700 lg:max-w-xs">
+						<div className="flex items-center gap-2 rounded-full bg-white/80 px-3 py-2 shadow-sm shadow-amber-100">
+							<span
 								className="inline-flex h-2 w-2 rounded-full bg-amber-500"
 								aria-hidden="true"
 							/>
 							<span className="font-semibold text-neutral-900">
 								{filteredRestaurants.length}
 							</span>
-                                                                <span className="text-neutral-600">venues found</span>
-                                                        </div>
+							<span className="text-neutral-600">venues found</span>
+						</div>
 
-                                                        <div className="flex flex-wrap gap-2">
-                                                                <span className="inline-flex items-center gap-2 rounded-full bg-amber-600/10 px-3 py-1 text-xs font-semibold text-amber-800">
-                                                                        Category: {categoryFilter}
-                                                                </span>
-                                                                {countryFilter !== "All" && (
-                                                                        <span className="inline-flex items-center gap-2 rounded-full bg-amber-600/10 px-3 py-1 text-xs font-semibold text-amber-800">
-                                                                                Country: {countryFilter}
-                                                                        </span>
-                                                                )}
-                                                                {cityFilter !== "All" && (
-                                                                        <span className="inline-flex items-center gap-2 rounded-full bg-amber-600/10 px-3 py-1 text-xs font-semibold text-amber-800">
-                                                                                City: {cityFilter}
-                                                                        </span>
-                                                                )}
-                                                                {countryFilter === "All" && cityFilter === "All" && (
-                                                                        <span className="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-neutral-600">
-                                                                                Showing all {categoryFilter.toLowerCase()} results
-                                                                        </span>
-                                                                )}
-                                                        </div>
-                                                </div>
-                                        </div>
+						<div className="flex flex-wrap gap-2">
+							<span className="inline-flex items-center gap-2 rounded-full bg-amber-600/10 px-3 py-1 text-xs font-semibold text-amber-800">
+								Category: {categoryFilter}
+							</span>
+							{countryFilter !== "All" && (
+								<span className="inline-flex items-center gap-2 rounded-full bg-amber-600/10 px-3 py-1 text-xs font-semibold text-amber-800">
+									Country: {countryFilter}
+								</span>
+							)}
+							{cityFilter !== "All" && (
+								<span className="inline-flex items-center gap-2 rounded-full bg-amber-600/10 px-3 py-1 text-xs font-semibold text-amber-800">
+									City: {cityFilter}
+								</span>
+							)}
+							{countryFilter === "All" && cityFilter === "All" && (
+								<span className="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-neutral-600">
+									Showing all {categoryFilter.toLowerCase()} results
+								</span>
+							)}
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -205,13 +203,14 @@ export default function GuidePage() {
 					<RestaurantCard key={restaurant.id} restaurant={restaurant} />
 				))}
 			</div>
-
-			<Link
-				href="/"
-				className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900 hover:bg-(--primary) hover:text-white"
-			>
-				Back to home
-			</Link>
+			<div className="flex justify-start">
+				<Link
+					href="/"
+					className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900 hover:bg-(--primary) hover:text-white"
+				>
+					Back to home
+				</Link>
+			</div>
 		</section>
 	);
 }

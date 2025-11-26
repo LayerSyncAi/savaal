@@ -19,7 +19,7 @@ export function ConsultingCta() {
 				title="Talk to us"
 				hoverFillColor="var(--sage-green)"
 				icon={<BsTelephone />}
-				defaultColor="var(--foreground)"
+				defaultColor="var(--peach-light)"
 				hoverScale={1.05}
 			/>
 		</div>
