@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} antialiased bg-[#040404] text-[#1f1f1f]`}
+        className={`${poppins.variable} antialiased bg-[--foreground] text-[#1f1f1f]`}
       >
         <Navbar />
         <PageFade>{children}</PageFade>
