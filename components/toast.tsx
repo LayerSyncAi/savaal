@@ -52,7 +52,7 @@ export const Toast = ({ toast, onDismiss }: ToastProps) => {
           animate={{ y: 0, scale: 1, opacity: 1 }}
           exit={{ y: -25, scale: 0.9, opacity: 0 }}
           transition={{ type: "spring" }}
-          className={`fixed bottom-4 right-4 z-50 flex w-80 items-start gap-3 rounded-lg p-4 text-sm font-medium text-white shadow-lg ${toneConfig[toast.type].bg}`}
+          className={`fixed bottom-4 right-4 z-50 flex w-80 items-start gap-3 rounded-lg p-4 text-sm font-medium p-white shadow-lg ${toneConfig[toast.type].bg}`}
         >
           <div className="mt-0.5 rounded-full bg-white/15 p-1.5">
             {(() => {
@@ -62,7 +62,7 @@ export const Toast = ({ toast, onDismiss }: ToastProps) => {
           </div>
           <div className="flex flex-col gap-1">
             {toast.action && (
-              <p className="text-xs uppercase tracking-wide text-white/80">
+              <p className="text-xs uppercase tracking-wide p-white/80">
                 {toast.action}
               </p>
             )}
