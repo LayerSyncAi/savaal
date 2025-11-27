@@ -1,3 +1,5 @@
+// import { EmailTemplate } from "@/ contact/components/email-template";
+import {EmailTemplate} from "@/app/contact/components/email-template"
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
@@ -26,7 +28,14 @@ export async function POST(request: Request) {
       from: "onboarding@resend.dev",
       to: "avdingiswayo54@gmail.com",
       subject: emailSubject,
-      text: emailBody,
+      react: EmailTemplate({
+        name,
+        email,
+        contactType,
+        requestType,
+        companyName,
+        message,
+      }),
     });
 
     return NextResponse.json({ success: true });

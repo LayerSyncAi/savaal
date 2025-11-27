@@ -48,11 +48,11 @@ export const Toast = ({ toast, onDismiss }: ToastProps) => {
         <motion.div
           layout
           key={toast.id}
-          initial={{ y: 15, scale: 0.9, opacity: 0 }}
+          initial={{ y: -15, scale: 0.9, opacity: 0 }}
           animate={{ y: 0, scale: 1, opacity: 1 }}
           exit={{ y: -25, scale: 0.9, opacity: 0 }}
           transition={{ type: "spring" }}
-          className={`fixed bottom-4 right-4 z-50 flex w-80 items-start gap-3 rounded-lg p-4 text-sm font-medium p-white shadow-lg ${toneConfig[toast.type].bg}`}
+          className={`fixed top-4 right-4 z-50 flex w-80 items-start gap-3 rounded-lg p-4 text-sm font-medium p-white shadow-lg ${toneConfig[toast.type].bg}`}
         >
           <div className="mt-0.5 rounded-full bg-white/15 p-1.5">
             {(() => {
