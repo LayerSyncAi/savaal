@@ -3,7 +3,6 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { PageFade } from "@/components/page-fade";
-import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -29,7 +28,6 @@ export default function RootLayout({
       >
         <Navbar />
         <PageFade>{children}</PageFade>
-        <Toaster position="top-right" richColors />
       </body>
     </html>
   );

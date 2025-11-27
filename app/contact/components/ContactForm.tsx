@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { toast } from "sonner";
+import { Toast, type ToastMessage } from "@/components/toast";
 
 type ContactType = "company" | "individual";
 type SubmissionStatus = "idle" | "success" | "error";
@@ -22,6 +22,7 @@ export const ContactForm = () => {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<SubmissionStatus>("idle");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState<ToastMessage | null>(null);
 
   const isCompany = selected === "company";
   const isFormValid = useMemo(() => {
@@ -39,6 +40,8 @@ export const ContactForm = () => {
       hasCompanyInfo
     );
   }, [companyName, email, isCompany, message, name, requestType]);
+
+  const dismissToast = () => setToast(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -73,14 +76,20 @@ export const ContactForm = () => {
       setCompanyName("");
       setRequestType("");
       setMessage("");
-      toast.success("Email sent", {
-        description: "Thanks for reaching out! We have received your message.",
+      setToast({
+        id: Date.now(),
+        type: "success",
+        action: "Email sent",
+        message: "Thanks for reaching out! We have received your message.",
       });
     } catch (error) {
       console.error(error);
       setStatus("error");
-      toast.error("Email failed", {
-        description:
+      setToast({
+        id: Date.now(),
+        type: "failure",
+        action: "Email failed",
+        message:
           "We couldn't send your message right now. Please try again shortly.",
       });
     } finally {
@@ -111,6 +120,7 @@ export const ContactForm = () => {
         />
         <Images selected={selected} />
       </div>
+      <Toast toast={toast} onDismiss={dismissToast} />
     </section>
   );
 };
