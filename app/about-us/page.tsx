@@ -57,14 +57,14 @@ export default function AboutUsPage() {
 						<RoundedSlideButtonLight
 							href="/about-us/services"
 							title="Explore our services"
-							hoverFillColor="var(--primary)"
+							hoverFillColor="var(--primary-dark)"
 							icon={<FiArrowRight />}
 							defaultColor="var(--sand)"
 							hoverScale={1.05}
 						/>
 						<Link
 							href="/"
-							className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
+							className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900 hover:bg-neutral-900 hover:text-white"
 						>
 							Back to home
 						</Link>
