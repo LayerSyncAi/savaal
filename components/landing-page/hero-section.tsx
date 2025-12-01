@@ -37,7 +37,7 @@ export function HeroSection() {
 						Savaal Guide · 2024 Edition
 					</p>
 					<p className="p-on-dark text-3xl md:text-5xl font-semibold ">
-						Plan <span className="text-(--tertiary-light)">unforgettable culinary escapes</span> through Zimbabwe&apos;s premier
+						Plan <span className="text-(--tertiary)">unforgettable culinary escapes</span> through Zimbabwe&apos;s premier
 						hotels, rooftop bars, and chef-driven kitchens.
 					</p>
 					<p className="text-lg p-on-dark">
@@ -50,7 +50,7 @@ export function HeroSection() {
 						<RoundedSlideButtonDark
 							href="/guide"
 							title="Start planning"
-							hoverFillColor="var(--secondary)"
+							hoverFillColor="var(--tertiary)"
 							icon={<FiArrowRight />}
 							defaultColor="var(--foreground)"
 						/>

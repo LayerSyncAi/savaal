@@ -149,6 +149,10 @@ p {
   color: var(--secondary);
 }
 
+.p-brown {
+  color: var(--accent-strong);
+}
+
 .p-tertiary {
   color: var(--tertiary);
 }

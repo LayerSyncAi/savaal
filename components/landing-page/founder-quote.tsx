@@ -8,7 +8,7 @@ export function FounderQuote() {
 			<div className="overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white shadow-2xl ring-1 ring-black/10">
 				<div className="grid gap-1 md:grid-cols-[1.15fr,0.85fr]">
 					<div className="space-y-6 p-10">
-						<p className="text-sm font-semibold uppercase tracking-[0.35em] p-on-dark">
+						<p className="text-sm font-semibold uppercase tracking-[0.35em] p-brown">
 							From our founder
 						</p>
 						<blockquote className="space-y-4">
@@ -16,7 +16,7 @@ export function FounderQuote() {
 								“Use your competitors as mirrors but be a window into something
 								only you can show the world”
 							</p>
-							<p className="text-lg text-amber-100 p-on-dark">
+							<p className="text-lg p-brown">
 								<span className="font-semibold text-white">
 									— Al Murindagomo,
 								</span>{" "}
@@ -43,7 +43,7 @@ export function FounderQuote() {
 						</div>
 						<div className="flex items-center justify-center ">
 							<RoundedSlideButtonLight
-								href="/about-us//about-us/academy-training"
+								href="/about-us/academy-training"
 								title="Explore the Academy & Training"
 								hoverFillColor="var(--sage-green)"
 								icon={<FiArrowRight />}

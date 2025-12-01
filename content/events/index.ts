@@ -104,7 +104,7 @@ export const events: EventDetails[] = [
     host: "Lead Judge Rumbi",
     theme: "Accreditation prep for cultural tastemakers safeguarding the Guide.",
     image:
-      "https://images.unsplash.com/photo-1604908177370-0ac1c9bb6462?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1762994576926-b8268190a2c9?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: [
       "A two-day intensive covering the Savaal Scorecard, ethical fieldwork, and the cultural context that underpins our standards.",
       "Participants shadow senior judges, practice discreet venue visits, and learn how to translate community feedback into fair evaluations.",

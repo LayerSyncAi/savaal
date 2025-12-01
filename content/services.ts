@@ -20,7 +20,7 @@ export const aboutServices: Service[] = [
       "Independent culinary, hospitality, and cultural experts keep standards transparent with a shared evaluation scorecard.",
     focus: "Quality assurance",
     image:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
+      "https://plus.unsplash.com/premium_photo-1661551604111-4ea0e5cb8249?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     title: "Pop-up Events & Cultural Festivals",
@@ -44,7 +44,7 @@ export const aboutServices: Service[] = [
       "Verified venues earn a recognizable seal of approval that signals authenticity and trust across the ecosystem.",
     focus: "Trustmark",
     image:
-      "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1636391886989-da35ee18cbdb?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     title: "Subscription Model for Listings",
