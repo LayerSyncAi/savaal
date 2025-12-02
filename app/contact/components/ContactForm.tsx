@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Transition } from "framer-motion";
 import {
   type FormEvent,
   Dispatch,
@@ -385,4 +385,4 @@ const Images = ({ selected }: { selected: ContactType }) => {
 
 export default ContactForm;
 
-const BASE_TRANSITION = { ease: "anticipate", duration: 0.75 };
+const BASE_TRANSITION: Transition = { ease: "anticipate", duration: 0.75 };

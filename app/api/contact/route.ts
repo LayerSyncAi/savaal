@@ -1,9 +1,9 @@
 // import { EmailTemplate } from "@/ contact/components/email-template";
-import {EmailTemplate} from "@/app/contact/components/email-template"
+import { EmailTemplate } from "@/app/contact/components/email-template";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resendApiKey = process.env.RESEND_API_KEY;
 
 export async function POST(request: Request) {
   const { name, email, companyName, requestType, message, contactType } =
@@ -14,6 +14,15 @@ export async function POST(request: Request) {
   }
 
   try {
+    if (!resendApiKey) {
+      console.error("Missing RESEND_API_KEY for contact form submission");
+      return NextResponse.json(
+        { error: "Email service is not configured" },
+        { status: 500 },
+      );
+    }
+
+    const resend = new Resend(resendApiKey);
     const emailSubject = `New contact form submission (${requestType})`;
     const emailBody = [
       `Name: ${name}`,

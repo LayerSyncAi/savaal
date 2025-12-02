@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Businesses } from "./Businesses";
@@ -18,6 +18,14 @@ const TAB_DATA = [
 ];
 
 export const ShiftHightlightTabs = () => {
+  return (
+    <Suspense fallback={<div className="px-6 py-10">Loading tabs...</div>}>
+      <ShiftHighlightTabsContent />
+    </Suspense>
+  );
+};
+
+const ShiftHighlightTabsContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
