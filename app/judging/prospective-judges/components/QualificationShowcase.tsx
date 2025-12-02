@@ -21,7 +21,7 @@ const gradients = [
 
 export function QualificationShowcase() {
         return (
-                <section className="mx-auto max-w-7xl overflow-hidden px-4 py-12">
+                <section className="md:mx-auto max-w-7xl overflow-hidden px-4 py-12">
 			<div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end md:px-4">
 				<div className="space-y-2">
 					<h2 className="text-4xl font-bold md:text-5xl">
@@ -92,10 +92,10 @@ function BounceCard({
 				</span>
 			</div>
 
-                        <p className="mt-4 max-w-2xl leading-relaxed">{step.description}</p>
+                        <p className="mt-4 hidden max-w-2xl leading-relaxed lg:block">{step.description}</p>
 
                         <div
-                                className={`absolute inset-x-3 bottom-5 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-5 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:inset-x-4 sm:bottom-7 sm:p-6`}
+                                className={`absolute inset-x-3 bottom-5 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-5 transition-transform duration-[250ms] group-hover:translate-y-12 group-hover:rotate-[2deg] sm:inset-x-4 sm:bottom-7 sm:p-6`}
                         >
                                 <span className="block text-center text-lg font-semibold text-indigo-50">
                                         Step {step.id}: {step.title}
