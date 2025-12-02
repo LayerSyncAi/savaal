@@ -22,9 +22,9 @@ const gradients = [
 export function QualificationShowcase() {
         return (
                 <section className="mx-auto max-w-7xl overflow-hidden px-4 py-12">
-			<div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end md:px-4">
-				<div className="space-y-2">
-					<h2 className="text-4xl font-bold md:text-5xl">
+                        <div className="mb-10 flex flex-col items-center justify-between gap-4 text-center md:flex-row md:items-end md:px-4 md:text-left">
+                                <div className="space-y-2">
+                                        <h2 className="text-4xl font-bold md:text-5xl">
 						Follow the path to join
 					</h2>
 					<p className="max-w-2xl text-lg">
@@ -40,7 +40,7 @@ export function QualificationShowcase() {
                                         <div key={step.id} className="flex w-full flex-col items-center gap-6">
                                                 <BounceCard
                                                         step={step}
-                                                        className="w-full max-w-xl sm:max-w-3xl"
+                                                        className="mx-auto w-full max-w-xl pb-28 sm:max-w-3xl sm:pb-32"
                                                         gradient={gradients[index]}
                                                 />
                                                 {index < qualificationSteps.length - 1 ? <StepArrow /> : null}
@@ -95,7 +95,7 @@ function BounceCard({
                         <p className="mt-4 max-w-2xl leading-relaxed">{step.description}</p>
 
                         <div
-                                className={`absolute inset-x-3 bottom-5 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-5 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:inset-x-4 sm:bottom-7 sm:p-6`}
+                                className={`pointer-events-none absolute inset-x-3 bottom-6 translate-y-8 rounded-2xl bg-gradient-to-br ${gradient} p-5 text-center transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:inset-x-4 sm:bottom-8 sm:p-6`}
                         >
                                 <span className="block text-center text-lg font-semibold text-indigo-50">
                                         Step {step.id}: {step.title}
