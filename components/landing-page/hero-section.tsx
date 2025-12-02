@@ -123,7 +123,7 @@ const Copy = ({
                                 />
                                 <Link
                                         href="/about-us"
-                                        className="px-6 py-3 border border-black/10 transition-colors text-black font-medium rounded-full hover:border-(--sand) hover:bg-(--sand) md:border-white/70 md:text-white"
+                                        className="px-6 py-3 border border-black transition-colors text-black font-medium rounded-full hover:border-(--sand) hover:bg-(--sand) md:border-black md:text-black"
                                 >
                                         Learn about Savaal
                                 </Link>
