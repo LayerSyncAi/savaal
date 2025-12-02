@@ -35,12 +35,12 @@ export function QualificationShowcase() {
 				</div>
 			</div>
 
-                        <div className="flex flex-col items-center gap-6">
+                        <div className="flex flex-col items-center gap-4">
                                 {qualificationSteps.map((step, index) => (
                                         <div key={step.id} className="flex w-full flex-col items-center gap-6">
                                                 <BounceCard
                                                         step={step}
-                                                        className="w-full max-w-xl sm:max-w-3xl"
+                                                        className="w-full max-w-xl pb-28 sm:max-w-3xl sm:pb-32"
                                                         gradient={gradients[index]}
                                                 />
                                                 {index < qualificationSteps.length - 1 ? <StepArrow /> : null}
