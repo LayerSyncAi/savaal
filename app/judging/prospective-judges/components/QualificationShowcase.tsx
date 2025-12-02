@@ -21,7 +21,7 @@ const gradients = [
 
 export function QualificationShowcase() {
         return (
-                <section className="mx-auto max-w-7xl overflow-hidden px-4 py-12">
+                <section className="max-w-auto overflow-hidden px-4 py-12">
                         <div className="mb-10 flex flex-col items-center justify-between gap-4 text-center md:flex-row md:items-end md:px-4 md:text-left">
                                 <div className="space-y-2">
                                         <h2 className="text-4xl font-bold md:text-5xl">
@@ -35,12 +35,12 @@ export function QualificationShowcase() {
 				</div>
 			</div>
 
-                        <div className="flex flex-col items-center gap-6">
+                        <div className="flex flex-col items-center gap-4">
                                 {qualificationSteps.map((step, index) => (
                                         <div key={step.id} className="flex w-full flex-col items-center gap-6">
                                                 <BounceCard
                                                         step={step}
-                                                        className="mx-auto w-full max-w-xl pb-28 sm:max-w-3xl sm:pb-32"
+                                                        className="w-full max-w-xl pb-28 sm:max-w-3xl sm:pb-32"
                                                         gradient={gradients[index]}
                                                 />
                                                 {index < qualificationSteps.length - 1 ? <StepArrow /> : null}
