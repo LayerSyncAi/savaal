@@ -20,8 +20,8 @@ const gradients = [
 ];
 
 export function QualificationShowcase() {
-	return (
-		<section className="mx-auto max-w-7xl px-4 py-12">
+        return (
+                <section className="md:mx-auto max-w-7xl overflow-hidden px-4 py-12">
 			<div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end md:px-4">
 				<div className="space-y-2">
 					<h2 className="text-4xl font-bold md:text-5xl">
@@ -35,12 +35,12 @@ export function QualificationShowcase() {
 				</div>
 			</div>
 
-                        <div className="flex flex-col items-center gap-6">
+                        <div className="flex flex-col items-center gap-4">
                                 {qualificationSteps.map((step, index) => (
                                         <div key={step.id} className="flex w-full flex-col items-center gap-6">
                                                 <BounceCard
                                                         step={step}
-                                                        className="w-full"
+                                                        className="w-full max-w-xl pb-28 sm:max-w-3xl sm:pb-32"
                                                         gradient={gradients[index]}
                                                 />
                                                 {index < qualificationSteps.length - 1 ? <StepArrow /> : null}
@@ -62,22 +62,22 @@ export function QualificationShowcase() {
 }
 
 function BounceCard({
-	className,
-	gradient,
-	step,
+        className,
+        gradient,
+        step,
 }: {
-	className: string;
-	gradient: string;
-	step: (typeof qualificationSteps)[number];
+        className: string;
+        gradient: string;
+        step: (typeof qualificationSteps)[number];
 }) {
-	return (
-		<motion.div
-			whileHover={{ scale: 0.97, rotate: "-1deg" }}
-			className={`group relative min-h-[320px] cursor-pointer overflow-hidden rounded-2xl bg-slate-100 p-8 shadow-lg transition-shadow hover:shadow-xl ${className}`}
-		>
-			<div className="flex items-center justify-between">
-				<div className="flex items-center gap-3">
-					<div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-lg font-bold text-white">
+        return (
+                <motion.div
+                        whileHover={{ scale: 0.97, rotate: "-1deg" }}
+                        className={`group relative min-h-[340px] cursor-pointer overflow-hidden rounded-2xl bg-slate-100 p-6 shadow-lg transition-shadow hover:shadow-xl sm:p-8 ${className}`}
+                >
+                        <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-lg font-bold text-white">
 						{step.id}
 					</div>
 					<div>
@@ -92,10 +92,10 @@ function BounceCard({
 				</span>
 			</div>
 
-			<p className="mt-4 max-w-2xl ">{step.description}</p>
+                        <p className="mt-4 hidden max-w-2xl leading-relaxed lg:block">{step.description}</p>
 
                         <div
-                                className={`absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-6 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]`}
+                                className={`absolute inset-x-3 bottom-5 top-32 translate-y-8 rounded-t-2xl bg-gradient-to-br ${gradient} p-5 transition-transform duration-[250ms] group-hover:translate-y-12 group-hover:rotate-[2deg] sm:inset-x-4 sm:bottom-7 sm:p-6`}
                         >
                                 <span className="block text-center text-lg font-semibold text-indigo-50">
                                         Step {step.id}: {step.title}
