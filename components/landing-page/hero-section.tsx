@@ -23,40 +23,42 @@ export function HeroSection() {
 	return (
 		<>
 			<Nav scrollYProgress={scrollYProgress} />
-			<section ref={targetRef} className="bg-white h-[350vh]">
-				<div className="h-screen sticky top-0 z-0 grid grid-cols-3 grid-rows-3 gap-4 p-4 overflow-hidden">
-					<Copy scrollYProgress={scrollYProgress} />
-					<Images scrollYProgress={scrollYProgress} />
-					<Circles />
-				</div>
-			</section>
+                        <section ref={targetRef} className="bg-white md:h-[350vh]">
+                                <div
+                                        className="relative grid grid-cols-1 gap-6 p-6 md:h-screen md:sticky md:top-0 md:z-0 md:grid-cols-3 md:grid-rows-3 md:gap-4 md:p-4"
+                                >
+                                        <Copy scrollYProgress={scrollYProgress} />
+                                        <Images scrollYProgress={scrollYProgress} />
+                                        <Circles />
+                                </div>
+                        </section>
 
-			<div className="h-screen bg-(--primary) text-white flex items-center justify-center px-6">
-				<div className="max-w-4xl text-center space-y-6">
-					<p className="p-on-dark text-sm uppercase tracking-[0.4em] text-white/70">
-						Savaal Guide · 2024 Edition
-					</p>
-					<p className="p-on-dark text-3xl md:text-5xl font-semibold ">
-						Plan <span className="text-(--tertiary)">unforgettable culinary escapes</span> through Zimbabwe&apos;s premier
-						hotels, rooftop bars, and chef-driven kitchens.
-					</p>
-					<p className="text-lg p-on-dark">
-						From sunrise tastings in Harare to sunset pairings in Victoria
-						Falls, the Guide maps every refined stay, table, and cultural
-						ritual—helping you book with confidence and savor each moment.
-					</p>
+                        <div className="bg-(--primary) text-white flex items-center justify-center px-6 py-16 md:h-screen md:py-0">
+                                <div className="max-w-4xl text-center space-y-6 pt-6 md:pt-0">
+                                        <p className="p-on-dark text-sm uppercase tracking-[0.4em] text-white/70">
+                                                Savaal Guide · 2024 Edition
+                                        </p>
+                                        <p className="p-on-dark text-3xl md:text-5xl font-semibold ">
+                                                Plan <span className="text-(--tertiary)">unforgettable culinary escapes</span> through Zimbabwe&apos;s premier
+                                                hotels, rooftop bars, and chef-driven kitchens.
+                                        </p>
+                                        <p className="text-lg p-on-dark">
+                                                From sunrise tastings in Harare to sunset pairings in Victoria
+                                                Falls, the Guide maps every refined stay, table, and cultural
+                                                ritual—helping you book with confidence and savor each moment.
+                                        </p>
                                         <StatsCounter />
-					<div className="flex flex-wrap justify-center gap-4 text-black">
-						<RoundedSlideButtonDark
-							href="/guide"
-							title="Start planning"
-							hoverFillColor="var(--tertiary)"
-							icon={<FiArrowRight />}
-							defaultColor="var(--foreground)"
-						/>
-					</div>
-				</div>
-			</div>
+                                        <div className="flex flex-wrap justify-center gap-4 text-black">
+                                                <RoundedSlideButtonDark
+                                                        href="/guide"
+                                                        title="Start planning"
+                                                        hoverFillColor="var(--tertiary)"
+                                                        icon={<FiArrowRight />}
+                                                        defaultColor="var(--foreground)"
+                                                />
+                                        </div>
+                                </div>
+                        </div>
 		</>
 	);
 }
@@ -99,35 +101,34 @@ const Copy = ({
 				opacity: copyOpacity,
 				y: copyY,
 			}}
-			className="absolute px-8 w-full h-screen z-20 flex flex-col items-center justify-center text-center"
-		>
-			<p className="text-xs uppercase tracking-[0.4em] text-white/80">
-				Zimbabwe · Africa · Hospitality
-			</p>
-			<h1 className="text-stone-50 text-4xl md:text-6xl font-bold max-w-2xl mt-6">
-				Elevating  <span className="text-(--tertiary)"> cultural hospitality </span> experiences across Africa.
-			</h1>
-			<p className="text-stone-200 text-base md:text-lg max-w-2xl my-6">
-				Savaal curates the most exceptional stays, dining rooms, and experiences
-				across Zimbabwe and beyond—helping travelers connect with authentic
-				African luxury and local artisans.
-			</p>
-			<div className="flex flex-wrap items-center justify-center gap-4">
-				<RoundedSlideButtonLight
-					href="/guide"
-					title="Explore Destinations"
-					hoverFillColor="var(--tertiary)"
-					icon={<FiArrowRight />}
-					defaultColor="var(--background)"
-				/>
-				<Link
-					href="/about-us"
-					className="px-6 py-3 border border-white/70 transition-colors text-black font-medium rounded-full hover:border-(--sand) hover:bg-(--sand)"
-				>
-					Learn about Savaal
-				</Link>
-			</div>
-		</motion.div>
+                        className="relative z-20 flex flex-col items-center justify-center gap-5 text-center rounded-3xl bg-white/90 px-6 py-12 md:absolute md:h-screen md:w-full md:bg-transparent md:px-8 md:py-0"
+                >
+                        <p className="text-xs uppercase tracking-[0.4em] text-white/80">
+                                Zimbabwe · Africa · Hospitality
+                        </p>
+                        <h1 className="text-stone-900 md:text-stone-50 text-3xl md:text-6xl font-bold max-w-2xl mt-2 md:mt-6">
+                                Elevating  <span className="text-(--tertiary)"> cultural hospitality </span> experiences across Africa.
+                        </h1>
+                        <p className="text-stone-700 md:text-stone-200 text-base md:text-lg max-w-2xl my-4 md:my-6">
+                                Savaal curates the most exceptional stays, dining rooms, and experiences across Zimbabwe and
+                                beyond—helping travelers connect with authentic African luxury and local artisans.
+                        </p>
+                        <div className="flex flex-wrap items-center justify-center gap-4">
+                                <RoundedSlideButtonLight
+                                        href="/guide"
+                                        title="Explore Destinations"
+                                        hoverFillColor="var(--tertiary)"
+                                        icon={<FiArrowRight />}
+                                        defaultColor="var(--background)"
+                                />
+                                <Link
+                                        href="/about-us"
+                                        className="px-6 py-3 border border-black/10 transition-colors text-black font-medium rounded-full hover:border-(--sand) hover:bg-(--sand) md:border-white/70 md:text-white"
+                                >
+                                        Learn about Savaal
+                                </Link>
+                        </div>
+                </motion.div>
 	);
 };
 
@@ -157,8 +158,8 @@ const Images = ({
 
 	return (
 		<>
-			<motion.div
-				className="col-span-2 relative z-10 rounded-3xl"
+                        <motion.div
+                                className="col-span-2 relative z-10 rounded-3xl min-h-[220px] md:min-h-0"
 				style={{
 					backgroundImage:
 						"url(https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1855&q=80)",
@@ -169,8 +170,8 @@ const Images = ({
 					y: image1Offset,
 				}}
 			/>
-			<motion.div
-				className="row-span-2 relative z-10 rounded-3xl"
+                        <motion.div
+                                className="row-span-2 relative z-10 rounded-3xl min-h-[220px] md:min-h-0"
 				style={{
 					backgroundImage:
 						"url(https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=870&q=80)",
@@ -182,8 +183,8 @@ const Images = ({
 				}}
 			/>
 
-			<motion.div
-				className="row-span-2 relative z-10 rounded-3xl"
+                        <motion.div
+                                className="row-span-2 relative z-10 rounded-3xl min-h-[220px] md:min-h-0"
 				style={{
 					backgroundImage:
 						"url(https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=870&q=80)",
@@ -194,8 +195,8 @@ const Images = ({
 					y: image3OffsetY,
 				}}
 			/>
-			<motion.div
-				className="relative z-10 rounded-3xl"
+                        <motion.div
+                                className="relative z-10 rounded-3xl min-h-[180px] md:min-h-0"
 				style={{
 					backgroundImage:
 						"url(https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=1624&q=80)",
@@ -207,8 +208,8 @@ const Images = ({
 				}}
 			/>
 
-			<motion.div
-				className="relative z-10 rounded-3xl"
+                        <motion.div
+                                className="relative z-10 rounded-3xl min-h-[180px] md:min-h-0"
 				style={{
 					backgroundImage:
 						"url(https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1740&q=80)",
@@ -219,8 +220,8 @@ const Images = ({
 					y: image5OffsetY,
 				}}
 			/>
-			<motion.div
-				className="relative z-10 rounded-3xl"
+                        <motion.div
+                                className="relative z-10 rounded-3xl min-h-[180px] md:min-h-0"
 				style={{
 					backgroundImage:
 						"url(https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=870&q=80)",
@@ -236,8 +237,8 @@ const Images = ({
 };
 
 const Circles = () => (
-	<>
-		<div className="w-3/5 max-w-[850px] min-w-[400px] aspect-square border-[8px] border-white/40 rounded-full absolute z-0 left-0 top-0 -translate-x-[50%] -translate-y-[50%]" />
-		<div className="w-1/2 max-w-[600px] min-w-[300px] aspect-square border-[8px] border-white/40 rounded-full absolute z-0 right-0 bottom-0 translate-x-[50%] translate-y-[50%]" />
-	</>
+        <>
+                <div className="hidden md:block w-3/5 max-w-[850px] min-w-[400px] aspect-square border-[8px] border-white/40 rounded-full absolute z-0 left-0 top-0 -translate-x-[50%] -translate-y-[50%]" />
+                <div className="hidden md:block w-1/2 max-w-[600px] min-w-[300px] aspect-square border-[8px] border-white/40 rounded-full absolute z-0 right-0 bottom-0 translate-x-[50%] translate-y-[50%]" />
+        </>
 );
