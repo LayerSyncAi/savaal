@@ -25,6 +25,18 @@ export function WelcomePopup() {
     }
   }, []);
 
+  // Lock body scroll when popup is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   const handleClose = () => {
     setIsOpen(false);
     localStorage.setItem(STORAGE_KEY, "true");
@@ -51,14 +63,14 @@ export function WelcomePopup() {
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={handleClose}
           />
 
@@ -68,7 +80,7 @@ export function WelcomePopup() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed left-1/2 top-1/2 z-50 w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2"
+            className="relative z-10 w-full max-w-md"
           >
             <div className="relative rounded-lg bg-white p-8 shadow-2xl">
               {/* Close button */}
@@ -207,7 +219,7 @@ export function WelcomePopup() {
               )}
             </div>
           </motion.div>
-        </>
+        </div>
       )}
     </AnimatePresence>
   );
