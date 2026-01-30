@@ -58,14 +58,10 @@ export default function GuidePage() {
 					Guide
 				</p>
 				<h1 className="text-4xl font-bold text-neutral-900">
-					<span className="text-(--tertiary)">Discover</span> the full Savaal
-					Guide experience.
+					<span className="text-(--tertiary)">Discover</span> THE SAVAAL GUIDE
 				</h1>
 				<p className="text-lg text-neutral-700">
-					Explore the restaurants, hotels, and bars celebrated by our judges
-					with mobile-first cards that showcase their signature offering,
-					location, and scoring breakdown. Hover or tap each feature card to see
-					how every venue performed.
+					Restaurants, stays, and experiences across Zimbabwe.
 				</p>
 
 				<div className="flex flex-wrap gap-3 pt-2">
