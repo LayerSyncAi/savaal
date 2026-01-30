@@ -8,6 +8,7 @@ import { FaqsSection } from "@/components/landing-page/faqs-section";
 import { ForBusinessSections } from "@/components/landing-page/for-business-sections";
 import { FounderQuote } from "@/components/landing-page/founder-quote";
 import { HeroSection } from "@/components/landing-page/hero-section";
+import { WelcomePopup } from "@/components/welcome-popup";
 import type { FAQ, Pillar } from "@/types/content";
 
 const getContent = <T,>(filename: string): T => {
@@ -22,6 +23,7 @@ const faqs = getContent<FAQ[]>("faqs.txt");
 export default function Home() {
         return (
                 <div className="flex min-h-screen flex-col bg-background text-foreground">
+                        <WelcomePopup />
                         <main className="flex-1">
                                 <HeroSection />
                                 <AboutUsSection />
