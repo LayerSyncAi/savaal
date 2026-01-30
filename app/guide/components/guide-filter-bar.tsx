@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { FaStar } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import type { RestaurantInfo, PriceLevel } from "@/content/restaurant-info";
-import { getSavaalDistinction, getPriceLevelDisplay } from "@/content/restaurant-info";
+import { getSavaalDistinction, getPriceLevelDisplay, zimbabweRegions } from "@/content/restaurant-info";
 
 export type CategoryType = "All" | "Restaurants" | "Stays";
 export type PriceFilter = "All" | PriceLevel;
@@ -46,9 +46,8 @@ export function GuideFilterBar({
 	filteredCount,
 }: GuideFilterBarProps) {
 	const regionOptions = useMemo(() => {
-		const countries = new Set(restaurants.map((r) => r.country));
-		return ["All", ...Array.from(countries).sort()];
-	}, [restaurants]);
+		return ["All", ...zimbabweRegions];
+	}, []);
 
 	const hasActiveFilters =
 		regionFilter !== "All" ||

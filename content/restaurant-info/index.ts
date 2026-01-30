@@ -5,6 +5,22 @@ export type ScoreBreakdown = {
 
 export type PriceLevel = 1 | 2 | 3 | 4;
 
+// Zimbabwe regions for the guide filter
+export const zimbabweRegions = [
+  "Harare",
+  "Bulawayo",
+  "Matobo",
+  "Victoria Falls",
+  "Nyanga",
+  "Chimanimani",
+  "Honde Valley & Vumba",
+  "Hwange",
+  "Mana Pools & Kariba",
+  "Masvingo & Southeastern Lowveld",
+] as const;
+
+export type ZimbabweRegion = (typeof zimbabweRegions)[number];
+
 export type RestaurantInfo = {
   id: string;
   name: string;
@@ -12,6 +28,7 @@ export type RestaurantInfo = {
   cuisine: string;
   city: string;
   country: string;
+  region: ZimbabweRegion;
   location: string;
   coverImage: string;
   rating: number;
@@ -42,6 +59,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "Modern South African",
     city: "Cape Town",
     country: "South Africa",
+    region: "Harare",
     location: "Cape Town, South Africa",
     coverImage:
       "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&q=80",
@@ -67,6 +85,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "Senegalese fine dining",
     city: "Dakar",
     country: "Senegal",
+    region: "Victoria Falls",
     location: "Dakar, Senegal",
     coverImage:
       "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
@@ -92,6 +111,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "Pan-African small plates",
     city: "Nairobi",
     country: "Kenya",
+    region: "Bulawayo",
     location: "Nairobi, Kenya",
     coverImage:
       "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=900&q=80",
@@ -117,6 +137,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "North African grill",
     city: "Marrakech",
     country: "Morocco",
+    region: "Hwange",
     location: "Marrakech, Morocco",
     coverImage:
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80",
@@ -142,6 +163,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "Coastal luxury resort",
     city: "Victoria",
     country: "Seychelles",
+    region: "Victoria Falls",
     location: "Victoria, Seychelles",
     coverImage:
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
@@ -167,6 +189,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "Safari retreat",
     city: "Arusha",
     country: "Tanzania",
+    region: "Mana Pools & Kariba",
     location: "Arusha, Tanzania",
     coverImage:
       "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
@@ -192,6 +215,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "Craft cocktails",
     city: "Lagos",
     country: "Nigeria",
+    region: "Harare",
     location: "Lagos, Nigeria",
     coverImage:
       "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=900&q=80",
@@ -217,6 +241,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "Live music lounge",
     city: "Accra",
     country: "Ghana",
+    region: "Nyanga",
     location: "Accra, Ghana",
     coverImage:
       "https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1200&q=80",
@@ -242,6 +267,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "Boutique seaside stay",
     city: "Essaouira",
     country: "Morocco",
+    region: "Chimanimani",
     location: "Essaouira, Morocco",
     coverImage:
       "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=85",
@@ -267,6 +293,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "Wood-fired contemporary",
     city: "Kigali",
     country: "Rwanda",
+    region: "Matobo",
     location: "Kigali, Rwanda",
     coverImage:
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80",
@@ -292,6 +319,7 @@ export const restaurants: RestaurantInfo[] = [
     cuisine: "Street food cocktails",
     city: "Johannesburg",
     country: "South Africa",
+    region: "Masvingo & Southeastern Lowveld",
     location: "Johannesburg, South Africa",
     coverImage:
       "https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=1200&q=80",
