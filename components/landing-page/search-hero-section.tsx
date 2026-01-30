@@ -40,7 +40,7 @@ export function SearchHeroSection() {
         className="absolute inset-0 z-10"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.6) 100%)",
+            "linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.7) 100%)",
         }}
       />
 
@@ -56,7 +56,7 @@ export function SearchHeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-8 md:mb-12 tracking-tight"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold p-white mb-8 md:mb-12 tracking-tight"
         >
           Where would you like to begin?
         </motion.h1>

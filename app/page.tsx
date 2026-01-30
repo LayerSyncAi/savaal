@@ -27,7 +27,7 @@ export default function Home() {
                         <WelcomePopup />
                         <main className="flex-1">
                                 <SearchHeroSection />
-                                <HeroSection />
+                                {/* <HeroSection /> */}
                                 <AboutUsSection />
                                 <FounderQuote />
                                 <EcosystemSection pillars={pillars} />
