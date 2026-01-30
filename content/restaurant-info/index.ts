@@ -3,6 +3,8 @@ export type ScoreBreakdown = {
   score: string;
 };
 
+export type PriceLevel = 1 | 2 | 3 | 4;
+
 export type RestaurantInfo = {
   id: string;
   name: string;
@@ -13,10 +15,24 @@ export type RestaurantInfo = {
   location: string;
   coverImage: string;
   rating: number;
+  priceLevel: PriceLevel;
   description: string;
   scores: ScoreBreakdown[];
   totalScore: string;
 };
+
+// Helper to convert totalScore to Savaal Distinction (1-3 stars)
+export function getSavaalDistinction(totalScore: string): number {
+  const score = parseInt(totalScore.split("/")[0], 10);
+  if (score >= 90) return 3; // 3 Stars - Exceptional
+  if (score >= 85) return 2; // 2 Stars - Excellent
+  return 1; // 1 Star - Notable
+}
+
+// Helper to display price level as dollar signs
+export function getPriceLevelDisplay(level: PriceLevel): string {
+  return "$".repeat(level);
+}
 
 export const restaurants: RestaurantInfo[] = [
   {
@@ -30,6 +46,7 @@ export const restaurants: RestaurantInfo[] = [
     coverImage:
       "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&q=80",
     rating: 4.8,
+    priceLevel: 4,
     description:
       "Chef-driven tasting menus celebrate South Africa's terroir with fire-kissed plates, seasonal produce, and impeccable wine pairings overlooking Table Mountain.",
     scores: [
@@ -54,6 +71,7 @@ export const restaurants: RestaurantInfo[] = [
     coverImage:
       "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
     rating: 4.7,
+    priceLevel: 4,
     description:
       "A refined tribute to Dakar's coastal larder where thieboudienne-inspired courses meet French technique, backed by warm, attentive Teranga hospitality.",
     scores: [
@@ -78,6 +96,7 @@ export const restaurants: RestaurantInfo[] = [
     coverImage:
       "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=900&q=80",
     rating: 4.6,
+    priceLevel: 3,
     description:
       "Vibrant small plates travel the spice routes from Addis to Zanzibar, paired with craft cocktails and live DJs in a rooftop lounge atmosphere.",
     scores: [
@@ -102,6 +121,7 @@ export const restaurants: RestaurantInfo[] = [
     coverImage:
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80",
     rating: 4.9,
+    priceLevel: 4,
     description:
       "Charcoal-grilled meats, saffron-scented vegetables, and smoky flatbreads evoke the medina, served in a lantern-lit courtyard with live oud music.",
     scores: [
@@ -126,6 +146,7 @@ export const restaurants: RestaurantInfo[] = [
     coverImage:
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
     rating: 4.7,
+    priceLevel: 4,
     description:
       "Private villas spill onto powdery sands with butler-led service, reef-to-table dining, and sunset cruises across the Seychelles' turquoise waters.",
     scores: [
@@ -150,6 +171,7 @@ export const restaurants: RestaurantInfo[] = [
     coverImage:
       "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
     rating: 4.8,
+    priceLevel: 4,
     description:
       "Canvas suites overlook acacia-dotted plains where sunrise game drives, Maasai-led bush walks, and farm-to-table feasts define the stay.",
     scores: [
@@ -174,6 +196,7 @@ export const restaurants: RestaurantInfo[] = [
     coverImage:
       "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=900&q=80",
     rating: 4.5,
+    priceLevel: 2,
     description:
       "Skyline views, Afrobeat sets, and a menu of palm wine spritzes and spice-forward cocktails make this the go-to Lagos sundowner spot.",
     scores: [
@@ -198,6 +221,7 @@ export const restaurants: RestaurantInfo[] = [
     coverImage:
       "https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1200&q=80",
     rating: 4.6,
+    priceLevel: 3,
     description:
       "Vintage vinyl, velvet banquettes, and nightly jazz trios set the tone for expertly stirred classics and small bites inspired by coastal Ghana.",
     scores: [
@@ -222,6 +246,7 @@ export const restaurants: RestaurantInfo[] = [
     coverImage:
       "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=85",
     rating: 4.6,
+    priceLevel: 3,
     description:
       "Sun-washed terraces, locally woven textiles, and hammam-inspired suites create a serene escape steps from Essaouira's Atlantic waves.",
     scores: [
@@ -236,16 +261,17 @@ export const restaurants: RestaurantInfo[] = [
     totalScore: "85/100",
   },
   {
-    id: "ember-canvas", 
-    name: "Ember Canvas", 
-    category: "Restaurant", 
-    cuisine: "Wood-fired contemporary", 
-    city: "Kigali", 
-    country: "Rwanda", 
-    location: "Kigali, Rwanda", 
+    id: "ember-canvas",
+    name: "Ember Canvas",
+    category: "Restaurant",
+    cuisine: "Wood-fired contemporary",
+    city: "Kigali",
+    country: "Rwanda",
+    location: "Kigali, Rwanda",
     coverImage:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80", 
-    rating: 4.7, 
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80",
+    rating: 4.7,
+    priceLevel: 3,
     description:
       "An art-filled dining room where seasonal Rwandan produce meets wood-fire cooking, showcasing smoky vegetables, aged meats, and natural wines.",
     scores: [
@@ -270,6 +296,7 @@ export const restaurants: RestaurantInfo[] = [
     coverImage:
       "https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=1200&q=80",
     rating: 4.4,
+    priceLevel: 2,
     description:
       "Neon-lit stalls serve wood-fired skewers and sorghum bao alongside cocktails built with marula, rooibos, and foraged botanicals.",
     scores: [
