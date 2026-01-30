@@ -23,7 +23,7 @@ export default function GuidePage() {
 		return restaurants.filter((restaurant) => {
 			// Region filter
 			const matchesRegion =
-				regionFilter === "All" || restaurant.country === regionFilter;
+				regionFilter === "All" || restaurant.region === regionFilter;
 
 			// Category type filter (Restaurants = Restaurant + Bar, Stays = Hotel)
 			let matchesCategoryType = true;
