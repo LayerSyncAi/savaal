@@ -104,7 +104,7 @@ const EditorialDiscoveryCard = ({
         {label}
       </span>
       <div className="mt-auto bg-gradient-to-t from-black/70 via-black/40 to-transparent p-6">
-        <h3 className="text-xl font-semibold text-white">{event.title}</h3>
+        <h3 className="text-xl font-semibold p-on-dark">{event.title}</h3>
       </div>
     </Link>
   );
