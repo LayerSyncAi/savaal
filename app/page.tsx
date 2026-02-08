@@ -15,30 +15,30 @@ import { WelcomePopup } from "@/components/welcome-popup";
 import type { FAQ, Pillar } from "@/types/content";
 
 const getContent = <T,>(filename: string): T => {
-        const filePath = path.join(process.cwd(), "content", filename);
-        const fileContents = fs.readFileSync(filePath, "utf-8");
-        return JSON.parse(fileContents) as T;
+	const filePath = path.join(process.cwd(), "content", filename);
+	const fileContents = fs.readFileSync(filePath, "utf-8");
+	return JSON.parse(fileContents) as T;
 };
 
 const pillars = getContent<Pillar[]>("pillars.txt");
 const faqs = getContent<FAQ[]>("faqs.txt");
 
 export default function Home() {
-  return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <WelcomePopup />
-      <main className="flex-1">
-        <SearchHeroSection />
-        <HeroSection />
-        {/* <AboutUsSection />
+	return (
+		<div className="flex min-h-screen flex-col bg-background text-foreground">
+			<WelcomePopup />
+			<main className="flex-1">
+				<SearchHeroSection />
+				<HeroSection />
+				{/* <AboutUsSection />
         <FounderQuote /> */}
-        <EcosystemSection pillars={pillars} />
-        <DistinctionsSection />
-        <EditorialDiscoverySection />
-        {/* <ForBusinessSections /> */}
-        <CtaSection />
-        <FaqsSection faqs={faqs} />
-      </main>
-    </div>
-  );
+				<EcosystemSection pillars={pillars} />
+				<DistinctionsSection />
+				<EditorialDiscoverySection />
+				{/* <ForBusinessSections /> */}
+				<CtaSection />
+				<FaqsSection faqs={faqs} />
+			</main>
+		</div>
+	);
 }
