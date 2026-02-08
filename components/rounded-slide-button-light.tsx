@@ -4,13 +4,15 @@ import Link from "next/link";
 import { type ReactNode, type CSSProperties } from "react";
 
 interface RoundedSlideButtonProps {
-        href: string;
-        title: string;
-        hoverFillColor?: string;
-        defaultColor?: string;
-        icon?: ReactNode;
-        hoverScale?: number;
-        className?: string;
+	href: string;
+	title: string;
+	hoverFillColor?: string;
+	defaultColor?: string;
+	icon?: ReactNode;
+	hoverScale?: number;
+	className?: string;
+	target?: string;
+	rel?: string;
 }
 
 export const RoundedSlideButtonLight = ({
@@ -18,9 +20,11 @@ export const RoundedSlideButtonLight = ({
         title,
         hoverFillColor = "var(--primary)",
         defaultColor = "var(--background)",
-        icon = null,
-        hoverScale = 1.15,
-        className = "",
+	icon = null,
+	hoverScale = 1.15,
+	className = "",
+	target,
+	rel,
 }: RoundedSlideButtonProps) => {
         const customProperties: CSSProperties & {
                 "--hover-color"?: string;
@@ -32,12 +36,14 @@ export const RoundedSlideButtonLight = ({
                 "--hover-scale": hoverScale.toString(),
         };
 
-        return (
-                <Link
-                        href={href}
-                        style={customProperties}
-                        className={`
-                                relative z-0 flex items-center gap-2 overflow-hidden border border-[var(--hover-color)]
+	return (
+		<Link
+			href={href}
+			target={target}
+			rel={rel}
+			style={customProperties}
+			className={`
+				relative z-0 flex items-center gap-2 overflow-hidden border border-[var(--hover-color)]
                                 px-4 py-2 font-semibold uppercase text-neutral-900 transition-all duration-500 rounded-full
                                 bg-[var(--default-color)]
 
