@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { PageFade } from "@/components/page-fade";
 import { Toaster } from "@/components/ui/sonner";
+import { Footer } from "@/components/footer";
 
 const poppins = localFont({
   variable: "--font-poppins",
@@ -35,6 +36,7 @@ export default function RootLayout({
       >
         <Navbar />
         <PageFade>{children}</PageFade>
+        <Footer />
         <Toaster richColors />
       </body>
     </html>

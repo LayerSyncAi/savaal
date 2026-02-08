@@ -37,35 +37,6 @@ export default function Home() {
                                 <CtaSection />
                                 <FaqsSection faqs={faqs} />
                         </main>
-
-			<footer className="bg-(--foreground)] px-6 py-10 text-(--sand)]">
-				<div className="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
-					<div>
-						<p className="text-lg font-semibold text-white">Savaal Guide</p>
-						<p className="text-sm text-(--sand)]">
-							Guiding the future of cultural hospitality in Zimbabwe and across
-							Africa.
-						</p>
-					</div>
-					<div className="text-sm">
-						<p>
-							Email:{" "}
-							<a href="mailto:partners@savaalguide.com" className="underline">
-								partners@savaalguide.com
-							</a>
-						</p>
-						<p>
-							Instagram:{" "}
-							<a
-								href="https://instagram.com/savaal_guide"
-								className="underline"
-							>
-								@savaal_guide
-							</a>
-						</p>
-					</div>
-				</div>
-			</footer>
 		</div>
 	);
 }
