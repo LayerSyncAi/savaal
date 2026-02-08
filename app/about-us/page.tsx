@@ -71,7 +71,7 @@ export default function AboutUsPage() {
 					</div>
 				</div>
 
-				<section className="grid gap-8 rounded-3xl bg-gradient-to-br from-amber-100 via-white to-indigo-100 p-8 sm:grid-cols-2">
+				{/* <section className="grid gap-8 rounded-3xl bg-gradient-to-br from-amber-100 via-white to-indigo-100 p-8 sm:grid-cols-2">
 					<div className="flex flex-col gap-6">
 						<p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700">
 							Vision & Mission
@@ -99,9 +99,9 @@ export default function AboutUsPage() {
 							</div>
 						))}
 					</div>
-				</section>
+				</section> */}
 
-				<section className="rounded-3xl bg-white p-10 shadow-sm">
+				{/* <section className="rounded-3xl bg-white p-10 shadow-sm">
 					<div className="flex flex-col gap-3">
 						<p className="text-xs font-semibold uppercase tracking-[0.3em] text-indigo-600">
 							What is the Savaal Guide?
@@ -134,7 +134,9 @@ export default function AboutUsPage() {
 						storytelling, and immersive events that keep local hospitality ahead
 						of the curve.
 					</p>
-				</section>
+				</section> */}
+
+				
 			</section>
 		</div>
 	);
