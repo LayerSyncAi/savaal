@@ -4,6 +4,7 @@ import path from "node:path";
 import { AboutUsSection } from "@/components/landing-page/about-us";
 import { CtaSection } from "@/components/landing-page/cta-section";
 import { DistinctionsSection } from "@/components/landing-page/distinctions-section";
+import { EditorialDiscoverySection } from "@/components/landing-page/editorial-discovery-section";
 import { EcosystemSection } from "@/components/landing-page/ecosystem-section";
 import { FaqsSection } from "@/components/landing-page/faqs-section";
 import { ForBusinessSections } from "@/components/landing-page/for-business-sections";
@@ -31,9 +32,10 @@ export default function Home() {
                                 <HeroSection />
 							{/* <AboutUsSection />
 							<FounderQuote /> */}
-							<EcosystemSection pillars={pillars} />
-							<DistinctionsSection />
-							{/* <ForBusinessSections /> */}
+					<EcosystemSection pillars={pillars} />
+					<DistinctionsSection />
+					<EditorialDiscoverySection />
+					{/* <ForBusinessSections /> */}
                                 <CtaSection />
                                 <FaqsSection faqs={faqs} />
                         </main>
