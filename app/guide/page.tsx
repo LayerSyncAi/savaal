@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { RoundedSlideButtonLight } from "@/components/rounded-slide-button-light";
-import { RestaurantCard } from "@/components/guide/restaurant-card";
 import { restaurants, getSavaalDistinction } from "@/content/restaurant-info";
 import {
 	GuideFilterBar,
@@ -11,6 +10,7 @@ import {
 	type PriceFilter,
 	type DistinctionFilter,
 } from "./components/guide-filter-bar";
+import { HorizontalCardSection } from "./components/horizontal-card-section";
 
 export default function GuidePage() {
 	const [regionFilter, setRegionFilter] = useState<string>("All");
@@ -54,6 +54,18 @@ export default function GuidePage() {
 		});
 	}, [regionFilter, categoryTypeFilter, priceFilter, distinctionFilter]);
 
+	const { restaurantItems, stayItems } = useMemo(() => {
+		const restaurantEntries = filteredRestaurants.filter(
+			(restaurant) =>
+				restaurant.category === "Restaurant" || restaurant.category === "Bar"
+		);
+		const stayEntries = filteredRestaurants.filter(
+			(restaurant) => restaurant.category === "Hotel"
+		);
+
+		return { restaurantItems: restaurantEntries, stayItems: stayEntries };
+	}, [filteredRestaurants]);
+
 	return (
 		<section className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20">
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -91,10 +103,12 @@ export default function GuidePage() {
 			/>
 
 			{filteredRestaurants.length > 0 ? (
-				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-					{filteredRestaurants.map((restaurant) => (
-						<RestaurantCard key={restaurant.id} restaurant={restaurant} />
-					))}
+				<div className="flex flex-col gap-10">
+					<HorizontalCardSection
+						title="Restaurants"
+						items={restaurantItems}
+					/>
+					<HorizontalCardSection title="Stays" items={stayItems} />
 				</div>
 			) : (
 				<div className="flex flex-col items-center justify-center rounded-2xl border border-amber-100 bg-amber-50/50 px-6 py-16 text-center">
