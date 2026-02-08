@@ -56,14 +56,12 @@ export default function GuidePage() {
 	return (
 		<section className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20">
 			<div className="space-y-3">
-				<p className="text-sm font-semibold uppercase tracking-wide text-amber-700">
-					Guide
-				</p>
 				<h1 className="text-4xl font-bold text-neutral-900">
-					<span className="text-(--tertiary)">Discover</span> THE SAVAAL GUIDE
+					{/* <span className="text-(--tertiary)">Discover</span>  */}
+					THE SAVAAL GUIDE
 				</h1>
 				<p className="text-lg text-neutral-700">
-					Restaurants, stays, and experiences across Africa.
+					Restaurants, stays, and experiences across Zimbabwe.
 				</p>
 			</div>
 

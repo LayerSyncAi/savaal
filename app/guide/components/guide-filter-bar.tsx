@@ -94,7 +94,7 @@ export function GuideFilterBar({
 						htmlFor="category-filter"
 						className="text-xs font-semibold uppercase tracking-wide text-neutral-700"
 					>
-						Type
+						Experience Type
 					</label>
 					<select
 						id="category-filter"

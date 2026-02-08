@@ -36,8 +36,8 @@ export default function Home() {
 				<DistinctionsSection />
 				<EditorialDiscoverySection />
 				{/* <ForBusinessSections /> */}
-				<CtaSection />
-				<FaqsSection faqs={faqs} />
+				{/* <CtaSection /> */}
+				{/* <FaqsSection faqs={faqs} /> */}
 			</main>
 		</div>
 	);
