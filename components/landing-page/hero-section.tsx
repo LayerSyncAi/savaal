@@ -23,7 +23,7 @@ export function HeroSection() {
 	return (
 		<>
 			<Nav scrollYProgress={scrollYProgress} />
-                        <section ref={targetRef} className="bg-white md:h-[350vh]">
+                        <section ref={targetRef} className="bg-white md:h-[350vh] pt-12">
                                 <div
                                         className="relative grid grid-cols-1 gap-6 p-6 md:h-screen md:sticky md:top-0 md:z-0 md:grid-cols-3 md:grid-rows-3 md:gap-4 md:p-4"
                                 >
@@ -199,7 +199,7 @@ const Images = ({
                                 className="relative z-10 rounded-3xl min-h-[180px] md:min-h-0"
 				style={{
 					backgroundImage:
-						"url(https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=1624&q=80)",
+						"url(https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=2620&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)",
 					backgroundSize: "cover",
 					backgroundPosition: "center",
 					scale,

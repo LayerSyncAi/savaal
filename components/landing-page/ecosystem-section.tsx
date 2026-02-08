@@ -7,13 +7,13 @@ const PILLAR_CTAS: Record<string, { href: string; label: string }> = {
                 href: "/guide",
                 label: "Explore the Guide",
         },
-        consultancy: {
+        standard: {
                 href: "/services",
-                label: "Meet the Consultants",
+                label: "Work With Savaal",
         },
-        events: {
+        experiences: {
                 href: "/judging/prospective-judges",
-                label: "Join as a Curator",
+                label: "View Experiences",
         },
 };
 

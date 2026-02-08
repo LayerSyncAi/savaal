@@ -1,20 +1,20 @@
 [
   {
-    "title": "The Guide",
+    "title": "The Guide : Discover",
     "items": ["Curated listings", "Savaal Scorecard", "Certification"],
-    "description": "Explore verified restaurants, hotels, and lifestyle spaces that meet our experiential benchmarks.",
+    "description": "A considered selection of restaurants, stays and experiences across Zimbabwe.",
     "anchor": "guide"
   },
   {
-    "title": "The Consultants",
+    "title": "The Standard : Refine",
     "items": ["Training", "Audits", "Hospitality consultancy"],
-    "description": "Upskill teams with bespoke coaching, operational audits, and cultural hospitality playbooks.",
-    "anchor": "consultancy"
+    "description": "Assessment, training, and cultural refinement for hospitality business committed to discipline and craft.",
+    "anchor": "standard"
   },
   {
-    "title": "The Curators",
+    "title": "The Experiences : Gather",
     "items": ["Pop-up events", "Cultural festivals", "Collaborative showcases"],
-    "description": "Design immersive events that celebrate Zimbabwean art, cuisine, music, and community.",
-    "anchor": "events"
+    "description": "Curated dinners and cultural gatherings shaped around food, sound and place.",
+    "anchor": "experiences"
   }
 ]

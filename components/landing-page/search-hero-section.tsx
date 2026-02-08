@@ -58,7 +58,7 @@ export function SearchHeroSection() {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold p-white mb-8 md:mb-12 tracking-tight"
         >
-          Where would you like to begin?
+          Search restaurants, stays or destinations
         </motion.h1>
 
         {/* Search Bar */}
@@ -108,7 +108,7 @@ export function SearchHeroSection() {
                 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="Submit search"
             >
-              Search
+              Start your journey
             </button>
           </div>
         </motion.form>

@@ -27,11 +27,11 @@ export default function Home() {
                         <WelcomePopup />
                         <main className="flex-1">
                                 <SearchHeroSection />
-                                {/* <HeroSection /> */}
-                                <AboutUsSection />
-                                <FounderQuote />
+                                <HeroSection />
+                                {/* <AboutUsSection />
+                                <FounderQuote /> */}
                                 <EcosystemSection pillars={pillars} />
-                                <ForBusinessSections />
+                                {/* <ForBusinessSections /> */}
                                 <CtaSection />
                                 <FaqsSection faqs={faqs} />
                         </main>
