@@ -1,4 +1,5 @@
 import RoundedSlideButtonLight from "@/components/rounded-slide-button-light";
+import Image from "next/image";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 
@@ -30,6 +31,39 @@ const guideHighlights = [
 		title: "Beyond discovery",
 		description:
 			"Expect editorial storytelling, training services, and immersive events designed to uplift the industry.",
+	},
+];
+
+const aboutSavaalCards = [
+	{
+		title: "Savaal Star",
+		description:
+			"A distinction awarded to restaurants demonstrating exceptional mastery, consistency and intent.",
+		href: "/judging/businesses",
+		image: {
+			src: "/globe.svg",
+			alt: "Globe illustration representing the Savaal Star distinction.",
+		},
+	},
+	{
+		title: "Savaal Selected",
+		description:
+			"Venues included in the Savaal Guide — considered, visited and chosen for quality and character.",
+		href: "/judging/prospective-judges",
+		image: {
+			src: "/window.svg",
+			alt: "Window illustration representing the Savaal Selected listings.",
+		},
+	},
+	{
+		title: "About Savaal",
+		description:
+			"Learn how Savaal works and explore our services for partners and businesses.",
+		href: "/about-us/services/consulting",
+		image: {
+			src: "/file.svg",
+			alt: "Document illustration introducing how Savaal works.",
+		},
 	},
 ];
 
@@ -70,6 +104,43 @@ export default function AboutUsPage() {
 						</Link>
 					</div>
 				</div>
+
+				<section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+					{aboutSavaalCards.map((card) => (
+						<article
+							key={card.title}
+							className="flex h-full flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-sm"
+						>
+							<div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+								<Image
+									src={card.image.src}
+									alt={card.image.alt}
+									fill
+									sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+									className="object-cover"
+								/>
+							</div>
+							<div className="flex h-full flex-col gap-3 p-6">
+								<h3 className="text-xl font-semibold text-neutral-900">
+									{card.title}
+								</h3>
+								<p className="text-sm leading-relaxed text-neutral-700">
+									{card.description}
+								</p>
+								<div className="mt-auto pt-4">
+									<RoundedSlideButtonLight
+										href={card.href}
+										title="Discover"
+										hoverFillColor="var(--tertiary)"
+										defaultColor="var(--background)"
+										icon={<FiArrowRight />}
+										className="w-fit"
+									/>
+								</div>
+							</div>
+						</article>
+					))}
+				</section>
 
 				{/* <section className="grid gap-8 rounded-3xl bg-gradient-to-br from-amber-100 via-white to-indigo-100 p-8 sm:grid-cols-2">
 					<div className="flex flex-col gap-6">
