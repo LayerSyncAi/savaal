@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { RoundedSlideButtonLight } from "@/components/rounded-slide-button-light";
 import { RestaurantCard } from "@/components/guide/restaurant-card";
 import { restaurants, getSavaalDistinction } from "@/content/restaurant-info";
 import {
@@ -55,14 +56,25 @@ export default function GuidePage() {
 
 	return (
 		<section className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20">
-			<div className="space-y-3">
-				<h1 className="text-4xl font-bold text-neutral-900">
-					{/* <span className="text-(--tertiary)">Discover</span>  */}
-					THE SAVAAL GUIDE
-				</h1>
-				<p className="text-lg text-neutral-700">
-					Restaurants, stays, and experiences across Zimbabwe.
-				</p>
+			<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+				<div className="space-y-3">
+					<h1 className="text-4xl font-bold text-neutral-900">
+						{/* <span className="text-(--tertiary)">Discover</span>  */}
+						THE SAVAAL GUIDE
+					</h1>
+					<p className="text-lg text-neutral-700">
+						Restaurants, stays, and experiences across Zimbabwe.
+					</p>
+				</div>
+				<RoundedSlideButtonLight
+					href="http://localhost:3000/judging/businesses"
+					title="How we assess"
+					hoverFillColor="var(--tertiary)"
+					defaultColor="var(--background)"
+					target="_blank"
+					rel="noreferrer noopener"
+					className="self-start sm:self-auto"
+				/>
 			</div>
 
 			<GuideFilterBar
