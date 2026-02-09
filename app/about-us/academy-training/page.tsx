@@ -42,17 +42,14 @@ export default function AcademyTrainingPage() {
 					About us · Academy + Training
 				</p>
 				<h1 className="text-4xl font-bold text-neutral-900">
-					Training pathways that <span className="text-(--tertiary)">improve everyday lives</span>
+					Cultivating the Future of <span className="text-(--tertiary)">African Excellence</span>
 				</h1>
 				<p className="max-w-3xl text-lg text-neutral-700">
-					The Savaal Academy is built to unlock government and partner funding
-					for programs that directly benefit workers, families, and the venues
-					they support. From judge accreditation to youth chef studios, every
-					cohort is tied to real jobs and safer, more joyful culinary spaces.
+					The Savaal Academy underpins the integrity of the Guide by training assessors, chefs, and service professionals.
 				</p>
 			</header>
 
-			<div className="grid gap-6 rounded-3xl bg-[rgb(var(--secondary-rgb)/0.6)] p-6 shadow-lg md:grid-cols-[1.1fr,0.9fr]">
+			{/* <div className="grid gap-6 rounded-3xl bg-[rgb(var(--secondary-rgb)/0.6)] p-6 shadow-lg md:grid-cols-[1.1fr,0.9fr]">
 				<div className="space-y-4 rounded-2xl bg-white p-6 shadow-sm">
 					<h2 className="text-2xl font-semibold text-neutral-900">
 						Our promise to funders
@@ -115,8 +112,9 @@ export default function AcademyTrainingPage() {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 
+				Training tracks
 			<div className="grid gap-6 md:grid-cols-3">
 				{trainingTracks.map((track) => (
 					<div
