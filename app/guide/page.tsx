@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { RoundedSlideButtonLight } from "@/components/rounded-slide-button-light";
-import { restaurants, getSavaalDistinction } from "@/content/restaurant-info";
+import { getSavaalDistinction } from "@/content/restaurant-info";
 import {
 	GuideFilterBar,
 	type CategoryType,
@@ -11,6 +11,9 @@ import {
 	type DistinctionFilter,
 } from "./components/guide-filter-bar";
 import { HorizontalCardSection } from "./components/horizontal-card-section";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { mapGuideItemToRestaurantInfo } from "@/lib/guide";
 
 export default function GuidePage() {
 	const [regionFilter, setRegionFilter] = useState<string>("All");
@@ -19,6 +22,15 @@ export default function GuidePage() {
 	const [priceFilter, setPriceFilter] = useState<PriceFilter>("All");
 	const [distinctionFilter, setDistinctionFilter] =
 		useState<DistinctionFilter>("All");
+
+	const guideItems = useQuery(api.guideItems.listGuideItems, {
+		publishedOnly: true,
+	});
+
+	const restaurants = useMemo(
+		() => (guideItems ?? []).map(mapGuideItemToRestaurantInfo),
+		[guideItems]
+	);
 
 	const filteredRestaurants = useMemo(() => {
 		return restaurants.filter((restaurant) => {
@@ -66,6 +78,8 @@ export default function GuidePage() {
 		return { restaurantItems: restaurantEntries, stayItems: stayEntries };
 	}, [filteredRestaurants]);
 
+	const isLoading = guideItems === undefined;
+
 	return (
 		<section className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20">
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -90,7 +104,6 @@ export default function GuidePage() {
 			</div>
 
 			<GuideFilterBar
-				restaurants={restaurants}
 				regionFilter={regionFilter}
 				setRegionFilter={setRegionFilter}
 				categoryTypeFilter={categoryTypeFilter}
@@ -102,7 +115,11 @@ export default function GuidePage() {
 				filteredCount={filteredRestaurants.length}
 			/>
 
-			{filteredRestaurants.length > 0 ? (
+			{isLoading ? (
+				<div className="rounded-2xl border border-amber-100 bg-white px-6 py-12 text-center text-neutral-600">
+					Loading guide venues…
+				</div>
+			) : filteredRestaurants.length > 0 ? (
 				<div className="flex flex-col gap-10">
 					<HorizontalCardSection
 						title="Restaurants"
