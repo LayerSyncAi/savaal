@@ -121,8 +121,7 @@ export default function JudgingPage() {
               </ul>
             </div>
           </section>
-        </div>
-          {/* <div className="space-y-3">
+        {/* <div className="space-y-3">
             <h3 className="text-lg font-semibold text-neutral-900">Judging timeline</h3>
             <ul className="space-y-3 text-neutral-700">
               <li>
