@@ -1,3 +1,4 @@
+import { FounderQuote } from "@/components/landing-page/founder-quote";
 import RoundedSlideButtonLight from "@/components/rounded-slide-button-light";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,7 +42,7 @@ const aboutSavaalCards = [
 			"A distinction awarded to restaurants demonstrating exceptional mastery, consistency and intent.",
 		href: "/judging/businesses",
 		image: {
-			src: "/globe.svg",
+			src: "https://images.unsplash.com/photo-1633613286991-611fe299c4be?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 			alt: "Globe illustration representing the Savaal Star distinction.",
 		},
 	},
@@ -51,7 +52,7 @@ const aboutSavaalCards = [
 			"Venues included in the Savaal Guide — considered, visited and chosen for quality and character.",
 		href: "/judging/prospective-judges",
 		image: {
-			src: "/window.svg",
+			src: "https://images.unsplash.com/photo-1608503120873-61c4643f96b1?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 			alt: "Window illustration representing the Savaal Selected listings.",
 		},
 	},
@@ -61,7 +62,7 @@ const aboutSavaalCards = [
 			"Learn how Savaal works and explore our services for partners and businesses.",
 		href: "/about-us/services/consulting",
 		image: {
-			src: "/file.svg",
+			src: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 			alt: "Document illustration introducing how Savaal works.",
 		},
 	},
@@ -77,7 +78,8 @@ export default function AboutUsPage() {
 							About Savaal
 						</p>
 						<h1 className="text-4xl font-bold leading-tight text-neutral-900 md:text-5xl">
-							<span className="text-(--tertiary)">Guiding travelers</span> to the heart of African hospitality.
+							<span className="text-(--tertiary)">Guiding travelers</span> to
+							the heart of African hospitality.
 						</h1>
 						<p className="text-lg text-neutral-700">
 							Savaal is a cultural hospitality guide that amplifies the chefs,
@@ -207,7 +209,7 @@ export default function AboutUsPage() {
 					</p>
 				</section> */}
 
-				
+				<FounderQuote /> 
 			</section>
 		</div>
 	);
