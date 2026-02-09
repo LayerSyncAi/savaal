@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import { businessCriteria } from "@/content/judgingBusinesses";
-
 const judgingFaqs = [
   {
     question: "How are judges selected for each assignment?",
@@ -78,35 +76,52 @@ export default function JudgingPage() {
           </div>
         </div>
 
-        <div className="grid gap-6 rounded-3xl border border-indigo-100 bg-white p-6 shadow-sm md:grid-cols-2">
-          <div className="space-y-3">
-            <h3 className="text-lg font-semibold text-neutral-900">How scoring works</h3>
-            <p className="text-neutral-700">
-              Judges use a 100-point rubric across seven categories. Notes from
-              each anonymous visit are reviewed by a small panel to confirm
-              accuracy before a star level is published.
-            </p>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {businessCriteria.slice(0, 4).map(({ category, maxScore, description }) => (
-                <div
-                  key={category}
-                  className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="text-sm font-semibold text-neutral-900">{category}</p>
-                    <span className="text-xs font-bold text-indigo-700">{maxScore} pts</span>
-                  </div>
-                  <p className="mt-2 text-sm text-neutral-700">{description}</p>
-                </div>
-              ))}
+        <div className="space-y-6">
+          <section className="rounded-3xl border border-indigo-100 bg-white p-6 shadow-sm">
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-neutral-900">Scoring Pillars</h3>
+              <p className="text-neutral-700">
+                Judges use a 100-point rubric across four pillars. Notes from
+                each anonymous visit are reviewed by a small panel to confirm
+                accuracy before a star level is published.
+              </p>
+              <ol className="grid gap-3 sm:grid-cols-2">
+                {[
+                  "Taste, Technique & Service",
+                  "Menu Composition",
+                  "Beverage Experience",
+                  "Ambience & Value",
+                ].map((pillar) => (
+                  <li
+                    key={pillar}
+                    className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4 text-sm font-semibold text-neutral-900"
+                  >
+                    {pillar}
+                  </li>
+                ))}
+              </ol>
             </div>
-            <p className="text-sm font-semibold text-neutral-700">
-              Stars are awarded at 70+ (⭐), 80+ (⭐⭐), and 90+ (⭐⭐⭐) once panel
-              consensus is reached.
-            </p>
-          </div>
-
-          <div className="space-y-3">
+          </section>
+          <section className="rounded-3xl border border-indigo-100 bg-white p-6 shadow-sm">
+            <div className="space-y-3">
+              <h4 className="text-base font-semibold text-neutral-900">Savaal Stars</h4>
+              <ul className="space-y-2 text-sm text-neutral-700">
+                <li>
+                  <span className="font-semibold text-neutral-900">1 star:</span>{" "}
+                  high level consistency and a clearly defined culinary identity
+                </li>
+                <li>
+                  <span className="font-semibold text-neutral-900">2 stars:</span>{" "}
+                  exceptional character and a deliberate, memorable guest journey
+                </li>
+                <li>
+                  <span className="font-semibold text-neutral-900">3 stars:</span>{" "}
+                  Absolutely excellence - precision, restraint, and command at the highest level
+                </li>
+              </ul>
+            </div>
+          </section>
+        {/* <div className="space-y-3">
             <h3 className="text-lg font-semibold text-neutral-900">Judging timeline</h3>
             <ul className="space-y-3 text-neutral-700">
               <li>
@@ -130,10 +145,10 @@ export default function JudgingPage() {
                 Savaal. Updates occur during each six-month cycle.
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
 
-        <div id="faq" className="grid gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+        {/* <div id="faq" className="grid gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-neutral-900">Judging FAQs</h3>
             <p className="text-neutral-700">Answers to common questions from prospective and active judges.</p>
@@ -153,6 +168,15 @@ export default function JudgingPage() {
             Learn how to qualify as a judge
           </Link>
         </div>
+
+        <div className="flex justify-center">
+          <Link
+            href="/contact"
+            className="rounded-full bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
+          >
+            Inquire About Certification
+          </Link>
+        </div> */}
       </section>
     </div>
   );
