@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { FaStar } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
-import type { RestaurantInfo, PriceLevel } from "@/content/restaurant-info";
+import type { PriceLevel } from "@/content/restaurant-info";
 import { getSavaalDistinction, getPriceLevelDisplay, zimbabweRegions } from "@/content/restaurant-info";
 
 export type CategoryType = "All" | "Restaurants" | "Stays";
@@ -11,7 +11,6 @@ export type PriceFilter = "All" | PriceLevel;
 export type DistinctionFilter = "All" | 1 | 2 | 3;
 
 type GuideFilterBarProps = {
-	restaurants: RestaurantInfo[];
 	regionFilter: string;
 	setRegionFilter: (value: string) => void;
 	categoryTypeFilter: CategoryType;
@@ -34,7 +33,6 @@ const distinctionLabels: Record<number, string> = {
 };
 
 export function GuideFilterBar({
-	restaurants,
 	regionFilter,
 	setRegionFilter,
 	categoryTypeFilter,

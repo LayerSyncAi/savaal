@@ -5,6 +5,7 @@ import { Navbar } from "@/components/navbar";
 import { PageFade } from "@/components/page-fade";
 import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/components/footer";
+import { ConvexClientProvider } from "./convex-provider";
 
 const poppins = localFont({
   variable: "--font-poppins",
@@ -34,10 +35,12 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} antialiased bg-[--foreground] text-[#1f1f1f]`}
       >
-        <Navbar />
-        <PageFade>{children}</PageFade>
-        <Footer />
-        <Toaster richColors />
+        <ConvexClientProvider>
+          <Navbar />
+          <PageFade>{children}</PageFade>
+          <Footer />
+          <Toaster richColors />
+        </ConvexClientProvider>
       </body>
     </html>
   );
