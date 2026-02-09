@@ -76,8 +76,8 @@ export default function JudgingPage() {
           </div>
         </div>
 
-        <div className="grid gap-6 rounded-3xl border border-indigo-100 bg-white p-6 shadow-sm md:grid-cols-2">
-          <div className="space-y-6">
+        <div className="space-y-6">
+          <section className="rounded-3xl border border-indigo-100 bg-white p-6 shadow-sm">
             <div className="space-y-3">
               <h3 className="text-lg font-semibold text-neutral-900">Scoring Pillars</h3>
               <p className="text-neutral-700">
@@ -101,10 +101,9 @@ export default function JudgingPage() {
                 ))}
               </ol>
             </div>
-
-           
-          </div>
- <div className="space-y-3">
+          </section>
+          <section className="rounded-3xl border border-indigo-100 bg-white p-6 shadow-sm">
+            <div className="space-y-3">
               <h4 className="text-base font-semibold text-neutral-900">Savaal Stars</h4>
               <ul className="space-y-2 text-sm text-neutral-700">
                 <li>
@@ -121,6 +120,8 @@ export default function JudgingPage() {
                 </li>
               </ul>
             </div>
+          </section>
+        </div>
           {/* <div className="space-y-3">
             <h3 className="text-lg font-semibold text-neutral-900">Judging timeline</h3>
             <ul className="space-y-3 text-neutral-700">
