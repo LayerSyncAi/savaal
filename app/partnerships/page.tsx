@@ -10,7 +10,7 @@ export default function PartnershipsPage() {
 					Partnerships
 				</p>
 				<h1 className="text-4xl font-bold text-neutral-900">
-					Explore partnership opportunities
+					For those ready to be considered
 				</h1>
 				<p className="text-lg text-neutral-700">
 					Learn how to collaborate with the Savaal Guide on campaigns, programs,
