@@ -102,7 +102,9 @@ export default function JudgingPage() {
               </ol>
             </div>
 
-            <div className="space-y-3">
+           
+          </div>
+ <div className="space-y-3">
               <h4 className="text-base font-semibold text-neutral-900">Savaal Stars</h4>
               <ul className="space-y-2 text-sm text-neutral-700">
                 <li>
@@ -119,9 +121,7 @@ export default function JudgingPage() {
                 </li>
               </ul>
             </div>
-          </div>
-
-          <div className="space-y-3">
+          {/* <div className="space-y-3">
             <h3 className="text-lg font-semibold text-neutral-900">Judging timeline</h3>
             <ul className="space-y-3 text-neutral-700">
               <li>
@@ -145,10 +145,10 @@ export default function JudgingPage() {
                 Savaal. Updates occur during each six-month cycle.
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
 
-        <div id="faq" className="grid gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+        {/* <div id="faq" className="grid gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-neutral-900">Judging FAQs</h3>
             <p className="text-neutral-700">Answers to common questions from prospective and active judges.</p>
@@ -176,7 +176,7 @@ export default function JudgingPage() {
           >
             Inquire About Certification
           </Link>
-        </div>
+        </div> */}
       </section>
     </div>
   );
