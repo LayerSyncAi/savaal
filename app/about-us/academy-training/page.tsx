@@ -142,7 +142,7 @@ export default function AcademyTrainingPage() {
 				))}
 			</div>
 
-			<div className="flex flex-col gap-4 rounded-2xl border border-amber-100 bg-amber-50/40 p-6 md:flex-row md:items-center md:justify-between">
+			{/* <div className="flex flex-col gap-4 rounded-2xl border border-amber-100 bg-amber-50/40 p-6 md:flex-row md:items-center md:justify-between">
 				<div>
 					<p className="text-sm font-semibold uppercase tracking-wide text-amber-700">
 						Judging or standards
@@ -161,7 +161,7 @@ export default function AcademyTrainingPage() {
 					icon={<FiArrowRight />}
 					className="uppercase"
 				/>
-			</div>
+			</div> */}
 
 			<div className="rounded-2xl bg-neutral-900 px-6 py-8 text-white">
 				<div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
