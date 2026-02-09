@@ -5,32 +5,30 @@ const trainingTracks = [
 	{
 		title: "Judge Accreditation",
 		description:
-			"Intensive standards training that equips cultural tastemakers to evaluate hospitality experiences fairly and transparently.",
-		outcomes: [
-			"Scorecard mastery with senior curator mentorship",
-			"Ethics, conflict of interest, and reporting rigor",
-			"Community listening sessions with venue teams",
-		],
+			"Earn trusted certification to evaluate hospitality experiences with fairness and transparency. Build confidence through guided scoring and reporting practice.",
+		cta: "Inquire About Enrollment",
+		href: "/contact",
 	},
 	{
 		title: "Taste Hunter Camps",
 		description:
-			"Field labs that place scouts in rural food hubs to spotlight farmers, market vendors, and homegrown culinary traditions.",
-		outcomes: [
-			"Storytelling that links producers to restaurants",
-			"Food safety, nutrition, and provenance checks",
-			"Career pathways for youth exploring hospitality",
-		],
+			"Join immersive field labs that uncover regional food stories and emerging talent. Learn ethical sourcing, documentation, and community engagement.",
+		cta: "Inquire About Enrollment",
+		href: "/contact",
 	},
 	{
-		title: "Junior Chef Studios",
+		title: "Chef Upskilling Studio",
 		description:
-			"Hands-on kitchen training focused on poultry, grains, and indigenous ingredients so young cooks can feed their communities well.",
-		outcomes: [
-			"Knife skills and safe kitchen operations",
-			"Menu costing that respects local supply chains",
-			"Signature dish labs with mentorship from Savaal chefs",
-		],
+			"Sharpen modern culinary techniques while honoring indigenous ingredients and local supply chains. Advance your craft with mentorship and practical labs.",
+		cta: "Inquire About Enrollment",
+		href: "/contact",
+	},
+	{
+		title: "Food & Beverage Service Excellence",
+		description:
+			"Elevate front-of-house standards with service rituals, guest care, and operational polish. Train teams to deliver consistent, memorable hospitality.",
+		cta: "Inquire About Enrollment",
+		href: "/contact",
 	},
 ];
 
@@ -114,8 +112,10 @@ export default function AcademyTrainingPage() {
 				</div>
 			</div> */}
 
+			<h2 className="text-2xl font-semibold text-neutral-900">
 				Training tracks
-			<div className="grid gap-6 md:grid-cols-3">
+			</h2>
+			<div className="grid gap-6 md:grid-cols-2">
 				{trainingTracks.map((track) => (
 					<div
 						key={track.title}
@@ -124,15 +124,44 @@ export default function AcademyTrainingPage() {
 						<h3 className="text-xl font-semibold text-neutral-900">
 							{track.title}
 						</h3>
-						<p className="mt-3 text-sm text-neutral-700">{track.description}</p>
-						<ul className="mt-4 space-y-2 text-sm font-medium text-neutral-800">
-							{track.outcomes.map((outcome) => (
-								<li key={outcome}>• {outcome}</li>
-							))}
-						</ul>
+						<p className="mt-3 text-sm text-neutral-700">
+							{track.description}
+						</p>
+						<div className="mt-5">
+							<RoundedSlideButtonLight
+								href={track.href}
+								title={track.cta}
+								hoverFillColor="var(--tertiary)"
+								defaultColor="var(--sand)"
+								hoverScale={1.05}
+								icon={<FiArrowRight />}
+								className="uppercase"
+							/>
+						</div>
 					</div>
 				))}
 			</div>
+
+			{/* <div className="flex flex-col gap-4 rounded-2xl border border-amber-100 bg-amber-50/40 p-6 md:flex-row md:items-center md:justify-between">
+				<div>
+					<p className="text-sm font-semibold uppercase tracking-wide text-amber-700">
+						Judging or standards
+					</p>
+					<p className="mt-2 text-sm text-neutral-700">
+						Explore the principles and scorecards we use to evaluate hospitality
+						across the Savaal Guide.
+					</p>
+				</div>
+				<RoundedSlideButtonLight
+					href="/about-us/judging"
+					title="See how we judge"
+					hoverFillColor="var(--tertiary)"
+					defaultColor="var(--sand)"
+					hoverScale={1.05}
+					icon={<FiArrowRight />}
+					className="uppercase"
+				/>
+			</div> */}
 
 			<div className="rounded-2xl bg-neutral-900 px-6 py-8 text-white">
 				<div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
