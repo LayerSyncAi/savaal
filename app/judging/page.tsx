@@ -1,4 +1,6 @@
 import Link from "next/link";
+import RoundedSlideButtonLight from "@/components/rounded-slide-button-light";
+import { FiArrowRight } from "react-icons/fi";
 
 const judgingFaqs = [
   {
@@ -177,6 +179,15 @@ export default function JudgingPage() {
             Inquire About Certification
           </Link>
         </div> */}
+        <div className="flex justify-center">
+          <RoundedSlideButtonLight
+            href="/contact"
+            title="Inquire about certification"
+            hoverFillColor="var(--tertiary)"
+            icon={<FiArrowRight />}
+            defaultColor="var(--background)"
+          />
+        </div>
       </section>
     </div>
   );
