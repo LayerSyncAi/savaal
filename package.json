@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "convex:clean": "find convex -type f \\( -name '*.js' -o -name '*.js.map' \\) ! -path 'convex/_generated/*' -delete && rm -rf convex/out",
+    "preconvex": "npm run convex:clean"
   },
   "dependencies": {
     "@react-email/components": "^1.0.1",
