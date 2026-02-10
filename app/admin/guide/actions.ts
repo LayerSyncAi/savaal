@@ -24,6 +24,22 @@ function requireAdminToken(): string {
 	return adminToken;
 }
 
+function parseJudgeComments(formData: FormData) {
+	const count = Number(formData.get("judgeCommentCount") ?? 0);
+	if (count === 0) return undefined;
+
+	const comments: { judgeName: string; comment: string; rating: number }[] = [];
+	for (let i = 0; i < Math.min(count, 3); i++) {
+		const judgeName = String(formData.get(`judgeComment_${i}_judgeName`) ?? "").trim();
+		const comment = String(formData.get(`judgeComment_${i}_comment`) ?? "").trim();
+		const rating = Number(formData.get(`judgeComment_${i}_rating`) ?? 0);
+		if (judgeName && comment) {
+			comments.push({ judgeName, comment, rating: Number.isNaN(rating) ? 0 : rating });
+		}
+	}
+	return comments.length > 0 ? comments : undefined;
+}
+
 function parseGuideItemForm(formData: FormData) {
 	const published = formData.get("published") === "on";
 	const rating = Number(formData.get("rating"));
@@ -52,6 +68,7 @@ function parseGuideItemForm(formData: FormData) {
 			{ label: "Perceived Value", score: String(formData.get("scoreValue") ?? "") },
 		],
 		totalScore: String(formData.get("totalScore") ?? ""),
+		judgeComments: parseJudgeComments(formData),
 		sortOrder: Number.isNaN(sortOrder) ? 0 : sortOrder,
 		published,
 	};

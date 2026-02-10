@@ -12,6 +12,12 @@ const scoreValidator = v.object({
 	score: v.string(),
 });
 
+const judgeCommentValidator = v.object({
+	judgeName: v.string(),
+	comment: v.string(),
+	rating: v.number(),
+});
+
 const guideItemPayload = {
 	name: v.string(),
 	category: categoryValidator,
@@ -26,6 +32,7 @@ const guideItemPayload = {
 	description: v.string(),
 	scores: v.array(scoreValidator),
 	totalScore: v.string(),
+	judgeComments: v.optional(v.array(judgeCommentValidator)),
 	sortOrder: v.number(),
 	published: v.boolean(),
 };

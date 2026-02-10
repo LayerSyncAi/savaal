@@ -19,19 +19,23 @@ export default async function EditGuideItemPage({
 }: GuideEditPageProps) {
 	const { id } = await params;
 	const itemId = id as Id<"guideItems">;
-	const item = await convexClient.query(api.guideItems.getGuideItemById, {
-		id: itemId,
-	});
+	const [item, judges] = await Promise.all([
+		convexClient.query(api.guideItems.getGuideItemById, { id: itemId }),
+		convexClient.query(api.judges.listJudges, {}),
+	]);
 
 	if (!item) {
 		notFound();
 	}
+
+	const judgeNames = judges.map((j) => j.name);
 
 	return (
 		<GuideItemForm
 			title="Edit guide item"
 			subtitle="Update venue details, scores, or publish status."
 			action={updateGuideItemAction.bind(null, itemId)}
+			judgeNames={judgeNames}
 			initialValues={{
 				name: item.name,
 				category: item.category,
@@ -48,6 +52,7 @@ export default async function EditGuideItemPage({
 				sortOrder: item.sortOrder,
 				published: item.published,
 				scores: item.scores,
+				judgeComments: item.judgeComments,
 			}}
 		>
 			<button
