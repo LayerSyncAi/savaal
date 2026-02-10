@@ -9,8 +9,9 @@ import type { Id } from "@/convex/_generated/dataModel";
 const adminToken = process.env.ADMIN_TOKEN;
 const adminPassword = process.env.ADMIN_PASSWORD;
 
-function requireAdminSession() {
-	const cookieValue = cookies().get("savaal_admin")?.value;
+async function requireAdminSession() {
+	const cookieStore = await cookies();
+	const cookieValue = cookieStore.get("savaal_admin")?.value;
 	if (cookieValue !== "true") {
 		throw new Error("Unauthorized");
 	}
@@ -31,7 +32,7 @@ function parseGuideItemForm(formData: FormData) {
 
 	return {
 		name: String(formData.get("name") ?? ""),
-		category: String(formData.get("category") ?? "Restaurant"),
+		category: String(formData.get("category") ?? "Restaurant") as "Restaurant" | "Hotel" | "Bar",
 		cuisine: String(formData.get("cuisine") ?? ""),
 		city: String(formData.get("city") ?? ""),
 		country: String(formData.get("country") ?? ""),
@@ -64,7 +65,8 @@ export async function loginAdminAction(formData: FormData) {
 	if (password !== adminPassword) {
 		throw new Error("Invalid password");
 	}
-	cookies().set("savaal_admin", "true", {
+	const cookieStore = await cookies();
+	cookieStore.set("savaal_admin", "true", {
 		httpOnly: true,
 		sameSite: "lax",
 		secure: process.env.NODE_ENV === "production",
@@ -74,7 +76,7 @@ export async function loginAdminAction(formData: FormData) {
 }
 
 export async function createGuideItemAction(formData: FormData) {
-	requireAdminSession();
+	await requireAdminSession();
 	const payload = parseGuideItemForm(formData);
 	await convexClient.mutation(api.guideItems.createGuideItem, {
 		payload,
@@ -88,7 +90,7 @@ export async function updateGuideItemAction(
 	id: Id<"guideItems">,
 	formData: FormData
 ) {
-	requireAdminSession();
+	await requireAdminSession();
 	const patch = parseGuideItemForm(formData);
 	await convexClient.mutation(api.guideItems.updateGuideItem, {
 		id,
@@ -103,7 +105,7 @@ export async function deleteGuideItemAction(
 	id: Id<"guideItems">,
 	_formData?: FormData
 ) {
-	requireAdminSession();
+	await requireAdminSession();
 	await convexClient.mutation(api.guideItems.deleteGuideItem, {
 		id,
 		adminToken: requireAdminToken(),

@@ -1,12 +1,13 @@
 import { cookies } from "next/headers";
 import { loginAdminAction } from "./actions";
 
-export default function GuideAdminLayout({
+export default async function GuideAdminLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
-	const isAdmin = cookies().get("savaal_admin")?.value === "true";
+	const cookieStore = await cookies();
+	const isAdmin = cookieStore.get("savaal_admin")?.value === "true";
 
 	if (!isAdmin) {
 		return (

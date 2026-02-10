@@ -9,15 +9,16 @@ import {
 import { GuideItemForm } from "../../components/guide-item-form";
 
 type GuideEditPageProps = {
-	params: {
+	params: Promise<{
 		id: string;
-	};
+	}>;
 };
 
 export default async function EditGuideItemPage({
 	params,
 }: GuideEditPageProps) {
-	const itemId = params.id as Id<"guideItems">;
+	const { id } = await params;
+	const itemId = id as Id<"guideItems">;
 	const item = await convexClient.query(api.guideItems.getGuideItemById, {
 		id: itemId,
 	});
