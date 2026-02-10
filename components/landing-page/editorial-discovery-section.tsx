@@ -37,7 +37,7 @@ const buildEditorialCards = () => {
 
       return { ...group, event: picked };
     })
-    .filter((card): card is { label: string; event: EventDetails } =>
+    .filter((card): card is { label: string; event: EventDetails; picker: (items: EventDetails[], used: Set<string>) => EventDetails | undefined } =>
       Boolean(card),
     )
     .slice(0, 3);

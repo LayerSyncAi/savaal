@@ -2,6 +2,12 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
+	judges: defineTable({
+		name: v.string(),
+		createdAt: v.number(),
+		updatedAt: v.number(),
+	}).index("by_name", ["name"]),
+
 	guideItems: defineTable({
 		name: v.string(),
 		category: v.union(
@@ -25,6 +31,15 @@ export default defineSchema({
 			})
 		),
 		totalScore: v.string(),
+		judgeComments: v.optional(
+			v.array(
+				v.object({
+					judgeName: v.string(),
+					comment: v.string(),
+					rating: v.number(),
+				})
+			)
+		),
 		sortOrder: v.number(),
 		published: v.boolean(),
 		createdAt: v.number(),

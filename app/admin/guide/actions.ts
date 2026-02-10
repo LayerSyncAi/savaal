@@ -9,8 +9,9 @@ import type { Id } from "@/convex/_generated/dataModel";
 const adminToken = process.env.ADMIN_TOKEN;
 const adminPassword = process.env.ADMIN_PASSWORD;
 
-function requireAdminSession() {
-	const cookieValue = cookies().get("savaal_admin")?.value;
+async function requireAdminSession() {
+	const cookieStore = await cookies();
+	const cookieValue = cookieStore.get("savaal_admin")?.value;
 	if (cookieValue !== "true") {
 		throw new Error("Unauthorized");
 	}
@@ -23,6 +24,22 @@ function requireAdminToken(): string {
 	return adminToken;
 }
 
+function parseJudgeComments(formData: FormData) {
+	const count = Number(formData.get("judgeCommentCount") ?? 0);
+	if (count === 0) return undefined;
+
+	const comments: { judgeName: string; comment: string; rating: number }[] = [];
+	for (let i = 0; i < Math.min(count, 3); i++) {
+		const judgeName = String(formData.get(`judgeComment_${i}_judgeName`) ?? "").trim();
+		const comment = String(formData.get(`judgeComment_${i}_comment`) ?? "").trim();
+		const rating = Number(formData.get(`judgeComment_${i}_rating`) ?? 0);
+		if (judgeName && comment) {
+			comments.push({ judgeName, comment, rating: Number.isNaN(rating) ? 0 : rating });
+		}
+	}
+	return comments.length > 0 ? comments : undefined;
+}
+
 function parseGuideItemForm(formData: FormData) {
 	const published = formData.get("published") === "on";
 	const rating = Number(formData.get("rating"));
@@ -31,7 +48,7 @@ function parseGuideItemForm(formData: FormData) {
 
 	return {
 		name: String(formData.get("name") ?? ""),
-		category: String(formData.get("category") ?? "Restaurant"),
+		category: String(formData.get("category") ?? "Restaurant") as "Restaurant" | "Hotel" | "Bar",
 		cuisine: String(formData.get("cuisine") ?? ""),
 		city: String(formData.get("city") ?? ""),
 		country: String(formData.get("country") ?? ""),
@@ -51,6 +68,7 @@ function parseGuideItemForm(formData: FormData) {
 			{ label: "Perceived Value", score: String(formData.get("scoreValue") ?? "") },
 		],
 		totalScore: String(formData.get("totalScore") ?? ""),
+		judgeComments: parseJudgeComments(formData),
 		sortOrder: Number.isNaN(sortOrder) ? 0 : sortOrder,
 		published,
 	};
@@ -64,7 +82,8 @@ export async function loginAdminAction(formData: FormData) {
 	if (password !== adminPassword) {
 		throw new Error("Invalid password");
 	}
-	cookies().set("savaal_admin", "true", {
+	const cookieStore = await cookies();
+	cookieStore.set("savaal_admin", "true", {
 		httpOnly: true,
 		sameSite: "lax",
 		secure: process.env.NODE_ENV === "production",
@@ -74,7 +93,7 @@ export async function loginAdminAction(formData: FormData) {
 }
 
 export async function createGuideItemAction(formData: FormData) {
-	requireAdminSession();
+	await requireAdminSession();
 	const payload = parseGuideItemForm(formData);
 	await convexClient.mutation(api.guideItems.createGuideItem, {
 		payload,
@@ -88,7 +107,7 @@ export async function updateGuideItemAction(
 	id: Id<"guideItems">,
 	formData: FormData
 ) {
-	requireAdminSession();
+	await requireAdminSession();
 	const patch = parseGuideItemForm(formData);
 	await convexClient.mutation(api.guideItems.updateGuideItem, {
 		id,
@@ -103,7 +122,7 @@ export async function deleteGuideItemAction(
 	id: Id<"guideItems">,
 	_formData?: FormData
 ) {
-	requireAdminSession();
+	await requireAdminSession();
 	await convexClient.mutation(api.guideItems.deleteGuideItem, {
 		id,
 		adminToken: requireAdminToken(),

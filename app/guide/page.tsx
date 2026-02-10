@@ -64,7 +64,7 @@ export default function GuidePage() {
 				matchesDistinction
 			);
 		});
-	}, [regionFilter, categoryTypeFilter, priceFilter, distinctionFilter]);
+	}, [restaurants, regionFilter, categoryTypeFilter, priceFilter, distinctionFilter]);
 
 	const { restaurantItems, stayItems } = useMemo(() => {
 		const restaurantEntries = filteredRestaurants.filter(

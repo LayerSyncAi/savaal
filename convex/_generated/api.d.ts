@@ -9,6 +9,7 @@
  */
 
 import type * as guideItems from "../guideItems.js";
+import type * as judges from "../judges.js";
 
 import type {
   ApiFromModules,
@@ -18,6 +19,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   guideItems: typeof guideItems;
+  judges: typeof judges;
 }>;
 
 /**
