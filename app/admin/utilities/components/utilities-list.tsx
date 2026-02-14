@@ -15,7 +15,7 @@ import {
 	toggleCityAction,
 	seedUtilitiesAction,
 } from "../actions";
-import { SOUTHERN_AFRICA_COUNTRIES } from "@/convex/constants";
+import { SOUTHERN_AFRICA_COUNTRIES } from "@/convex/_constants";
 
 type Cuisine = Doc<"utilities_cuisines">;
 type Country = Doc<"utilities_countries">;

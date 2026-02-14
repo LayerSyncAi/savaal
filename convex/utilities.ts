@@ -1,6 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { SOUTHERN_AFRICA_COUNTRIES } from "./constants";
+import { SOUTHERN_AFRICA_COUNTRIES } from "./_constants";
 
 function assertAdmin(adminToken?: string) {
 	const expected = process.env.ADMIN_TOKEN;
@@ -301,7 +301,7 @@ export const seedUtilities = mutation({
 		assertAdmin(args.adminToken);
 
 		const { DEFAULT_CUISINES, SOUTHERN_AFRICA_COUNTRIES, DEFAULT_CITIES } =
-			await import("./constants");
+			await import("./_constants");
 
 		const now = Date.now();
 		let cuisinesAdded = 0;
