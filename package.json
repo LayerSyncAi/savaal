@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "convex:clean": "find convex -type f \\( -name '*.js' -o -name '*.js.map' \\) ! -path 'convex/_generated/*' -delete && rm -rf convex/out",
+    "convex:dev": "npm run convex:clean && npx convex dev",
     "preconvex": "npm run convex:clean"
   },
   "dependencies": {

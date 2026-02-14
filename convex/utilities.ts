@@ -1,6 +1,69 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { SOUTHERN_AFRICA_COUNTRIES } from "./_constants";
+
+// ── Constants (inlined to avoid extra entry-point files in convex/) ──
+
+const SOUTHERN_AFRICA_COUNTRIES = [
+	"South Africa",
+	"Zimbabwe",
+	"Botswana",
+	"Namibia",
+	"Mozambique",
+	"Zambia",
+	"Malawi",
+	"Lesotho",
+	"Eswatini",
+	"Angola",
+] as const;
+
+const DEFAULT_CUISINES = [
+	"Contemporary",
+	"African",
+	"Italian",
+	"Seafood",
+	"Steakhouse",
+	"Cafe",
+	"French",
+	"Asian",
+	"Indian",
+	"Mediterranean",
+	"Mexican",
+	"Japanese",
+	"Fusion",
+	"Vegetarian",
+	"Farm-to-Table",
+	"Fine Dining",
+	"Bistro",
+	"Gastropub",
+] as const;
+
+const DEFAULT_CITIES: Record<string, string[]> = {
+	"South Africa": [
+		"Cape Town",
+		"Johannesburg",
+		"Durban",
+		"Pretoria",
+		"Stellenbosch",
+		"Franschhoek",
+		"Port Elizabeth",
+		"Knysna",
+	],
+	Zimbabwe: [
+		"Harare",
+		"Bulawayo",
+		"Victoria Falls",
+		"Mutare",
+		"Masvingo",
+	],
+	Botswana: ["Gaborone", "Maun", "Kasane", "Francistown"],
+	Namibia: ["Windhoek", "Swakopmund", "Walvis Bay"],
+	Mozambique: ["Maputo", "Vilankulo", "Tofo"],
+	Zambia: ["Lusaka", "Livingstone"],
+	Malawi: ["Lilongwe", "Blantyre", "Cape Maclear"],
+	Lesotho: ["Maseru"],
+	Eswatini: ["Mbabane", "Manzini"],
+	Angola: ["Luanda"],
+};
 
 function assertAdmin(adminToken?: string) {
 	const expected = process.env.ADMIN_TOKEN;
@@ -299,9 +362,6 @@ export const seedUtilities = mutation({
 	args: { adminToken: v.string() },
 	handler: async (ctx, args) => {
 		assertAdmin(args.adminToken);
-
-		const { DEFAULT_CUISINES, SOUTHERN_AFRICA_COUNTRIES, DEFAULT_CITIES } =
-			await import("./_constants");
 
 		const now = Date.now();
 		let cuisinesAdded = 0;
