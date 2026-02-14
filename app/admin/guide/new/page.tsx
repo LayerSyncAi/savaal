@@ -4,7 +4,11 @@ import { createGuideItemAction } from "../actions";
 import { GuideItemForm } from "../components/guide-item-form";
 
 export default async function NewGuideItemPage() {
-	const judges = await convexClient.query(api.judges.listJudges, {});
+	const [judges, cuisines, cities] = await Promise.all([
+		convexClient.query(api.judges.listJudges, {}),
+		convexClient.query(api.utilities.listCuisines, { activeOnly: true }),
+		convexClient.query(api.utilities.listCities, { activeOnly: true }),
+	]);
 	const judgeNames = judges.map((j) => j.name);
 
 	return (
@@ -14,6 +18,8 @@ export default async function NewGuideItemPage() {
 				subtitle="Add a new restaurant, stay, or bar to the Guide."
 				action={createGuideItemAction}
 				judgeNames={judgeNames}
+				cuisines={cuisines}
+				cities={cities}
 			>
 				<Link
 					href="/admin/guide"

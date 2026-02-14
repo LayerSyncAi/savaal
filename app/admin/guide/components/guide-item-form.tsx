@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { zimbabweRegions } from "@/content/restaurant-info";
 
@@ -8,6 +9,17 @@ type JudgeComment = {
 	judgeName: string;
 	comment: string;
 	rating: number;
+};
+
+type CityOption = {
+	_id: string;
+	name: string;
+	countryName: string;
+};
+
+type CuisineOption = {
+	_id: string;
+	name: string;
 };
 
 type GuideItemFormValues = {
@@ -39,6 +51,8 @@ type GuideItemFormProps = {
 	action: (formData: FormData) => void;
 	children?: React.ReactNode;
 	judgeNames: string[];
+	cuisines?: CuisineOption[];
+	cities?: CityOption[];
 };
 
 const scoreFields = [
@@ -63,12 +77,31 @@ export function GuideItemForm({
 	action,
 	children,
 	judgeNames,
+	cuisines = [],
+	cities = [],
 }: GuideItemFormProps) {
 	const initialImage = initialValues?.coverImage ?? "";
 	const [imageUrl, setImageUrl] = useState(initialImage);
 	const [comments, setComments] = useState<JudgeComment[]>(
 		initialValues?.judgeComments ?? []
 	);
+	const [selectedCity, setSelectedCity] = useState(
+		initialValues?.city ?? ""
+	);
+
+	// Build a city→country lookup
+	const cityCountryMap = useMemo(() => {
+		const map = new Map<string, string>();
+		for (const city of cities) {
+			map.set(city.name, city.countryName);
+		}
+		return map;
+	}, [cities]);
+
+	// Derive country from selected city
+	const derivedCountry = selectedCity
+		? cityCountryMap.get(selectedCity) ?? ""
+		: initialValues?.country ?? "";
 
 	const scoresByLabel = new Map(
 		(initialValues?.scores ?? []).map((score) => [score.label, score.score])
@@ -88,6 +121,9 @@ export function GuideItemForm({
 			comments.map((c, i) => (i === index ? { ...c, [field]: value } : c))
 		);
 	};
+
+	const hasCuisines = cuisines.length > 0;
+	const hasCities = cities.length > 0;
 
 	return (
 		<section className="mx-auto flex max-w-4xl flex-col gap-6 px-6 py-16">
@@ -122,33 +158,85 @@ export function GuideItemForm({
 							<option value="Bar">Bar</option>
 						</select>
 					</label>
+
+					{/* Cuisine dropdown */}
 					<label className="text-sm font-medium text-neutral-700">
 						Cuisine
-						<input
-							name="cuisine"
-							defaultValue={initialValues?.cuisine ?? ""}
-							required
-							className={inputClass}
-						/>
+						{hasCuisines ? (
+							<select
+								name="cuisine"
+								defaultValue={initialValues?.cuisine ?? ""}
+								required
+								className={inputClass}
+							>
+								<option value="">Select cuisine</option>
+								{cuisines.map((c) => (
+									<option key={c._id} value={c.name}>
+										{c.name}
+									</option>
+								))}
+							</select>
+						) : (
+							<div className="mt-2 flex items-center gap-2">
+								<span className="text-xs text-neutral-500">
+									No cuisines configured.
+								</span>
+								<Link
+									href="/admin/utilities"
+									className="text-xs font-semibold text-amber-700 underline"
+								>
+									Manage Utilities
+								</Link>
+							</div>
+						)}
 					</label>
+
+					{/* City dropdown */}
 					<label className="text-sm font-medium text-neutral-700">
 						City
-						<input
-							name="city"
-							defaultValue={initialValues?.city ?? ""}
-							required
-							className={inputClass}
-						/>
+						{hasCities ? (
+							<select
+								name="city"
+								value={selectedCity}
+								onChange={(e) => setSelectedCity(e.target.value)}
+								required
+								className={inputClass}
+							>
+								<option value="">Select city</option>
+								{cities.map((c) => (
+									<option key={c._id} value={c.name}>
+										{c.name} ({c.countryName})
+									</option>
+								))}
+							</select>
+						) : (
+							<div className="mt-2 flex items-center gap-2">
+								<span className="text-xs text-neutral-500">
+									No cities configured.
+								</span>
+								<Link
+									href="/admin/utilities"
+									className="text-xs font-semibold text-amber-700 underline"
+								>
+									Manage Utilities
+								</Link>
+							</div>
+						)}
 					</label>
+
+					{/* Country (auto-populated, disabled) */}
 					<label className="text-sm font-medium text-neutral-700">
 						Country
 						<input
-							name="country"
-							defaultValue={initialValues?.country ?? ""}
-							required
-							className={inputClass}
+							value={derivedCountry}
+							readOnly
+							disabled
+							className={`${inputClass} bg-neutral-100 text-neutral-500 cursor-not-allowed`}
 						/>
+						{/* Hidden input so country is included in FormData */}
+						<input type="hidden" name="country" value={derivedCountry} />
 					</label>
+
 					<label className="text-sm font-medium text-neutral-700">
 						Region
 						<select

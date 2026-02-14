@@ -47,4 +47,29 @@ export default defineSchema({
 	})
 		.index("by_category", ["category"])
 		.index("by_published", ["published"]),
+
+	utilities_cuisines: defineTable({
+		name: v.string(),
+		slug: v.string(),
+		isActive: v.boolean(),
+		createdAt: v.number(),
+	}).index("by_slug", ["slug"]),
+
+	utilities_countries: defineTable({
+		name: v.string(),
+		code: v.optional(v.string()),
+		region: v.literal("southern-africa"),
+		isActive: v.boolean(),
+		createdAt: v.number(),
+	}).index("by_name", ["name"]),
+
+	utilities_cities: defineTable({
+		name: v.string(),
+		slug: v.string(),
+		countryId: v.id("utilities_countries"),
+		isActive: v.boolean(),
+		createdAt: v.number(),
+	})
+		.index("by_slug", ["slug"])
+		.index("by_countryId", ["countryId"]),
 });

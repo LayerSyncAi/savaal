@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import type { DatabaseReader } from "./_generated/server";
 
 const categoryValidator = v.union(
 	v.literal("Restaurant"),
@@ -44,6 +45,42 @@ function assertAdmin(adminToken?: string) {
 	}
 }
 
+/**
+ * Validate cuisine, city, and country for a guide item.
+ * - Cuisine must exist in utilities_cuisines (active).
+ * - City must exist in utilities_cities (active, Southern Africa).
+ * - Country is derived from the city's country; the submitted country value is ignored.
+ * Returns the corrected country name.
+ */
+async function validateAndResolveCityCountryCuisine(
+	db: DatabaseReader,
+	cuisine: string,
+	city: string
+): Promise<string> {
+	// Validate cuisine exists
+	const cuisines = await db.query("utilities_cuisines").collect();
+	const cuisineExists = cuisines.some(
+		(c) => c.name === cuisine && c.isActive
+	);
+	if (!cuisineExists) {
+		throw new Error(`Cuisine "${cuisine}" is not in the allowed list`);
+	}
+
+	// Validate city exists and resolve country
+	const cities = await db.query("utilities_cities").collect();
+	const cityRecord = cities.find((c) => c.name === city && c.isActive);
+	if (!cityRecord) {
+		throw new Error(`City "${city}" is not in the allowed list`);
+	}
+
+	const country = await db.get(cityRecord.countryId);
+	if (!country || country.region !== "southern-africa") {
+		throw new Error(`City "${city}" does not belong to a valid Southern Africa country`);
+	}
+
+	return country.name;
+}
+
 export const listGuideItems = query({
 	args: {
 		category: v.optional(categoryValidator),
@@ -86,9 +123,16 @@ export const createGuideItem = mutation({
 	},
 	handler: async (ctx, args) => {
 		assertAdmin(args.adminToken);
+		// Server-side: derive country from city, validate cuisine
+		const resolvedCountry = await validateAndResolveCityCountryCuisine(
+			ctx.db,
+			args.payload.cuisine,
+			args.payload.city
+		);
 		const timestamp = Date.now();
 		return ctx.db.insert("guideItems", {
 			...args.payload,
+			country: resolvedCountry,
 			createdAt: timestamp,
 			updatedAt: timestamp,
 		});
@@ -107,8 +151,15 @@ export const updateGuideItem = mutation({
 		if (!existing) {
 			throw new Error("Guide item not found");
 		}
+		// Server-side: derive country from city, validate cuisine
+		const resolvedCountry = await validateAndResolveCityCountryCuisine(
+			ctx.db,
+			args.patch.cuisine,
+			args.patch.city
+		);
 		return ctx.db.patch(args.id, {
 			...args.patch,
+			country: resolvedCountry,
 			updatedAt: Date.now(),
 		});
 	},
