@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useActionState } from "react";
 import type { Doc, Id } from "@/convex/_generated/dataModel";
 import {
 	createCuisineAction,
@@ -17,6 +18,8 @@ import {
 } from "../actions";
 import { SOUTHERN_AFRICA_COUNTRIES } from "@/lib/southern-africa";
 
+type ActionResult = { success: true } | { success: false; error: string };
+
 type Cuisine = Doc<"utilities_cuisines">;
 type Country = Doc<"utilities_countries">;
 type CityWithCountry = Doc<"utilities_cities"> & { countryName: string };
@@ -27,35 +30,53 @@ const inputClass =
 const sectionClass =
 	"space-y-4 rounded-2xl border border-amber-100 bg-white p-6 shadow-sm";
 
+function ErrorBanner({ message }: { message: string }) {
+	return (
+		<div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+			{message}
+		</div>
+	);
+}
+
 function SeedButton() {
 	const [seeding, setSeeding] = useState(false);
 	const [result, setResult] = useState<string | null>(null);
+	const [error, setError] = useState<string | null>(null);
 
 	return (
-		<div className="flex items-center gap-3">
-			<button
-				type="button"
-				disabled={seeding}
-				onClick={async () => {
-					setSeeding(true);
-					try {
-						const res = await seedUtilitiesAction();
-						setResult(
-							`Seeded: ${res.cuisinesAdded} cuisines, ${res.countriesAdded} countries, ${res.citiesAdded} cities`
-						);
-					} catch {
-						setResult("Seed failed");
-					} finally {
-						setSeeding(false);
-					}
-				}}
-				className="rounded-full border border-amber-300 px-5 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-50 disabled:opacity-50"
-			>
-				{seeding ? "Seeding..." : "Seed defaults"}
-			</button>
-			{result && (
-				<span className="text-xs text-neutral-500">{result}</span>
-			)}
+		<div className="flex flex-col gap-2">
+			<div className="flex items-center gap-3">
+				<button
+					type="button"
+					disabled={seeding}
+					onClick={async () => {
+						setSeeding(true);
+						setError(null);
+						try {
+							const res = await seedUtilitiesAction();
+							setResult(
+								`Seeded: ${res.cuisinesAdded} cuisines, ${res.countriesAdded} countries, ${res.citiesAdded} cities`
+							);
+						} catch (err: unknown) {
+							const msg =
+								err instanceof Error
+									? err.message
+									: "Seed failed";
+							setError(msg);
+							setResult(null);
+						} finally {
+							setSeeding(false);
+						}
+					}}
+					className="rounded-full border border-amber-300 px-5 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-50 disabled:opacity-50"
+				>
+					{seeding ? "Seeding..." : "Seed defaults"}
+				</button>
+				{result && (
+					<span className="text-xs text-neutral-500">{result}</span>
+				)}
+			</div>
+			{error && <ErrorBanner message={error} />}
 		</div>
 	);
 }
@@ -66,6 +87,10 @@ function CuisinesSection({
 	cuisines: Cuisine[];
 }) {
 	const [editingId, setEditingId] = useState<string | null>(null);
+	const [state, formAction, pending] = useActionState<
+		ActionResult | null,
+		FormData
+	>(createCuisineAction, null);
 
 	return (
 		<div className={sectionClass}>
@@ -73,7 +98,11 @@ function CuisinesSection({
 				Cuisines ({cuisines.length})
 			</h2>
 
-			<form action={createCuisineAction} className="flex gap-3">
+			{state && !state.success && (
+				<ErrorBanner message={state.error} />
+			)}
+
+			<form action={formAction} className="flex gap-3">
 				<input
 					name="name"
 					placeholder="New cuisine name"
@@ -82,9 +111,10 @@ function CuisinesSection({
 				/>
 				<button
 					type="submit"
-					className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+					disabled={pending}
+					className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-50"
 				>
-					Add
+					{pending ? "Adding..." : "Add"}
 				</button>
 			</form>
 
@@ -195,6 +225,10 @@ function CountriesSection({
 	const availableCountries = SOUTHERN_AFRICA_COUNTRIES.filter(
 		(name) => !existingNames.has(name)
 	);
+	const [state, formAction, pending] = useActionState<
+		ActionResult | null,
+		FormData
+	>(createCountryAction, null);
 
 	return (
 		<div className={sectionClass}>
@@ -205,8 +239,12 @@ function CountriesSection({
 				Limited to Southern Africa only.
 			</p>
 
+			{state && !state.success && (
+				<ErrorBanner message={state.error} />
+			)}
+
 			{availableCountries.length > 0 && (
-				<form action={createCountryAction} className="flex gap-3">
+				<form action={formAction} className="flex gap-3">
 					<select name="name" required className={inputClass}>
 						<option value="">Select a country to add</option>
 						{availableCountries.map((name) => (
@@ -217,9 +255,10 @@ function CountriesSection({
 					</select>
 					<button
 						type="submit"
-						className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+						disabled={pending}
+						className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-50"
 					>
-						Add
+						{pending ? "Adding..." : "Add"}
 					</button>
 				</form>
 			)}
@@ -288,6 +327,10 @@ function CitiesSection({
 	countries: Country[];
 }) {
 	const activeCountries = countries.filter((c) => c.isActive);
+	const [state, formAction, pending] = useActionState<
+		ActionResult | null,
+		FormData
+	>(createCityAction, null);
 
 	return (
 		<div className={sectionClass}>
@@ -295,8 +338,12 @@ function CitiesSection({
 				Cities ({cities.length})
 			</h2>
 
+			{state && !state.success && (
+				<ErrorBanner message={state.error} />
+			)}
+
 			{activeCountries.length > 0 ? (
-				<form action={createCityAction} className="flex gap-3">
+				<form action={formAction} className="flex gap-3">
 					<input
 						name="name"
 						placeholder="New city name"
@@ -317,9 +364,10 @@ function CitiesSection({
 					</select>
 					<button
 						type="submit"
-						className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+						disabled={pending}
+						className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-50"
 					>
-						Add
+						{pending ? "Adding..." : "Add"}
 					</button>
 				</form>
 			) : (

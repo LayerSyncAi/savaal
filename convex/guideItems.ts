@@ -40,7 +40,17 @@ const guideItemPayload = {
 
 function assertAdmin(adminToken?: string) {
 	const expected = process.env.ADMIN_TOKEN;
-	if (!expected || !adminToken || adminToken !== expected) {
+	if (!expected) {
+		console.error(
+			"[assertAdmin] ADMIN_TOKEN env var is not set in the Convex environment. " +
+				"Set it via `npx convex env set ADMIN_TOKEN <value>` or in the Convex dashboard."
+		);
+		throw new Error(
+			"Admin authorization is not configured. See server logs."
+		);
+	}
+	if (!adminToken || adminToken !== expected) {
+		console.warn("[assertAdmin] Rejected: invalid or missing admin token.");
 		throw new Error("Unauthorized");
 	}
 }

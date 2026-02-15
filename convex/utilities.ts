@@ -67,7 +67,17 @@ const DEFAULT_CITIES: Record<string, string[]> = {
 
 function assertAdmin(adminToken?: string) {
 	const expected = process.env.ADMIN_TOKEN;
-	if (!expected || !adminToken || adminToken !== expected) {
+	if (!expected) {
+		console.error(
+			"[assertAdmin] ADMIN_TOKEN env var is not set in the Convex environment. " +
+				"Set it via `npx convex env set ADMIN_TOKEN <value>` or in the Convex dashboard."
+		);
+		throw new Error(
+			"Admin authorization is not configured. See server logs."
+		);
+	}
+	if (!adminToken || adminToken !== expected) {
+		console.warn("[assertAdmin] Rejected: invalid or missing admin token.");
 		throw new Error("Unauthorized");
 	}
 }
@@ -431,5 +441,22 @@ export const seedUtilities = mutation({
 		}
 
 		return { cuisinesAdded, countriesAdded, citiesAdded };
+	},
+});
+
+// ── Admin setup verification ─────────────────────────────────────────
+// Returns whether ADMIN_TOKEN is configured in the Convex environment.
+// Does NOT reveal the token value.
+export const verifyAdminSetup = query({
+	args: {},
+	handler: async () => {
+		const hasToken = !!process.env.ADMIN_TOKEN;
+		return {
+			adminTokenConfigured: hasToken,
+			message: hasToken
+				? "ADMIN_TOKEN is configured in Convex."
+				: "ADMIN_TOKEN is NOT set in the Convex environment. " +
+					"Run: npx convex env set ADMIN_TOKEN <your-token-value>",
+		};
 	},
 });
