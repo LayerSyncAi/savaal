@@ -58,13 +58,13 @@ type GuideItemFormProps = {
 };
 
 const scoreFields = [
-	{ name: "scoreTaste", label: "Taste & Technique" },
-	{ name: "scoreService", label: "Service" },
-	{ name: "scoreBeverage", label: "Beverage Experience" },
-	{ name: "scoreMenu", label: "Menu Composition" },
-	{ name: "scorePresentation", label: "Presentation" },
-	{ name: "scoreAmbience", label: "Ambience" },
-	{ name: "scoreValue", label: "Perceived Value" },
+	{ name: "scoreTaste", label: "Taste & Technique", maxScore: 35 },
+	{ name: "scoreService", label: "Service", maxScore: 25 },
+	{ name: "scoreBeverage", label: "Beverage Experience", maxScore: 10 },
+	{ name: "scoreMenu", label: "Menu Composition", maxScore: 10 },
+	{ name: "scorePresentation", label: "Presentation", maxScore: 10 },
+	{ name: "scoreAmbience", label: "Ambience", maxScore: 5 },
+	{ name: "scoreValue", label: "Perceived Value", maxScore: 5 },
 ] as const;
 
 const MAX_COMMENTS = 3;
@@ -115,6 +115,27 @@ export function GuideItemForm({
 	const scoresByLabel = new Map(
 		(initialValues?.scores ?? []).map((score) => [score.label, score.score])
 	);
+
+	const [scoreValues, setScoreValues] = useState<Record<string, string>>(() => {
+		const initial: Record<string, string> = {};
+		for (const field of scoreFields) {
+			initial[field.name] = scoresByLabel.get(field.label) ?? "";
+		}
+		return initial;
+	});
+
+	const updateScore = (fieldName: string, value: string) => {
+		setScoreValues((prev) => ({ ...prev, [fieldName]: value }));
+	};
+
+	const totalScore = useMemo(() => {
+		let sum = 0;
+		for (const field of scoreFields) {
+			const val = parseFloat(scoreValues[field.name]);
+			if (!Number.isNaN(val)) sum += val;
+		}
+		return sum;
+	}, [scoreValues]);
 
 	const addComment = () => {
 		if (comments.length >= MAX_COMMENTS) return;
@@ -371,7 +392,8 @@ export function GuideItemForm({
 					</div>
 
 					<label className="text-sm font-medium text-neutral-700">
-						Rating
+						Rating{" "}
+						<span className="text-xs text-neutral-400">(max 5)</span>
 						<input
 							type="number"
 							step="0.1"
@@ -397,13 +419,15 @@ export function GuideItemForm({
 						</select>
 					</label>
 					<label className="text-sm font-medium text-neutral-700">
-						Total score
+						Total score{" "}
+						<span className="text-xs text-neutral-400">(auto-calculated, max 100)</span>
 						<input
-							name="totalScore"
-							defaultValue={initialValues?.totalScore ?? ""}
-							required
-							className={inputClass}
+							value={String(totalScore)}
+							readOnly
+							disabled
+							className={`${inputClass} bg-neutral-100 text-neutral-500 cursor-not-allowed`}
 						/>
+						<input type="hidden" name="totalScore" value={String(totalScore)} />
 					</label>
 					<label className="text-sm font-medium text-neutral-700">
 						Sort order
@@ -429,19 +453,30 @@ export function GuideItemForm({
 
 				<div className="space-y-3">
 					<p className="text-sm font-semibold text-neutral-800">
-						Score breakdown
+						Score breakdown{" "}
+						<span className="text-xs font-normal text-neutral-400">
+							(total: {totalScore} / 100)
+						</span>
 					</p>
 					<div className="grid gap-4 sm:grid-cols-2">
-						{scoreFields.map(({ name, label }) => {
+						{scoreFields.map(({ name, label, maxScore }) => {
 							return (
 								<label
 									key={label}
 									className="text-sm font-medium text-neutral-700"
 								>
-									{label}
+									{label}{" "}
+									<span className="text-xs text-neutral-400">
+										(max {maxScore})
+									</span>
 									<input
+										type="number"
+										step="0.1"
+										min="0"
+										max={maxScore}
 										name={name}
-										defaultValue={scoresByLabel.get(label) ?? ""}
+										value={scoreValues[name]}
+										onChange={(e) => updateScore(name, e.target.value)}
 										required
 										className={inputClass}
 									/>

@@ -19,6 +19,36 @@ const judgeCommentValidator = v.object({
 	rating: v.number(),
 });
 
+const SCORE_MAX: Record<string, number> = {
+	"Taste & Technique": 35,
+	Service: 25,
+	"Beverage Experience": 10,
+	"Menu Composition": 10,
+	Presentation: 10,
+	Ambience: 5,
+	"Perceived Value": 5,
+};
+
+function validateScoresAndRating(payload: {
+	rating: number;
+	scores: { label: string; score: string }[];
+}) {
+	if (payload.rating < 0 || payload.rating > 5) {
+		throw new Error("Rating must be between 0 and 5");
+	}
+	for (const s of payload.scores) {
+		const max = SCORE_MAX[s.label];
+		if (max !== undefined) {
+			const val = parseFloat(s.score);
+			if (!Number.isNaN(val) && (val < 0 || val > max)) {
+				throw new Error(
+					`${s.label} score must be between 0 and ${max}`
+				);
+			}
+		}
+	}
+}
+
 const guideItemPayload = {
 	name: v.string(),
 	category: categoryValidator,
@@ -133,6 +163,7 @@ export const createGuideItem = mutation({
 	},
 	handler: async (ctx, args) => {
 		assertAdmin(args.adminToken);
+		validateScoresAndRating(args.payload);
 		// Server-side: derive country from city, validate cuisine
 		const resolvedCountry = await validateAndResolveCityCountryCuisine(
 			ctx.db,
@@ -157,6 +188,7 @@ export const updateGuideItem = mutation({
 	},
 	handler: async (ctx, args) => {
 		assertAdmin(args.adminToken);
+		validateScoresAndRating(args.patch);
 		const existing = await ctx.db.get(args.id);
 		if (!existing) {
 			throw new Error("Guide item not found");
