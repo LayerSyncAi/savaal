@@ -1,4 +1,3 @@
-// import { EmailTemplate } from "@/ contact/components/email-template";
 import { EmailTemplate } from "@/app/contact/components/email-template";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
@@ -24,18 +23,11 @@ export async function POST(request: Request) {
 
     const resend = new Resend(resendApiKey);
     const emailSubject = `New contact form submission (${requestType})`;
-    const emailBody = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      `Type: ${contactType}`,
-      `Company: ${companyName ?? "N/A"}`,
-      "",
-      message,
-    ].join("\n");
 
     await resend.emails.send({
       from: "onboarding@resend.dev",
       to: "avdingiswayo54@gmail.com",
+      replyTo: email,
       subject: emailSubject,
       react: EmailTemplate({
         name,

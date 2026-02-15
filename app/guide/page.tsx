@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { RoundedSlideButtonLight } from "@/components/rounded-slide-button-light";
-import { getSavaalDistinction } from "@/content/restaurant-info";
+import { getSavaalDistinction, zimbabweRegions } from "@/content/restaurant-info";
 import {
 	GuideFilterBar,
 	type CategoryType,
@@ -16,7 +17,13 @@ import { api } from "@/convex/_generated/api";
 import { mapGuideItemToRestaurantInfo } from "@/lib/guide";
 
 export default function GuidePage() {
-	const [regionFilter, setRegionFilter] = useState<string>("All");
+	const searchParams = useSearchParams();
+	const regionParam = searchParams.get("region");
+	const initialRegion =
+		regionParam && (zimbabweRegions as readonly string[]).includes(regionParam)
+			? regionParam
+			: "All";
+	const [regionFilter, setRegionFilter] = useState<string>(initialRegion);
 	const [categoryTypeFilter, setCategoryTypeFilter] =
 		useState<CategoryType>("All");
 	const [priceFilter, setPriceFilter] = useState<PriceFilter>("All");
