@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { zimbabweRegions } from "@/content/restaurant-info";
 
 type JudgeComment = {
@@ -82,6 +84,13 @@ export function GuideItemForm({
 }: GuideItemFormProps) {
 	const initialImage = initialValues?.coverImage ?? "";
 	const [imageUrl, setImageUrl] = useState(initialImage);
+	const [imageMode, setImageMode] = useState<"url" | "upload">(
+		initialImage ? "url" : "url"
+	);
+	const [uploading, setUploading] = useState(false);
+	const [uploadError, setUploadError] = useState<string | null>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
+	const generateUploadUrl = useMutation(api.storage.generateUploadUrl);
 	const [comments, setComments] = useState<JudgeComment[]>(
 		initialValues?.judgeComments ?? []
 	);
@@ -120,6 +129,38 @@ export function GuideItemForm({
 		setComments(
 			comments.map((c, i) => (i === index ? { ...c, [field]: value } : c))
 		);
+	};
+
+	const handleFileUpload = async (file: File) => {
+		if (file.size > 10 * 1024 * 1024) {
+			setUploadError("File must be under 10 MB");
+			return;
+		}
+
+		setUploading(true);
+		setUploadError(null);
+		try {
+			const postUrl = await generateUploadUrl();
+			const result = await fetch(postUrl, {
+				method: "POST",
+				headers: { "Content-Type": file.type },
+				body: file,
+			});
+			if (!result.ok) throw new Error("Upload failed");
+			const { storageId } = await result.json();
+			// Build the Convex HTTP action URL for serving the image.
+			// Convex storage URLs are served via the site URL.
+			const siteUrl = process.env.NEXT_PUBLIC_CONVEX_URL!.replace(
+				".cloud",
+				".site"
+			);
+			setImageUrl(`${siteUrl}/getImage?storageId=${storageId}`);
+		} catch (err: unknown) {
+			const msg = err instanceof Error ? err.message : "Upload failed";
+			setUploadError(msg);
+		} finally {
+			setUploading(false);
+		}
 	};
 
 	const hasCuisines = cuisines.length > 0;
@@ -260,16 +301,75 @@ export function GuideItemForm({
 							className={inputClass}
 						/>
 					</label>
-					<label className="text-sm font-medium text-neutral-700">
-						Image URL
-						<input
-							name="imageUrl"
-							defaultValue={initialValues?.coverImage ?? ""}
-							onChange={(event) => setImageUrl(event.target.value)}
-							required
-							className={inputClass}
-						/>
-					</label>
+
+					{/* Cover Image: URL or Upload */}
+					<div className="text-sm font-medium text-neutral-700 sm:col-span-2">
+						Cover Image
+						<div className="mt-1 mb-2 flex gap-2">
+							<button
+								type="button"
+								onClick={() => setImageMode("url")}
+								className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+									imageMode === "url"
+										? "bg-neutral-900 text-white"
+										: "border border-neutral-300 text-neutral-600 hover:bg-neutral-50"
+								}`}
+							>
+								Enter URL
+							</button>
+							<button
+								type="button"
+								onClick={() => setImageMode("upload")}
+								className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+									imageMode === "upload"
+										? "bg-neutral-900 text-white"
+										: "border border-neutral-300 text-neutral-600 hover:bg-neutral-50"
+								}`}
+							>
+								Upload file
+							</button>
+						</div>
+
+						{imageMode === "url" ? (
+							<input
+								name="imageUrl"
+								value={imageUrl}
+								onChange={(e) => setImageUrl(e.target.value)}
+								placeholder="https://example.com/image.jpg"
+								required={!imageUrl}
+								className={inputClass}
+							/>
+						) : (
+							<div className="space-y-2">
+								<input
+									ref={fileInputRef}
+									type="file"
+									accept="image/*"
+									disabled={uploading}
+									onChange={(e) => {
+										const file = e.target.files?.[0];
+										if (file) handleFileUpload(file);
+									}}
+									className={`${inputClass} file:mr-3 file:rounded-full file:border-0 file:bg-amber-50 file:px-4 file:py-1.5 file:text-xs file:font-semibold file:text-amber-700 hover:file:bg-amber-100`}
+								/>
+								{uploading && (
+									<p className="text-xs text-amber-600">Uploading...</p>
+								)}
+								{uploadError && (
+									<p className="text-xs text-red-600">{uploadError}</p>
+								)}
+								{/* Hidden input carries the resolved URL into FormData */}
+								<input type="hidden" name="imageUrl" value={imageUrl} />
+							</div>
+						)}
+
+						{imageUrl && (
+							<p className="mt-1 truncate text-xs text-neutral-400">
+								{imageUrl}
+							</p>
+						)}
+					</div>
+
 					<label className="text-sm font-medium text-neutral-700">
 						Rating
 						<input
@@ -469,6 +569,7 @@ export function GuideItemForm({
 								alt="Preview"
 								fill
 								className="object-cover"
+								unoptimized
 							/>
 						</div>
 					</div>
@@ -477,9 +578,10 @@ export function GuideItemForm({
 				<div className="flex flex-wrap gap-3">
 					<button
 						type="submit"
-						className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+						disabled={uploading}
+						className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-50"
 					>
-						Save guide item
+						{uploading ? "Uploading image..." : "Save guide item"}
 					</button>
 					{children}
 				</div>
