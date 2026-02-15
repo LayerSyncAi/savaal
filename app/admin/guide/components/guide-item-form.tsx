@@ -24,6 +24,12 @@ type CuisineOption = {
 	name: string;
 };
 
+type MenuItem = {
+	name: string;
+	description: string;
+	price: string;
+};
+
 type GuideItemFormValues = {
 	name: string;
 	category: "Restaurant" | "Hotel" | "Bar";
@@ -44,6 +50,8 @@ type GuideItemFormValues = {
 		score: string;
 	}[];
 	judgeComments?: JudgeComment[];
+	gallery?: string[];
+	menu?: MenuItem[];
 };
 
 type GuideItemFormProps = {
@@ -96,6 +104,17 @@ export function GuideItemForm({
 	);
 	const [selectedCity, setSelectedCity] = useState(
 		initialValues?.city ?? ""
+	);
+	const [gallery, setGallery] = useState<string[]>(
+		initialValues?.gallery ?? []
+	);
+	const [galleryInputMode, setGalleryInputMode] = useState<"url" | "upload">("url");
+	const [galleryUrlInput, setGalleryUrlInput] = useState("");
+	const [galleryUploading, setGalleryUploading] = useState(false);
+	const [galleryUploadError, setGalleryUploadError] = useState<string | null>(null);
+	const galleryFileRef = useRef<HTMLInputElement>(null);
+	const [menuItems, setMenuItems] = useState<MenuItem[]>(
+		initialValues?.menu ?? []
 	);
 
 	// Build a city→country lookup
@@ -182,6 +201,62 @@ export function GuideItemForm({
 		} finally {
 			setUploading(false);
 		}
+	};
+
+	const addGalleryUrl = () => {
+		const url = galleryUrlInput.trim();
+		if (url) {
+			setGallery([...gallery, url]);
+			setGalleryUrlInput("");
+		}
+	};
+
+	const handleGalleryFileUpload = async (file: File) => {
+		if (file.size > 10 * 1024 * 1024) {
+			setGalleryUploadError("File must be under 10 MB");
+			return;
+		}
+		setGalleryUploading(true);
+		setGalleryUploadError(null);
+		try {
+			const postUrl = await generateUploadUrl();
+			const result = await fetch(postUrl, {
+				method: "POST",
+				headers: { "Content-Type": file.type },
+				body: file,
+			});
+			if (!result.ok) throw new Error("Upload failed");
+			const { storageId } = await result.json();
+			const siteUrl = process.env.NEXT_PUBLIC_CONVEX_URL!.replace(
+				".cloud",
+				".site"
+			);
+			setGallery([...gallery, `${siteUrl}/getImage?storageId=${storageId}`]);
+		} catch (err: unknown) {
+			const msg = err instanceof Error ? err.message : "Upload failed";
+			setGalleryUploadError(msg);
+		} finally {
+			setGalleryUploading(false);
+			if (galleryFileRef.current) galleryFileRef.current.value = "";
+		}
+	};
+
+	const removeGalleryImage = (index: number) => {
+		setGallery(gallery.filter((_, i) => i !== index));
+	};
+
+	const addMenuItem = () => {
+		setMenuItems([...menuItems, { name: "", description: "", price: "" }]);
+	};
+
+	const removeMenuItem = (index: number) => {
+		setMenuItems(menuItems.filter((_, i) => i !== index));
+	};
+
+	const updateMenuItem = (index: number, field: keyof MenuItem, value: string) => {
+		setMenuItems(
+			menuItems.map((item, i) => (i === index ? { ...item, [field]: value } : item))
+		);
 	};
 
 	const hasCuisines = cuisines.length > 0;
@@ -581,6 +656,192 @@ export function GuideItemForm({
 						</div>
 					))}
 					<input type="hidden" name="judgeCommentCount" value={comments.length} />
+				</div>
+
+				{/* Gallery Section */}
+				<div className="space-y-3">
+					<div className="flex items-center justify-between">
+						<p className="text-sm font-semibold text-neutral-800">
+							Gallery images ({gallery.length})
+						</p>
+					</div>
+
+					<div className="space-y-2">
+						<div className="flex gap-2">
+							<button
+								type="button"
+								onClick={() => setGalleryInputMode("url")}
+								className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+									galleryInputMode === "url"
+										? "bg-neutral-900 text-white"
+										: "border border-neutral-300 text-neutral-600 hover:bg-neutral-50"
+								}`}
+							>
+								Add by URL
+							</button>
+							<button
+								type="button"
+								onClick={() => setGalleryInputMode("upload")}
+								className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+									galleryInputMode === "upload"
+										? "bg-neutral-900 text-white"
+										: "border border-neutral-300 text-neutral-600 hover:bg-neutral-50"
+								}`}
+							>
+								Upload file
+							</button>
+						</div>
+
+						{galleryInputMode === "url" ? (
+							<div className="flex gap-2">
+								<input
+									value={galleryUrlInput}
+									onChange={(e) => setGalleryUrlInput(e.target.value)}
+									placeholder="https://example.com/image.jpg"
+									className={`${inputClass} mt-0 flex-1`}
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											e.preventDefault();
+											addGalleryUrl();
+										}
+									}}
+								/>
+								<button
+									type="button"
+									onClick={addGalleryUrl}
+									className="rounded-full border border-amber-300 px-4 py-1.5 text-xs font-semibold text-amber-700 transition hover:bg-amber-50"
+								>
+									Add
+								</button>
+							</div>
+						) : (
+							<div className="space-y-1">
+								<input
+									ref={galleryFileRef}
+									type="file"
+									accept="image/*"
+									disabled={galleryUploading}
+									onChange={(e) => {
+										const file = e.target.files?.[0];
+										if (file) handleGalleryFileUpload(file);
+									}}
+									className={`${inputClass} mt-0 file:mr-3 file:rounded-full file:border-0 file:bg-amber-50 file:px-4 file:py-1.5 file:text-xs file:font-semibold file:text-amber-700 hover:file:bg-amber-100`}
+								/>
+								{galleryUploading && (
+									<p className="text-xs text-amber-600">Uploading...</p>
+								)}
+								{galleryUploadError && (
+									<p className="text-xs text-red-600">{galleryUploadError}</p>
+								)}
+							</div>
+						)}
+					</div>
+
+					{gallery.length === 0 ? (
+						<p className="text-xs text-neutral-500">
+							No gallery images yet. Add images by URL or upload.
+						</p>
+					) : (
+						<div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+							{gallery.map((url, index) => (
+								<div key={index} className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-amber-100">
+									<Image
+										src={url}
+										alt={`Gallery ${index + 1}`}
+										fill
+										className="object-cover"
+										unoptimized
+									/>
+									<button
+										type="button"
+										onClick={() => removeGalleryImage(index)}
+										className="absolute top-1 right-1 rounded-full bg-red-500 px-2 py-0.5 text-xs font-bold text-white opacity-0 transition group-hover:opacity-100"
+									>
+										&times;
+									</button>
+								</div>
+							))}
+						</div>
+					)}
+
+					{gallery.map((url, index) => (
+						<input key={index} type="hidden" name={`gallery_${index}`} value={url} />
+					))}
+					<input type="hidden" name="galleryCount" value={gallery.length} />
+				</div>
+
+				{/* Menu Section */}
+				<div className="space-y-3">
+					<div className="flex items-center justify-between">
+						<p className="text-sm font-semibold text-neutral-800">
+							Menu highlights ({menuItems.length})
+						</p>
+						<button
+							type="button"
+							onClick={addMenuItem}
+							className="rounded-full border border-amber-300 px-4 py-1.5 text-xs font-semibold text-amber-700 transition hover:bg-amber-50"
+						>
+							Add menu item
+						</button>
+					</div>
+
+					{menuItems.length === 0 && (
+						<p className="text-xs text-neutral-500">
+							No menu items yet. Click &ldquo;Add menu item&rdquo; to add highlights.
+						</p>
+					)}
+
+					{menuItems.map((item, index) => (
+						<div
+							key={index}
+							className="space-y-3 rounded-xl border border-amber-100 bg-amber-50/40 p-4"
+						>
+							<div className="flex items-center justify-between">
+								<p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
+									Item {index + 1}
+								</p>
+								<button
+									type="button"
+									onClick={() => removeMenuItem(index)}
+									className="text-xs font-medium text-red-500 transition hover:text-red-700"
+								>
+									Remove
+								</button>
+							</div>
+							<div className="grid gap-3 sm:grid-cols-2">
+								<label className="text-sm font-medium text-neutral-700">
+									Name
+									<input
+										value={item.name}
+										onChange={(e) => updateMenuItem(index, "name", e.target.value)}
+										className={inputClass}
+									/>
+								</label>
+								<label className="text-sm font-medium text-neutral-700">
+									Price
+									<input
+										value={item.price}
+										onChange={(e) => updateMenuItem(index, "price", e.target.value)}
+										placeholder="$25"
+										className={inputClass}
+									/>
+								</label>
+							</div>
+							<label className="text-sm font-medium text-neutral-700">
+								Description
+								<textarea
+									value={item.description}
+									onChange={(e) => updateMenuItem(index, "description", e.target.value)}
+									rows={2}
+									className={inputClass}
+								/>
+							</label>
+							<input type="hidden" name={`menu_${index}_name`} value={item.name} />
+							<input type="hidden" name={`menu_${index}_description`} value={item.description} />
+							<input type="hidden" name={`menu_${index}_price`} value={item.price} />
+						</div>
+					))}
+					<input type="hidden" name="menuCount" value={menuItems.length} />
 				</div>
 
 				<label className="flex items-center gap-2 text-sm font-medium text-neutral-700">

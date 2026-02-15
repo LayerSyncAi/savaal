@@ -3,14 +3,21 @@ import { restaurantDetails } from "@/content/restaurant-info/details";
 import { FaCommentDots } from "react-icons/fa6";
 import { FaRegCheckCircle } from "react-icons/fa";
 
-type ScoreAndCommentsProps = {
-  restaurant: RestaurantInfo;
+type JudgeComment = {
+  judge: string;
+  comment: string;
 };
 
-export function ScoreAndComments({ restaurant }: ScoreAndCommentsProps) {
-  const details = restaurantDetails[restaurant.id];
+type ScoreAndCommentsProps = {
+  restaurant: RestaurantInfo;
+  judgeComments?: JudgeComment[];
+};
 
-  if (!details) return null;
+export function ScoreAndComments({ restaurant, judgeComments }: ScoreAndCommentsProps) {
+  const details = restaurantDetails[restaurant.id];
+  const comments = judgeComments ?? details?.judgeComments;
+
+  if (!comments || comments.length === 0) return null;
 
   return (
     <section className="rounded-2xl border border-orange-100 bg-neutral-900 p-6 text-white">
@@ -20,7 +27,7 @@ export function ScoreAndComments({ restaurant }: ScoreAndCommentsProps) {
           Judge comments
         </div>
         <div className="space-y-3">
-          {details.judgeComments.map((entry) => (
+          {comments.map((entry) => (
             <div
               key={`${entry.judge}-${entry.comment}`}
               className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-amber-50"
