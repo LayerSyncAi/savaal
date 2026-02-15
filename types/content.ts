@@ -4,8 +4,3 @@ export interface Pillar {
   description: string;
   anchor: string;
 }
-
-export interface FAQ {
-  question: string;
-  answer: string;
-}

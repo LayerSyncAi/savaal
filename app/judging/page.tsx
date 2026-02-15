@@ -2,29 +2,6 @@ import Link from "next/link";
 import RoundedSlideButtonLight from "@/components/rounded-slide-button-light";
 import { FiArrowRight } from "react-icons/fi";
 
-const judgingFaqs = [
-  {
-    question: "How are judges selected for each assignment?",
-    answer:
-      "Assignments pair your cuisine expertise, language skills, and neighborhoods you selected so visits feel natural and unbiased.",
-  },
-  {
-    question: "Do businesses know who the judges are?",
-    answer:
-      "No. Judges visit anonymously, pay their own bill upfront, and only our core team sees their identity for scheduling purposes.",
-  },
-  {
-    question: "What happens if scores disagree?",
-    answer:
-      "A calibration panel reviews the notes, requests clarifications, and may schedule a second visit to confirm the right star level.",
-  },
-  {
-    question: "Can judges participate multiple cycles in a row?",
-    answer:
-      "Yes. We re-run a short integrity and rubric check every six months to keep standards aligned before new assignments start.",
-  },
-];
-
 export default function JudgingPage() {
   return (
     <div className="bg-neutral-50">
@@ -123,62 +100,8 @@ export default function JudgingPage() {
               </ul>
             </div>
           </section>
-        {/* <div className="space-y-3">
-            <h3 className="text-lg font-semibold text-neutral-900">Judging timeline</h3>
-            <ul className="space-y-3 text-neutral-700">
-              <li>
-                <span className="font-semibold text-neutral-900">Mystery visit:</span>{" "}
-                Judges are scheduled discreetly; venues do not know when they are
-                being evaluated.
-              </li>
-              <li>
-                <span className="font-semibold text-neutral-900">Scorecard & notes:</span>{" "}
-                A full rubric is completed within 24 hours, capturing photos and
-                observations to support the score.
-              </li>
-              <li>
-                <span className="font-semibold text-neutral-900">Panel calibration:</span>{" "}
-                A small review team checks for consistency and resolves any
-                variances against our standards.
-              </li>
-              <li>
-                <span className="font-semibold text-neutral-900">Stars published:</span>{" "}
-                Once confirmed, stars are shared with the business and listed on
-                Savaal. Updates occur during each six-month cycle.
-              </li>
-            </ul>
-          </div> */}
         </div>
 
-        {/* <div id="faq" className="grid gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-neutral-900">Judging FAQs</h3>
-            <p className="text-neutral-700">Answers to common questions from prospective and active judges.</p>
-          </div>
-          <div className="grid gap-3 md:grid-cols-2">
-            {judgingFaqs.map(({ question, answer }) => (
-              <div key={question} className="rounded-xl border border-neutral-100 bg-neutral-50 p-4">
-                <p className="text-sm font-semibold text-neutral-900">{question}</p>
-                <p className="mt-2 text-sm text-neutral-700">{answer}</p>
-              </div>
-            ))}
-          </div>
-          <Link
-            href="/judging/prospective-judges"
-            className="text-sm font-semibold text-indigo-700 underline-offset-4 hover:underline"
-          >
-            Learn how to qualify as a judge
-          </Link>
-        </div>
-
-        <div className="flex justify-center">
-          <Link
-            href="/contact"
-            className="rounded-full bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
-          >
-            Inquire About Certification
-          </Link>
-        </div> */}
         <div className="flex justify-center">
           <RoundedSlideButtonLight
             href="/contact"

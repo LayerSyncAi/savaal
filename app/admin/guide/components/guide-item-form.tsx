@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef } from "react";
+import { useFormStatus } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import { useMutation } from "convex/react";
@@ -872,16 +873,28 @@ export function GuideItemForm({
 				) : null}
 
 				<div className="flex flex-wrap gap-3">
-					<button
-						type="submit"
-						disabled={uploading}
-						className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-50"
-					>
-						{uploading ? "Uploading image..." : "Save guide item"}
-					</button>
+					<SubmitButton uploading={uploading} />
 					{children}
 				</div>
 			</form>
 		</section>
+	);
+}
+
+function SubmitButton({ uploading }: { uploading: boolean }) {
+	const { pending } = useFormStatus();
+	const isDisabled = uploading || pending;
+
+	return (
+		<button
+			type="submit"
+			disabled={isDisabled}
+			className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-50"
+		>
+			{pending && (
+				<span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+			)}
+			{uploading ? "Uploading image..." : pending ? "Saving..." : "Save guide item"}
+		</button>
 	);
 }

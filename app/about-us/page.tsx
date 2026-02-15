@@ -4,37 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 
-const pillars = [
-	{
-		title: "Vision",
-		summary:
-			"To be the leading cultural hospitality guide across Africa, starting in Zimbabwe.",
-	},
-	{
-		title: "Mission",
-		summary:
-			"To elevate local hospitality standards, celebrate culinary and lifestyle excellence, and connect travelers to authentic African experiences.",
-	},
-];
-
-const guideHighlights = [
-	{
-		title: "Curated listings",
-		description:
-			"A digital platform showcasing verified restaurants, hotels, bars, and vendors that reflect the spirit of African hospitality.",
-	},
-	{
-		title: "Savaal-certified standards",
-		description:
-			"Each feature is backed by hands-on evaluations that measure ambience, service, and cultural resonance.",
-	},
-	{
-		title: "Beyond discovery",
-		description:
-			"Expect editorial storytelling, training services, and immersive events designed to uplift the industry.",
-	},
-];
-
 const aboutSavaalCards = [
 	{
 		title: "Savaal Star",
@@ -143,71 +112,6 @@ export default function AboutUsPage() {
 						</article>
 					))}
 				</section>
-
-				{/* <section className="grid gap-8 rounded-3xl bg-gradient-to-br from-amber-100 via-white to-indigo-100 p-8 sm:grid-cols-2">
-					<div className="flex flex-col gap-6">
-						<p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700">
-							Vision & Mission
-						</p>
-						<h2 className="text-3xl font-semibold text-neutral-900">
-							A roadmap that celebrates excellence and authenticity.
-						</h2>
-						<p className="text-base text-neutral-700">
-							We meet tastemakers where they are, providing the tools and
-							visibility required to thrive on the continental stage.
-						</p>
-					</div>
-					<div className="grid gap-4">
-						{pillars.map((pillar) => (
-							<div
-								key={pillar.title}
-								className="rounded-2xl border border-white/60 bg-white/90 p-6 shadow-sm"
-							>
-								<h3 className="text-lg font-semibold text-neutral-900">
-									{pillar.title}
-								</h3>
-								<p className="mt-2 text-sm leading-relaxed text-neutral-700">
-									{pillar.summary}
-								</p>
-							</div>
-						))}
-					</div>
-				</section> */}
-
-				{/* <section className="rounded-3xl bg-white p-10 shadow-sm">
-					<div className="flex flex-col gap-3">
-						<p className="text-xs font-semibold uppercase tracking-[0.3em] text-indigo-600">
-							What is the Savaal Guide?
-						</p>
-						<h2 className="text-3xl font-semibold text-neutral-900">
-							A trusted companion for travelers, locals, and partners.
-						</h2>
-						<p className="text-base text-neutral-700">
-							The Savaal Guide curates and celebrates exceptional spaces while
-							investing in the people who bring them to life.
-						</p>
-					</div>
-					<div className="mt-8 grid gap-6 md:grid-cols-3">
-						{guideHighlights.map((highlight) => (
-							<article
-								key={highlight.title}
-								className="flex flex-col gap-2 rounded-2xl border border-neutral-100 bg-neutral-50/60 p-6"
-							>
-								<h3 className="text-lg font-semibold text-neutral-900">
-									{highlight.title}
-								</h3>
-								<p className="text-sm text-neutral-700">
-									{highlight.description}
-								</p>
-							</article>
-						))}
-					</div>
-					<p className="mt-8 text-sm text-neutral-500">
-						Together with our partners, we offer training services, editorial
-						storytelling, and immersive events that keep local hospitality ahead
-						of the curve.
-					</p>
-				</section> */}
 
 				<FounderQuote /> 
 			</section>
