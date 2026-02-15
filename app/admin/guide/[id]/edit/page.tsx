@@ -57,6 +57,8 @@ export default async function EditGuideItemPage({
 				published: item.published,
 				scores: item.scores,
 				judgeComments: item.judgeComments,
+				gallery: item.gallery,
+				menu: item.menu,
 			}}
 		>
 			<button

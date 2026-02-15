@@ -40,6 +40,34 @@ function parseJudgeComments(formData: FormData) {
 	return comments.length > 0 ? comments : undefined;
 }
 
+function parseGallery(formData: FormData) {
+	const count = Number(formData.get("galleryCount") ?? 0);
+	if (count === 0) return undefined;
+
+	const urls: string[] = [];
+	for (let i = 0; i < count; i++) {
+		const url = String(formData.get(`gallery_${i}`) ?? "").trim();
+		if (url) urls.push(url);
+	}
+	return urls.length > 0 ? urls : undefined;
+}
+
+function parseMenu(formData: FormData) {
+	const count = Number(formData.get("menuCount") ?? 0);
+	if (count === 0) return undefined;
+
+	const items: { name: string; description: string; price: string }[] = [];
+	for (let i = 0; i < count; i++) {
+		const name = String(formData.get(`menu_${i}_name`) ?? "").trim();
+		const description = String(formData.get(`menu_${i}_description`) ?? "").trim();
+		const price = String(formData.get(`menu_${i}_price`) ?? "").trim();
+		if (name) {
+			items.push({ name, description, price });
+		}
+	}
+	return items.length > 0 ? items : undefined;
+}
+
 function parseGuideItemForm(formData: FormData) {
 	const published = formData.get("published") === "on";
 	const rating = Number(formData.get("rating"));
@@ -69,6 +97,8 @@ function parseGuideItemForm(formData: FormData) {
 		],
 		totalScore: String(formData.get("totalScore") ?? ""),
 		judgeComments: parseJudgeComments(formData),
+		gallery: parseGallery(formData),
+		menu: parseMenu(formData),
 		sortOrder: Number.isNaN(sortOrder) ? 0 : sortOrder,
 		published,
 	};

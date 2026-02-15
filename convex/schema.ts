@@ -40,6 +40,16 @@ export default defineSchema({
 				})
 			)
 		),
+		gallery: v.optional(v.array(v.string())),
+		menu: v.optional(
+			v.array(
+				v.object({
+					name: v.string(),
+					description: v.string(),
+					price: v.string(),
+				})
+			)
+		),
 		sortOrder: v.number(),
 		published: v.boolean(),
 		createdAt: v.number(),

@@ -49,6 +49,12 @@ function validateScoresAndRating(payload: {
 	}
 }
 
+const menuItemValidator = v.object({
+	name: v.string(),
+	description: v.string(),
+	price: v.string(),
+});
+
 const guideItemPayload = {
 	name: v.string(),
 	category: categoryValidator,
@@ -64,6 +70,8 @@ const guideItemPayload = {
 	scores: v.array(scoreValidator),
 	totalScore: v.string(),
 	judgeComments: v.optional(v.array(judgeCommentValidator)),
+	gallery: v.optional(v.array(v.string())),
+	menu: v.optional(v.array(menuItemValidator)),
 	sortOrder: v.number(),
 	published: v.boolean(),
 };
