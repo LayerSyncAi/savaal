@@ -3,19 +3,23 @@
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { zimbabweRegions } from "@/content/restaurant-info";
 
 // Background image placeholder - easy to swap later
 const HERO_BACKGROUND_IMAGE =
   "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2070&q=80";
 
 export function SearchHeroSection() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const router = useRouter();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      // Handle search submission - can be connected to router or search API
-      console.log("Search submitted:", searchQuery);
+    if (selectedRegion) {
+      router.push(`/guide?region=${encodeURIComponent(selectedRegion)}`);
+    } else {
+      router.push("/guide");
     }
   };
 
@@ -72,30 +76,35 @@ export function SearchHeroSection() {
           <div className="relative group">
             {/* Search Icon */}
             <Search
-              className="absolute left-5 md:left-6 top-1/2 -translate-y-1/2 text-stone-400 group-focus-within:text-stone-600 transition-colors z-10"
+              className="absolute left-5 md:left-6 top-1/2 -translate-y-1/2 text-stone-400 group-focus-within:text-stone-600 transition-colors z-10 pointer-events-none"
               size={22}
               strokeWidth={2}
             />
 
-            {/* Search Input */}
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search restaurants, stays, or destinations"
-              className="w-full py-4 md:py-5 pl-14 md:pl-16 pr-5 md:pr-6
-                text-base md:text-lg text-stone-800 placeholder:text-stone-400
+            {/* Region Dropdown */}
+            <select
+              value={selectedRegion}
+              onChange={(e) => setSelectedRegion(e.target.value)}
+              className="w-full py-4 md:py-5 pl-14 md:pl-16 pr-44 md:pr-52
+                text-base md:text-lg text-stone-800
                 bg-white/90 backdrop-blur-md
                 rounded-full border-0
                 shadow-lg shadow-black/10
-                outline-none
+                outline-none appearance-none
                 transition-all duration-300 ease-out
                 focus:bg-white focus:shadow-xl focus:shadow-black/15
                 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent"
-              aria-label="Search restaurants, stays, or destinations"
-            />
+              aria-label="Select a region to explore"
+            >
+              <option value="">Select a region</option>
+              {zimbabweRegions.map((region) => (
+                <option key={region} value={region}>
+                  {region}
+                </option>
+              ))}
+            </select>
 
-            {/* Optional Submit Button - appears on hover/focus for better UX */}
+            {/* Submit Button */}
             <button
               type="submit"
               className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2
@@ -103,9 +112,8 @@ export function SearchHeroSection() {
                 bg-stone-900 hover:bg-stone-800 active:bg-stone-950
                 text-white text-sm md:text-base font-medium
                 rounded-full
-                opacity-0 group-focus-within:opacity-100 group-hover:opacity-100
                 transition-all duration-300 ease-out
-                focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-white/50"
+                focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="Submit search"
             >
               Start your journey
