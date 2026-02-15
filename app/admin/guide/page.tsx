@@ -29,6 +29,12 @@ export default async function GuideAdminPage() {
 					>
 						Manage Judges
 					</Link>
+					<Link
+						href="/admin/utilities"
+						className="inline-flex items-center justify-center rounded-full border border-neutral-300 px-5 py-2 text-sm font-semibold text-neutral-700 transition hover:border-neutral-900 hover:text-neutral-900"
+					>
+						Manage Utilities
+					</Link>
 				</div>
 			</div>
 
