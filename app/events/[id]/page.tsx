@@ -1,31 +1,29 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-import { events, type EventDetails } from "@/content/events";
+import { convexClient, api } from "@/lib/convex";
+import type { Doc } from "@/convex/_generated/dataModel";
 
 type EventPageProps = {
 	params: Promise<{ id: string }>;
 };
 
-export function generateStaticParams() {
-	return events.map((event) => ({
-		id: event.id,
-	}));
-}
+type EventItem = Doc<"events">;
 
 export default async function EventDetailPage({ params }: EventPageProps) {
 	const { id } = await params;
-	const eventId = decodeURIComponent(id);
-	const event = events.find((item) => item.id === eventId);
+	const slug = decodeURIComponent(id);
+	const event = await convexClient.query(api.events.getEventBySlug, {
+		slug,
+	});
 
-	if (!event) {
+	if (!event || !event.published) {
 		return notFound();
 	}
 
 	return <EventContent event={event} />;
 }
 
-const EventContent = ({ event }: { event: EventDetails }) => {
+const EventContent = ({ event }: { event: EventItem }) => {
 	return (
 		<section className="mx-auto flex max-w-5xl flex-col gap-10 px-6 py-24">
 			<header className="overflow-hidden rounded-3xl shadow-lg">
@@ -126,7 +124,7 @@ const EventContent = ({ event }: { event: EventDetails }) => {
 			</div>
 
 			<div className="flex justify-between gap-4">
-				
+
 				<Link
 					href="/events"
 					className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900 hover:bg-(--primary) hover:text-white"
