@@ -1,31 +1,29 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-import { events, type EventDetails } from "@/content/events";
+import { convexClient, api } from "@/lib/convex";
+import type { Doc } from "@/convex/_generated/dataModel";
 
 type EventPageProps = {
 	params: Promise<{ id: string }>;
 };
 
-export function generateStaticParams() {
-	return events.map((event) => ({
-		id: event.id,
-	}));
-}
+type EventItem = Doc<"events">;
 
 export default async function EventDetailPage({ params }: EventPageProps) {
 	const { id } = await params;
-	const eventId = decodeURIComponent(id);
-	const event = events.find((item) => item.id === eventId);
+	const slug = decodeURIComponent(id);
+	const event = await convexClient.query(api.events.getEventBySlug, {
+		slug,
+	});
 
-	if (!event) {
+	if (!event || !event.published) {
 		return notFound();
 	}
 
 	return <EventContent event={event} />;
 }
 
-const EventContent = ({ event }: { event: EventDetails }) => {
+const EventContent = ({ event }: { event: EventItem }) => {
 	return (
 		<section className="mx-auto flex max-w-5xl flex-col gap-10 px-6 py-24">
 			<header className="overflow-hidden rounded-3xl shadow-lg">
@@ -79,10 +77,34 @@ const EventContent = ({ event }: { event: EventDetails }) => {
                                 </div>
 
 				<aside className="flex flex-col gap-6 rounded-2xl bg-neutral-900 p-6 text-white">
-					<div className="space-y-1">
-						<p className="text-sm uppercase tracking-wide p-on-dark">Price</p>
-						<p className="text-lg font-semibold p-white">{event.price}</p>
-						<p className="text-sm text-amber-100 p-white">{event.seating}</p>
+					<div className="space-y-3">
+						<p className="text-sm uppercase tracking-wide p-on-dark">
+							{event.tickets && event.tickets.length > 1 ? "Tickets" : "Price"}
+						</p>
+						{event.tickets && event.tickets.length > 0 ? (
+							event.tickets.map((ticket, index) => (
+								<div
+									key={index}
+									className="flex items-baseline justify-between gap-3 rounded-lg bg-white/5 px-4 py-2"
+								>
+									<div>
+										<p className="text-base font-semibold p-white">
+											{ticket.label}
+										</p>
+										<p className="text-lg font-bold p-on-dark">
+											{ticket.price}
+										</p>
+									</div>
+									{ticket.seats > 0 && (
+										<p className="whitespace-nowrap text-xs p-on-dark">
+											{ticket.seats} {ticket.seats === 1 ? "seat" : "seats"}
+										</p>
+									)}
+								</div>
+							))
+						) : event.price ? (
+							<p className="text-lg font-semibold p-white">{event.price}</p>
+						) : null}
 					</div>
 
 					<div className="space-y-2">
@@ -126,7 +148,7 @@ const EventContent = ({ event }: { event: EventDetails }) => {
 			</div>
 
 			<div className="flex justify-between gap-4">
-				
+
 				<Link
 					href="/events"
 					className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900 hover:bg-(--primary) hover:text-white"

@@ -73,6 +73,48 @@ export default defineSchema({
 		createdAt: v.number(),
 	}).index("by_name", ["name"]),
 
+	events: defineTable({
+		slug: v.string(),
+		title: v.string(),
+		category: v.union(v.literal("gathering"), v.literal("training")),
+		presentedBy: v.string(),
+		host: v.string(),
+		theme: v.string(),
+		image: v.string(),
+		description: v.array(v.string()),
+		highlights: v.array(v.string()),
+		date: v.string(),
+		time: v.string(),
+		price: v.optional(v.string()),
+		tickets: v.optional(
+			v.array(
+				v.object({
+					label: v.string(),
+					price: v.string(),
+					seats: v.number(),
+				})
+			)
+		),
+		seating: v.optional(v.string()),
+		location: v.object({
+			venue: v.string(),
+			address: v.string(),
+		}),
+		notes: v.array(v.string()),
+		cta: v.object({
+			label: v.string(),
+			href: v.string(),
+		}),
+		published: v.boolean(),
+		showOnHomepage: v.boolean(),
+		sortOrder: v.number(),
+		createdAt: v.number(),
+		updatedAt: v.number(),
+	})
+		.index("by_slug", ["slug"])
+		.index("by_published", ["published"])
+		.index("by_showOnHomepage", ["showOnHomepage"]),
+
 	utilities_cities: defineTable({
 		name: v.string(),
 		slug: v.string(),

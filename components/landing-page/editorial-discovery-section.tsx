@@ -1,50 +1,42 @@
 import Link from "next/link";
+import { convexClient, api } from "@/lib/convex";
 
-import { events, type EventDetails } from "@/content/events";
-
-const editorialGroups = [
-  {
-    label: "Recently Added",
-    picker: (items: EventDetails[], used: Set<string>) =>
-      items.find((event) => !used.has(event.id)),
-  },
-  {
-    label: "This Month’s Tables",
-    picker: (items: EventDetails[], used: Set<string>) =>
-      items.find((event) => event.category === "gathering" && !used.has(event.id)),
-  },
-  {
-    label: "Noteworthy Stays",
-    picker: (items: EventDetails[], used: Set<string>) =>
-      items.find((event) => event.category === "training" && !used.has(event.id)),
-  },
-];
-
-const buildEditorialCards = () => {
-  const used = new Set<string>();
-
-  return editorialGroups
-    .map((group) => {
-      const picked =
-        group.picker(events, used) ??
-        events.find((event) => !used.has(event.id));
-
-      if (!picked) {
-        return null;
-      }
-
-      used.add(picked.id);
-
-      return { ...group, event: picked };
-    })
-    .filter((card): card is { label: string; event: EventDetails; picker: (items: EventDetails[], used: Set<string>) => EventDetails | undefined } =>
-      Boolean(card),
-    )
-    .slice(0, 3);
+type HomepageEvent = {
+  slug: string;
+  title: string;
+  image: string;
+  category: "gathering" | "training";
 };
 
-export function EditorialDiscoverySection() {
-  const editorialCards = buildEditorialCards();
+const editorialLabels = [
+  "Recently Added",
+  "This Month's Tables",
+  "Noteworthy Stays",
+];
+
+export async function EditorialDiscoverySection() {
+  const homepageEvents = await convexClient.query(api.events.listEvents, {
+    publishedOnly: true,
+    homepageOnly: true,
+  });
+
+  const cards: { label: string; event: HomepageEvent }[] = [];
+  const used = new Set<string>();
+
+  for (
+    let i = 0;
+    i < editorialLabels.length && i < homepageEvents.length;
+    i++
+  ) {
+    const event = homepageEvents.find((e) => !used.has(e._id));
+    if (!event) break;
+    used.add(event._id);
+    cards.push({ label: editorialLabels[i], event });
+  }
+
+  if (cards.length === 0) {
+    return null;
+  }
 
   return (
     <section
@@ -72,9 +64,9 @@ export function EditorialDiscoverySection() {
           </Link>
         </div>
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {editorialCards.map((card) => (
+          {cards.map((card) => (
             <EditorialDiscoveryCard
-              key={`${card.label}-${card.event.id}`}
+              key={`${card.label}-${card.event.slug}`}
               event={card.event}
               label={card.label}
             />
@@ -89,12 +81,12 @@ const EditorialDiscoveryCard = ({
   event,
   label,
 }: {
-  event: EventDetails;
+  event: HomepageEvent;
   label: string;
 }) => {
   return (
     <Link
-      href={`/events/${event.id}`}
+      href={`/events/${event.slug}`}
       style={{
         backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%), url(${event.image})`,
       }}

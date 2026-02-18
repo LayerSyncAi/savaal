@@ -4,8 +4,9 @@ import { useMemo, useRef, useState, type MutableRefObject } from "react";
 import type React from "react";
 import { FiArrowRight } from "react-icons/fi";
 import Link from "next/link";
-
-import { events, type EventDetails } from "@/content/events";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import type { Doc } from "@/convex/_generated/dataModel";
 
 const CURSOR_WIDTH = 32;
 const HOVER_PADDING = 24;
@@ -25,6 +26,8 @@ const eventTabs = [
 
 type EventCategory = (typeof eventTabs)[number]["id"];
 
+type EventItem = Doc<"events">;
+
 export default function EventsPage() {
   const [activeCategory, setActiveCategory] = useState<EventCategory>(() => {
     if (typeof window === "undefined") {
@@ -35,9 +38,12 @@ export default function EventsPage() {
     return hash === "training" ? "training" : "gathering";
   });
 
+  const allEvents = useQuery(api.events.listEvents, { publishedOnly: true });
+
   const filteredEvents = useMemo(
-    () => events.filter((event) => event.category === activeCategory),
-    [activeCategory],
+    () =>
+      (allEvents ?? []).filter((event) => event.category === activeCategory),
+    [allEvents, activeCategory],
   );
 
   return (
@@ -81,7 +87,13 @@ export default function EventsPage() {
               {eventTabs.find((tab) => tab.id === activeCategory)?.copy}
             </div>
           </div>
-          <OutlineCards events={filteredEvents} />
+          {allEvents === undefined ? (
+            <div className="py-12 text-center text-sm text-neutral-500">
+              Loading events...
+            </div>
+          ) : (
+            <OutlineCards events={filteredEvents} />
+          )}
         </div>
 
         <div>
@@ -97,7 +109,7 @@ export default function EventsPage() {
   );
 }
 
-const OutlineCards = ({ events }: { events: EventDetails[] }) => {
+const OutlineCards = ({ events }: { events: EventItem[] }) => {
   const cursorRef = useRef<HTMLDivElement | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -136,7 +148,7 @@ const OutlineCards = ({ events }: { events: EventDetails[] }) => {
     >
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-3">
         {events.map((event) => (
-          <Card key={event.id} event={event} />
+          <Card key={event._id} event={event} />
         ))}
       </div>
       <Cursor cursorRef={cursorRef} />
@@ -144,10 +156,10 @@ const OutlineCards = ({ events }: { events: EventDetails[] }) => {
   );
 };
 
-const Card = ({ event }: { event: EventDetails }) => {
+const Card = ({ event }: { event: EventItem }) => {
   return (
     <Link
-      href={`/events/${event.id}`}
+      href={`/events/${event.slug}`}
       style={{
         backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.65) 100%), url(${event.image})`,
         backgroundPosition: "center",
@@ -167,7 +179,13 @@ const Card = ({ event }: { event: EventDetails }) => {
         </p>
         <p className="sm:truncate p-on-dark ">{event.location.venue}</p>
         <p className="sm:text-center p-on-dark ">{event.date}</p>
-        <p className="sm:text-right p-on-dark ">{event.price}</p>
+        <p className="sm:text-right p-on-dark ">
+          {event.tickets && event.tickets.length > 0
+            ? event.tickets.length === 1
+              ? `${event.tickets[0].price} · ${event.tickets[0].seats} seats`
+              : `From ${event.tickets[0].price}`
+            : event.price ?? "—"}
+        </p>
       </div>
     </Link>
   );
