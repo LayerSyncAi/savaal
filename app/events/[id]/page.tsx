@@ -91,12 +91,12 @@ const EventContent = ({ event }: { event: EventItem }) => {
 										<p className="text-base font-semibold p-white">
 											{ticket.label}
 										</p>
-										<p className="text-lg font-bold text-amber-300">
+										<p className="text-lg font-bold p-on-dark">
 											{ticket.price}
 										</p>
 									</div>
 									{ticket.seats > 0 && (
-										<p className="whitespace-nowrap text-xs text-amber-100">
+										<p className="whitespace-nowrap text-xs p-on-dark">
 											{ticket.seats} {ticket.seats === 1 ? "seat" : "seats"}
 										</p>
 									)}
@@ -105,9 +105,6 @@ const EventContent = ({ event }: { event: EventItem }) => {
 						) : event.price ? (
 							<p className="text-lg font-semibold p-white">{event.price}</p>
 						) : null}
-						{event.seating && (
-							<p className="text-sm text-amber-100 p-white">{event.seating}</p>
-						)}
 					</div>
 
 					<div className="space-y-2">
