@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { RoundedSlideButtonLight } from "@/components/rounded-slide-button-light";
-import { getSavaalDistinction, zimbabweRegions } from "@/content/restaurant-info";
+import { getSavaalDistinction, zimbabweRegions, type RestaurantInfo } from "@/content/restaurant-info";
 import {
 	GuideFilterBar,
 	type CategoryType,
@@ -40,7 +40,7 @@ export default function GuidePage() {
 	);
 
 	const filteredRestaurants = useMemo(() => {
-		return restaurants.filter((restaurant) => {
+		return restaurants.filter((restaurant: RestaurantInfo) => {
 			// Region filter
 			const matchesRegion =
 				regionFilter === "All" || restaurant.region === regionFilter;
@@ -75,11 +75,11 @@ export default function GuidePage() {
 
 	const { restaurantItems, stayItems } = useMemo(() => {
 		const restaurantEntries = filteredRestaurants.filter(
-			(restaurant) =>
+			(restaurant: RestaurantInfo) =>
 				restaurant.category === "Restaurant" || restaurant.category === "Bar"
 		);
 		const stayEntries = filteredRestaurants.filter(
-			(restaurant) => restaurant.category === "Hotel"
+			(restaurant: RestaurantInfo) => restaurant.category === "Hotel"
 		);
 
 		return { restaurantItems: restaurantEntries, stayItems: stayEntries };
