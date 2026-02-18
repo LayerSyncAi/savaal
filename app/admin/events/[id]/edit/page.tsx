@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { convexClient, api } from "@/lib/convex";
-import type { Id } from "@/convex/_generated/dataModel";
+import type { Doc, Id } from "@/convex/_generated/dataModel";
 import { deleteEventAction, updateEventAction } from "../../actions";
 import { EventForm } from "../../components/event-form";
+
+type Ticket = NonNullable<Doc<"events">["tickets"]>[number];
 
 type EventEditPageProps = {
 	params: Promise<{
@@ -39,10 +41,10 @@ export default async function EditEventPage({ params }: EventEditPageProps) {
 				highlights: item.highlights,
 				date: item.date,
 				time: item.time,
-				tickets: item.tickets?.map((t) => ({
+				tickets: item.tickets?.map((t: Ticket) => ({
 					label: t.label,
 					price: t.price,
-					seats: "seats" in t ? (t as { seats: number }).seats : 0,
+					seats: t.seats,
 				})) ?? (item.price ? [{ label: item.price, price: item.price, seats: 0 }] : []),
 				location: item.location,
 				notes: item.notes,

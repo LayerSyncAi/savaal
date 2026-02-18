@@ -7,7 +7,10 @@ import { ScoreAndComments } from "../components/score-and-comments";
 import { restaurantDetails } from "@/content/restaurant-info/details";
 import { restaurants } from "@/content/restaurant-info";
 import { convexClient, api } from "@/lib/convex";
+import type { Doc } from "@/convex/_generated/dataModel";
 import { mapGuideItemToRestaurantInfo } from "@/lib/guide";
+
+type GuideJudgeComment = NonNullable<Doc<"guideItems">["judgeComments"]>[number];
 
 export function generateStaticParams() {
   return restaurants.map((restaurant) => ({ id: restaurant.id }));
@@ -56,7 +59,7 @@ export default async function RestaurantPage({
     }
 
     const restaurant = mapGuideItemToRestaurantInfo(guideItem);
-    const judgeComments = guideItem.judgeComments?.map((jc) => ({
+    const judgeComments = guideItem.judgeComments?.map((jc: GuideJudgeComment) => ({
       judge: jc.judgeName,
       comment: jc.comment,
     }));

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { convexClient, api } from "@/lib/convex";
-import type { Id } from "@/convex/_generated/dataModel";
+import type { Doc, Id } from "@/convex/_generated/dataModel";
 import {
 	deleteGuideItemAction,
 	updateGuideItemAction,
@@ -30,7 +30,7 @@ export default async function EditGuideItemPage({
 		notFound();
 	}
 
-	const judgeNames = judges.map((j) => j.name);
+	const judgeNames = judges.map((j: Doc<"judges">) => j.name);
 
 	return (
 		<GuideItemForm
