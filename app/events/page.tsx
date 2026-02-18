@@ -42,7 +42,7 @@ export default function EventsPage() {
 
   const filteredEvents = useMemo(
     () =>
-      (allEvents ?? []).filter((event) => event.category === activeCategory),
+      (allEvents ?? []).filter((event: EventItem) => event.category === activeCategory),
     [allEvents, activeCategory],
   );
 
