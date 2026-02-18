@@ -24,10 +24,11 @@ const eventPayload = {
 			v.object({
 				label: v.string(),
 				price: v.string(),
+				seats: v.number(),
 			})
 		)
 	),
-	seating: v.string(),
+	seating: v.optional(v.string()),
 	location: v.object({
 		venue: v.string(),
 		address: v.string(),

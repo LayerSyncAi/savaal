@@ -39,8 +39,11 @@ export default async function EditEventPage({ params }: EventEditPageProps) {
 				highlights: item.highlights,
 				date: item.date,
 				time: item.time,
-				tickets: item.tickets ?? (item.price ? [{ label: item.price, price: item.price }] : []),
-				seating: item.seating,
+				tickets: item.tickets?.map((t) => ({
+					label: t.label,
+					price: t.price,
+					seats: "seats" in t ? (t as { seats: number }).seats : 0,
+				})) ?? (item.price ? [{ label: item.price, price: item.price, seats: 0 }] : []),
 				location: item.location,
 				notes: item.notes,
 				cta: item.cta,

@@ -182,7 +182,7 @@ const Card = ({ event }: { event: EventItem }) => {
         <p className="sm:text-right p-on-dark ">
           {event.tickets && event.tickets.length > 0
             ? event.tickets.length === 1
-              ? event.tickets[0].price
+              ? `${event.tickets[0].price} · ${event.tickets[0].seats} seats`
               : `From ${event.tickets[0].price}`
             : event.price ?? "—"}
         </p>

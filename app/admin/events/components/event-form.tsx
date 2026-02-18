@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
-type TicketType = { label: string; price: string };
+type TicketType = { label: string; price: string; seats: number };
 
 type EventFormValues = {
 	slug: string;
@@ -21,7 +21,6 @@ type EventFormValues = {
 	date: string;
 	time: string;
 	tickets: TicketType[];
-	seating: string;
 	location: { venue: string; address: string };
 	notes: string[];
 	cta: { label: string; href: string };
@@ -84,7 +83,7 @@ export function EventForm({
 	const [tickets, setTickets] = useState<TicketType[]>(
 		initialValues?.tickets?.length
 			? initialValues.tickets
-			: [{ label: "", price: "" }]
+			: [{ label: "", price: "", seats: 0 }]
 	);
 
 	const handleTitleChange = (value: string) => {
@@ -326,7 +325,7 @@ export function EventForm({
 					</div>
 				)}
 
-				{/* Date, time, seating */}
+				{/* Date & time */}
 				<div className="grid gap-4 sm:grid-cols-2">
 					<label className="text-sm font-medium text-neutral-700">
 						Date<RequiredMark />
@@ -348,16 +347,6 @@ export function EventForm({
 							className={inputClass}
 						/>
 					</label>
-					<label className="text-sm font-medium text-neutral-700">
-						Seating<RequiredMark />
-						<input
-							name="seating"
-							defaultValue={initialValues?.seating ?? ""}
-							required
-							placeholder="Limited to 20 seats"
-							className={inputClass}
-						/>
-					</label>
 				</div>
 
 				{/* Ticket types */}
@@ -371,7 +360,7 @@ export function EventForm({
 							onClick={() =>
 								setTickets((prev) => [
 									...prev,
-									{ label: "", price: "" },
+									{ label: "", price: "", seats: 0 },
 								])
 							}
 							className="rounded-full border border-amber-300 px-4 py-1.5 text-xs font-semibold text-amber-700 transition hover:bg-amber-50"
@@ -379,10 +368,16 @@ export function EventForm({
 							Add ticket type
 						</button>
 					</div>
+					<div className="grid grid-cols-[1fr_7rem_5rem_auto] gap-x-2 text-xs font-semibold uppercase tracking-wide text-neutral-400">
+						<span>Label</span>
+						<span>Price</span>
+						<span>Seats</span>
+						<span />
+					</div>
 					{tickets.map((ticket, index) => (
 						<div
 							key={index}
-							className="flex gap-2 items-start"
+							className="grid grid-cols-[1fr_7rem_5rem_auto] gap-2 items-start"
 						>
 							<input
 								value={ticket.label}
@@ -395,8 +390,8 @@ export function EventForm({
 										)
 									)
 								}
-								placeholder="e.g. General Admission, VIP Table"
-								className={`${inputClass} mt-0 flex-1`}
+								placeholder="e.g. General Admission"
+								className={`${inputClass} mt-0`}
 							/>
 							<input
 								value={ticket.price}
@@ -409,10 +404,29 @@ export function EventForm({
 										)
 									)
 								}
-								placeholder="e.g. $50"
-								className={`${inputClass} mt-0 w-40`}
+								placeholder="$50"
+								className={`${inputClass} mt-0`}
 							/>
-							{tickets.length > 1 && (
+							<input
+								type="number"
+								min={0}
+								value={ticket.seats}
+								onChange={(e) =>
+									setTickets((prev) =>
+										prev.map((t, i) =>
+											i === index
+												? {
+														...t,
+														seats: Number(e.target.value) || 0,
+													}
+												: t
+										)
+									)
+								}
+								placeholder="20"
+								className={`${inputClass} mt-0`}
+							/>
+							{tickets.length > 1 ? (
 								<button
 									type="button"
 									onClick={() =>
@@ -424,6 +438,8 @@ export function EventForm({
 								>
 									Remove
 								</button>
+							) : (
+								<span />
 							)}
 							<input
 								type="hidden"
@@ -434,6 +450,11 @@ export function EventForm({
 								type="hidden"
 								name={`ticket_${index}_price`}
 								value={ticket.price}
+							/>
+							<input
+								type="hidden"
+								name={`ticket_${index}_seats`}
+								value={ticket.seats}
 							/>
 						</div>
 					))}

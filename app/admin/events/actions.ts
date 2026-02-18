@@ -45,13 +45,16 @@ function parseHighlights(formData: FormData): string[] {
 
 function parseTickets(
 	formData: FormData
-): { label: string; price: string }[] {
+): { label: string; price: string; seats: number }[] {
 	const count = Number(formData.get("ticketCount") ?? 0);
-	const tickets: { label: string; price: string }[] = [];
+	const tickets: { label: string; price: string; seats: number }[] = [];
 	for (let i = 0; i < count; i++) {
 		const label = String(formData.get(`ticket_${i}_label`) ?? "").trim();
 		const price = String(formData.get(`ticket_${i}_price`) ?? "").trim();
-		if (label && price) tickets.push({ label, price });
+		const seats = Number(formData.get(`ticket_${i}_seats`) ?? 0);
+		if (label && price) {
+			tickets.push({ label, price, seats: Number.isNaN(seats) ? 0 : seats });
+		}
 	}
 	return tickets;
 }
@@ -86,7 +89,6 @@ function parseEventForm(formData: FormData) {
 		date: String(formData.get("date") ?? ""),
 		time: String(formData.get("time") ?? ""),
 		tickets: parseTickets(formData),
-		seating: String(formData.get("seating") ?? ""),
 		location: {
 			venue: String(formData.get("locationVenue") ?? ""),
 			address: String(formData.get("locationAddress") ?? ""),
