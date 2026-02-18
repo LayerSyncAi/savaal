@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { convexClient, api } from "@/lib/convex";
 
+import type { Doc } from "@/convex/_generated/dataModel";
+
 type HomepageEvent = {
   slug: string;
   title: string;
@@ -28,7 +30,7 @@ export async function EditorialDiscoverySection() {
     i < editorialLabels.length && i < homepageEvents.length;
     i++
   ) {
-    const event = homepageEvents.find((e) => !used.has(e._id));
+    const event = homepageEvents.find((e: Doc<"events">) => !used.has(e._id));
     if (!event) break;
     used.add(event._id);
     cards.push({ label: editorialLabels[i], event });
