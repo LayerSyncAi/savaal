@@ -43,6 +43,19 @@ function parseHighlights(formData: FormData): string[] {
 	return lines;
 }
 
+function parseTickets(
+	formData: FormData
+): { label: string; price: string }[] {
+	const count = Number(formData.get("ticketCount") ?? 0);
+	const tickets: { label: string; price: string }[] = [];
+	for (let i = 0; i < count; i++) {
+		const label = String(formData.get(`ticket_${i}_label`) ?? "").trim();
+		const price = String(formData.get(`ticket_${i}_price`) ?? "").trim();
+		if (label && price) tickets.push({ label, price });
+	}
+	return tickets;
+}
+
 function parseNotes(formData: FormData): string[] {
 	const count = Number(formData.get("noteCount") ?? 0);
 	const lines: string[] = [];
@@ -72,7 +85,7 @@ function parseEventForm(formData: FormData) {
 		highlights: parseHighlights(formData),
 		date: String(formData.get("date") ?? ""),
 		time: String(formData.get("time") ?? ""),
-		price: String(formData.get("price") ?? ""),
+		tickets: parseTickets(formData),
 		seating: String(formData.get("seating") ?? ""),
 		location: {
 			venue: String(formData.get("locationVenue") ?? ""),

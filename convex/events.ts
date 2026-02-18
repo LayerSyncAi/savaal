@@ -18,7 +18,12 @@ const eventPayload = {
 	highlights: v.array(v.string()),
 	date: v.string(),
 	time: v.string(),
-	price: v.string(),
+	tickets: v.array(
+		v.object({
+			label: v.string(),
+			price: v.string(),
+		})
+	),
 	seating: v.string(),
 	location: v.object({
 		venue: v.string(),

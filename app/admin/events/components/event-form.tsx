@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
+type TicketType = { label: string; price: string };
+
 type EventFormValues = {
 	slug: string;
 	title: string;
@@ -18,7 +20,7 @@ type EventFormValues = {
 	highlights: string[];
 	date: string;
 	time: string;
-	price: string;
+	tickets: TicketType[];
 	seating: string;
 	location: { venue: string; address: string };
 	notes: string[];
@@ -38,6 +40,10 @@ type EventFormProps = {
 
 const inputClass =
 	"mt-2 w-full rounded-xl border border-amber-200 px-3 py-2 text-sm shadow-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-200";
+
+const RequiredMark = () => (
+	<span className="ml-0.5 text-red-500" aria-label="required">*</span>
+);
 
 function slugify(text: string): string {
 	return text
@@ -73,6 +79,12 @@ export function EventForm({
 	);
 	const [notes, setNotes] = useState<string[]>(
 		initialValues?.notes?.length ? initialValues.notes : [""]
+	);
+
+	const [tickets, setTickets] = useState<TicketType[]>(
+		initialValues?.tickets?.length
+			? initialValues.tickets
+			: [{ label: "", price: "" }]
 	);
 
 	const handleTitleChange = (value: string) => {
@@ -146,10 +158,14 @@ export function EventForm({
 				action={action}
 				className="space-y-6 rounded-2xl border border-amber-100 bg-white p-6 shadow-sm"
 			>
+				<p className="text-xs text-neutral-500">
+					Fields marked with <span className="text-red-500">*</span> are required.
+				</p>
+
 				{/* Basic info */}
 				<div className="grid gap-4 sm:grid-cols-2">
 					<label className="text-sm font-medium text-neutral-700">
-						Title
+						Title<RequiredMark />
 						<input
 							name="title"
 							value={titleValue}
@@ -159,7 +175,7 @@ export function EventForm({
 						/>
 					</label>
 					<label className="text-sm font-medium text-neutral-700">
-						Slug
+						Slug<RequiredMark />
 						<div className="flex gap-2">
 							<input
 								name="slug"
@@ -177,7 +193,7 @@ export function EventForm({
 						</span>
 					</label>
 					<label className="text-sm font-medium text-neutral-700">
-						Category
+						Category<RequiredMark />
 						<select
 							name="category"
 							defaultValue={
@@ -190,7 +206,7 @@ export function EventForm({
 						</select>
 					</label>
 					<label className="text-sm font-medium text-neutral-700">
-						Presented by
+						Presented by<RequiredMark />
 						<input
 							name="presentedBy"
 							defaultValue={initialValues?.presentedBy ?? ""}
@@ -199,7 +215,7 @@ export function EventForm({
 						/>
 					</label>
 					<label className="text-sm font-medium text-neutral-700">
-						Host
+						Host<RequiredMark />
 						<input
 							name="host"
 							defaultValue={initialValues?.host ?? ""}
@@ -208,7 +224,7 @@ export function EventForm({
 						/>
 					</label>
 					<label className="text-sm font-medium text-neutral-700 sm:col-span-2">
-						Theme
+						Theme<RequiredMark />
 						<input
 							name="theme"
 							defaultValue={initialValues?.theme ?? ""}
@@ -220,7 +236,7 @@ export function EventForm({
 
 				{/* Cover image */}
 				<div className="text-sm font-medium text-neutral-700">
-					Cover Image
+					Cover Image<RequiredMark />
 					<div className="mt-1 mb-2 flex gap-2">
 						<button
 							type="button"
@@ -310,10 +326,10 @@ export function EventForm({
 					</div>
 				)}
 
-				{/* Date, time, price, seating */}
+				{/* Date, time, seating */}
 				<div className="grid gap-4 sm:grid-cols-2">
 					<label className="text-sm font-medium text-neutral-700">
-						Date
+						Date<RequiredMark />
 						<input
 							name="date"
 							defaultValue={initialValues?.date ?? ""}
@@ -323,7 +339,7 @@ export function EventForm({
 						/>
 					</label>
 					<label className="text-sm font-medium text-neutral-700">
-						Time
+						Time<RequiredMark />
 						<input
 							name="time"
 							defaultValue={initialValues?.time ?? ""}
@@ -333,17 +349,7 @@ export function EventForm({
 						/>
 					</label>
 					<label className="text-sm font-medium text-neutral-700">
-						Price
-						<input
-							name="price"
-							defaultValue={initialValues?.price ?? ""}
-							required
-							placeholder="$50 five-course dinner with wine pairings"
-							className={inputClass}
-						/>
-					</label>
-					<label className="text-sm font-medium text-neutral-700">
-						Seating
+						Seating<RequiredMark />
 						<input
 							name="seating"
 							defaultValue={initialValues?.seating ?? ""}
@@ -354,10 +360,94 @@ export function EventForm({
 					</label>
 				</div>
 
+				{/* Ticket types */}
+				<div className="space-y-3">
+					<div className="flex items-center justify-between">
+						<p className="text-sm font-semibold text-neutral-800">
+							Ticket types<RequiredMark /> ({tickets.length})
+						</p>
+						<button
+							type="button"
+							onClick={() =>
+								setTickets((prev) => [
+									...prev,
+									{ label: "", price: "" },
+								])
+							}
+							className="rounded-full border border-amber-300 px-4 py-1.5 text-xs font-semibold text-amber-700 transition hover:bg-amber-50"
+						>
+							Add ticket type
+						</button>
+					</div>
+					{tickets.map((ticket, index) => (
+						<div
+							key={index}
+							className="flex gap-2 items-start"
+						>
+							<input
+								value={ticket.label}
+								onChange={(e) =>
+									setTickets((prev) =>
+										prev.map((t, i) =>
+											i === index
+												? { ...t, label: e.target.value }
+												: t
+										)
+									)
+								}
+								placeholder="e.g. General Admission, VIP Table"
+								className={`${inputClass} mt-0 flex-1`}
+							/>
+							<input
+								value={ticket.price}
+								onChange={(e) =>
+									setTickets((prev) =>
+										prev.map((t, i) =>
+											i === index
+												? { ...t, price: e.target.value }
+												: t
+										)
+									)
+								}
+								placeholder="e.g. $50"
+								className={`${inputClass} mt-0 w-40`}
+							/>
+							{tickets.length > 1 && (
+								<button
+									type="button"
+									onClick={() =>
+										setTickets((prev) =>
+											prev.filter((_, i) => i !== index)
+										)
+									}
+									className="mt-1 text-xs font-medium text-red-500 transition hover:text-red-700"
+								>
+									Remove
+								</button>
+							)}
+							<input
+								type="hidden"
+								name={`ticket_${index}_label`}
+								value={ticket.label}
+							/>
+							<input
+								type="hidden"
+								name={`ticket_${index}_price`}
+								value={ticket.price}
+							/>
+						</div>
+					))}
+					<input
+						type="hidden"
+						name="ticketCount"
+						value={tickets.length}
+					/>
+				</div>
+
 				{/* Location */}
 				<div className="grid gap-4 sm:grid-cols-2">
 					<label className="text-sm font-medium text-neutral-700">
-						Venue name
+						Venue name<RequiredMark />
 						<input
 							name="locationVenue"
 							defaultValue={
@@ -368,7 +458,7 @@ export function EventForm({
 						/>
 					</label>
 					<label className="text-sm font-medium text-neutral-700">
-						Venue address
+						Venue address<RequiredMark />
 						<input
 							name="locationAddress"
 							defaultValue={
@@ -555,7 +645,7 @@ export function EventForm({
 				{/* CTA */}
 				<div className="grid gap-4 sm:grid-cols-2">
 					<label className="text-sm font-medium text-neutral-700">
-						CTA label
+						CTA label<RequiredMark />
 						<input
 							name="ctaLabel"
 							defaultValue={
@@ -566,7 +656,7 @@ export function EventForm({
 						/>
 					</label>
 					<label className="text-sm font-medium text-neutral-700">
-						CTA link
+						CTA link<RequiredMark />
 						<input
 							name="ctaHref"
 							defaultValue={

@@ -77,9 +77,16 @@ const EventContent = ({ event }: { event: EventItem }) => {
                                 </div>
 
 				<aside className="flex flex-col gap-6 rounded-2xl bg-neutral-900 p-6 text-white">
-					<div className="space-y-1">
-						<p className="text-sm uppercase tracking-wide p-on-dark">Price</p>
-						<p className="text-lg font-semibold p-white">{event.price}</p>
+					<div className="space-y-2">
+						<p className="text-sm uppercase tracking-wide p-on-dark">
+							{event.tickets.length > 1 ? "Tickets" : "Price"}
+						</p>
+						{event.tickets.map((ticket, index) => (
+							<div key={index} className="space-y-0.5">
+								<p className="text-lg font-semibold p-white">{ticket.price}</p>
+								<p className="text-sm text-amber-100 p-white">{ticket.label}</p>
+							</div>
+						))}
 						<p className="text-sm text-amber-100 p-white">{event.seating}</p>
 					</div>
 
