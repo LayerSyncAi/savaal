@@ -85,11 +85,14 @@ export default defineSchema({
 		highlights: v.array(v.string()),
 		date: v.string(),
 		time: v.string(),
-		tickets: v.array(
-			v.object({
-				label: v.string(),
-				price: v.string(),
-			})
+		price: v.optional(v.string()),
+		tickets: v.optional(
+			v.array(
+				v.object({
+					label: v.string(),
+					price: v.string(),
+				})
+			)
 		),
 		seating: v.string(),
 		location: v.object({

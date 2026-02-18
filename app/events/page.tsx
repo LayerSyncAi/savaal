@@ -180,9 +180,11 @@ const Card = ({ event }: { event: EventItem }) => {
         <p className="sm:truncate p-on-dark ">{event.location.venue}</p>
         <p className="sm:text-center p-on-dark ">{event.date}</p>
         <p className="sm:text-right p-on-dark ">
-          {event.tickets.length === 1
-            ? event.tickets[0].price
-            : `From ${event.tickets[0]?.price ?? "—"}`}
+          {event.tickets && event.tickets.length > 0
+            ? event.tickets.length === 1
+              ? event.tickets[0].price
+              : `From ${event.tickets[0].price}`
+            : event.price ?? "—"}
         </p>
       </div>
     </Link>

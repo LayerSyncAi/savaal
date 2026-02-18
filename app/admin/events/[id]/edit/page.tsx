@@ -39,7 +39,7 @@ export default async function EditEventPage({ params }: EventEditPageProps) {
 				highlights: item.highlights,
 				date: item.date,
 				time: item.time,
-				tickets: item.tickets,
+				tickets: item.tickets ?? (item.price ? [{ label: item.price, price: item.price }] : []),
 				seating: item.seating,
 				location: item.location,
 				notes: item.notes,
