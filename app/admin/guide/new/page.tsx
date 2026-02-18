@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { convexClient, api } from "@/lib/convex";
+import type { Doc } from "@/convex/_generated/dataModel";
 import { createGuideItemAction } from "../actions";
 import { GuideItemForm } from "../components/guide-item-form";
 
@@ -9,7 +10,7 @@ export default async function NewGuideItemPage() {
 		convexClient.query(api.utilities.listCuisines, { activeOnly: true }),
 		convexClient.query(api.utilities.listCities, { activeOnly: true }),
 	]);
-	const judgeNames = judges.map((j) => j.name);
+	const judgeNames = judges.map((j: Doc<"judges">) => j.name);
 
 	return (
 		<>
