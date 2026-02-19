@@ -9,7 +9,7 @@ import { SiInstagram } from "react-icons/si";
 const contactLinks: { label: string; href: string; Icon: IconType; badge: string }[] = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/savaal_guide",
+    href: "https://www.instagram.com/savaalguide?igsh=M3libDVnN2JpcW5p",
     Icon: SiInstagram,
     badge: "Social",
   },
