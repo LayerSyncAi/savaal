@@ -133,6 +133,7 @@ Guide items represent restaurants, hotels, and bars listed on the public Guide p
 | **Judge Comments** | Up to 3 comments | Judge name + comment + rating |
 | **Gallery** | Additional photo URLs | Displayed in the photo gallery |
 | **Menu** | Menu items | Name, description, price per item |
+| **Google Maps Embed URL** | Embedded map | See [How to Get a Google Maps Embed URL](#how-to-get-a-google-maps-embed-url) below |
 | **Sort Order** | Display ordering | Lower numbers appear first |
 | **Published** | Visibility toggle | Only published items appear on the public site |
 
@@ -149,6 +150,35 @@ Guide items represent restaurants, hotels, and bars listed on the public Guide p
 
 - Use the delete action on the guide list page.
 - **This is permanent.** There is no soft-delete or trash/recycle bin.
+
+### How to Get a Google Maps Embed URL
+
+The Google Maps field requires a specific **embed URL** format. Other link formats (share links, short links like `maps.app.goo.gl/...`) will **not** work.
+
+**Step-by-step instructions:**
+
+1. Open [Google Maps](https://www.google.com/maps) in your browser.
+2. Search for the venue/location.
+3. Click the **Share** button (share icon).
+4. Select the **"Embed a map"** tab (not "Send a link").
+5. Google will show an HTML `<iframe>` code snippet. It looks like this:
+   ```
+   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15198..." width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+   ```
+6. Copy **only the URL** from the `src="..."` attribute. The URL you paste into the admin form should start with:
+   ```
+   https://www.google.com/maps/embed?pb=...
+   ```
+
+**Example of a correct URL:**
+```
+https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15198.296237339206!2d31.021689176559452!3d-17.764697813091832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1931a57b9b87cba1%3A0x7b1e747fb82cea6d!2sThe%20Vanilla%20Moon.!5e0!3m2!1sen!2szw!4v1773053417470!5m2!1sen!2szw
+```
+
+**Common mistakes:**
+- Pasting a share link like `https://maps.app.goo.gl/...` — this will **not** work.
+- Pasting the full `<iframe>` HTML tag — only paste the URL, not the HTML.
+- Pasting a regular Google Maps URL like `https://www.google.com/maps/place/...` — this will **not** work.
 
 ### Important Notes
 
@@ -375,6 +405,14 @@ The contact form offers several request types via a dropdown (defined in the for
 1. Check the Resend dashboard for errors.
 2. Verify the `RESEND_API_KEY` is valid and not expired.
 3. Check the recipient email address in `/app/api/contact/route.ts`.
+
+### "The map is not showing on a listing"
+
+1. Go to `/admin/guide` and edit the item.
+2. Check the **Google Maps Embed URL** field.
+3. The URL must start with `https://www.google.com/maps/embed?pb=...`. If it contains any other format (e.g., `maps.app.goo.gl/...` or `google.com/maps/place/...`), it needs to be replaced.
+4. Follow the steps in [How to Get a Google Maps Embed URL](#how-to-get-a-google-maps-embed-url) to get the correct URL.
+5. If the field is empty, the listing will show "Location unavailable" instead of a map.
 
 ### "Images are broken or not displaying"
 

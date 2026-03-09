@@ -18,7 +18,7 @@ export function FounderQuote() {
 							</p>
 							<p className="text-lg p-brown">
 								<span className="font-semibold text-white">
-									— Al Murindagomo,
+									— Al Dumisani Murindagomo,
 								</span>{" "}
 								Founder & Chief Curator
 							</p>

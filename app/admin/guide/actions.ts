@@ -68,6 +68,36 @@ function parseMenu(formData: FormData) {
 	return items.length > 0 ? items : undefined;
 }
 
+/**
+ * Validates and returns a Google Maps embed URL.
+ *
+ * The URL must be obtained from Google Maps by:
+ * 1. Opening the location on Google Maps
+ * 2. Clicking "Share" → "Embed a map"
+ * 3. Copying the iframe code
+ * 4. Extracting just the URL from the src="..." attribute
+ *
+ * Expected format: https://www.google.com/maps/embed?pb=...
+ */
+function resolveGoogleMapsEmbedUrl(raw: string): string | undefined {
+	if (!raw) return undefined;
+
+	const trimmed = raw.trim();
+
+	// Accept Google Maps embed URLs (the proper embed format)
+	if (trimmed.startsWith("https://www.google.com/maps/embed")) {
+		return trimmed;
+	}
+
+	// Also accept the older maps.google.com embed format
+	if (trimmed.startsWith("https://maps.google.com/maps") && trimmed.includes("output=embed")) {
+		return trimmed;
+	}
+
+	// Reject other URL formats — they won't work in iframes
+	return undefined;
+}
+
 function parseGuideItemForm(formData: FormData) {
 	const published = formData.get("published") === "on";
 	const rating = Number(formData.get("rating"));
@@ -99,6 +129,7 @@ function parseGuideItemForm(formData: FormData) {
 		judgeComments: parseJudgeComments(formData),
 		gallery: parseGallery(formData),
 		menu: parseMenu(formData),
+		googleMapsUrl: resolveGoogleMapsEmbedUrl(String(formData.get("googleMapsUrl") ?? "").trim()),
 		sortOrder: Number.isNaN(sortOrder) ? 0 : sortOrder,
 		published,
 	};
