@@ -68,7 +68,48 @@ function parseMenu(formData: FormData) {
 	return items.length > 0 ? items : undefined;
 }
 
-function parseGuideItemForm(formData: FormData) {
+async function resolveGoogleMapsEmbedUrl(raw: string): Promise<string | undefined> {
+	if (!raw) return undefined;
+
+	// Already a proper embed URL
+	if (raw.includes("/maps/embed")) return raw;
+
+	// Resolve the URL to get the final destination (handles short links like maps.app.goo.gl)
+	let resolvedUrl = raw;
+	try {
+		const res = await fetch(raw, { method: "HEAD", redirect: "follow" });
+		resolvedUrl = res.url;
+	} catch {
+		// If fetch fails, try to work with the original URL
+	}
+
+	// Extract coordinates from @lat,lng in URL
+	const atMatch = resolvedUrl.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
+	if (atMatch) {
+		return `https://www.google.com/maps?q=${atMatch[1]},${atMatch[2]}&z=16&output=embed`;
+	}
+
+	// Extract place name from /place/ path
+	try {
+		const parsed = new URL(resolvedUrl);
+		const placeMatch = parsed.pathname.match(/\/place\/([^/@]+)/);
+		if (placeMatch) {
+			return `https://www.google.com/maps?q=${encodeURIComponent(decodeURIComponent(placeMatch[1].replace(/\+/g, " ")))}&z=16&output=embed`;
+		}
+		// Extract query param
+		const query = parsed.searchParams.get("q");
+		if (query) {
+			return `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=16&output=embed`;
+		}
+	} catch {
+		// Invalid URL
+	}
+
+	// Fallback: use as search query
+	return `https://www.google.com/maps?q=${encodeURIComponent(raw)}&z=16&output=embed`;
+}
+
+async function parseGuideItemForm(formData: FormData) {
 	const published = formData.get("published") === "on";
 	const rating = Number(formData.get("rating"));
 	const priceLevel = Number(formData.get("priceLevel"));
@@ -99,7 +140,7 @@ function parseGuideItemForm(formData: FormData) {
 		judgeComments: parseJudgeComments(formData),
 		gallery: parseGallery(formData),
 		menu: parseMenu(formData),
-		googleMapsUrl: String(formData.get("googleMapsUrl") ?? "").trim() || undefined,
+		googleMapsUrl: await resolveGoogleMapsEmbedUrl(String(formData.get("googleMapsUrl") ?? "").trim()),
 		sortOrder: Number.isNaN(sortOrder) ? 0 : sortOrder,
 		published,
 	};
@@ -125,7 +166,7 @@ export async function loginAdminAction(formData: FormData) {
 
 export async function createGuideItemAction(formData: FormData) {
 	await requireAdminSession();
-	const payload = parseGuideItemForm(formData);
+	const payload = await parseGuideItemForm(formData);
 	await convexClient.mutation(api.guideItems.createGuideItem, {
 		payload,
 		adminToken: requireAdminToken(),
@@ -139,7 +180,7 @@ export async function updateGuideItemAction(
 	formData: FormData
 ) {
 	await requireAdminSession();
-	const patch = parseGuideItemForm(formData);
+	const patch = await parseGuideItemForm(formData);
 	await convexClient.mutation(api.guideItems.updateGuideItem, {
 		id,
 		patch,

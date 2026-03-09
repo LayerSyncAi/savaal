@@ -846,16 +846,16 @@ export function GuideItemForm({
 					<input type="hidden" name="menuCount" value={menuItems.length} />
 				</div>
 
-				{/* Google Maps Embed URL */}
+				{/* Google Maps URL */}
 				<label className="text-sm font-medium text-neutral-700">
-					Google Maps Embed URL
+					Google Maps URL
 					<span className="block text-xs font-normal text-neutral-500">
-						Google Maps → Share → Embed a map → copy the src URL from the iframe code
+						Paste any Google Maps link (share link, short link, or embed URL)
 					</span>
 					<input
 						name="googleMapsUrl"
 						defaultValue={initialValues?.googleMapsUrl ?? ""}
-						placeholder="https://www.google.com/maps/embed?pb=..."
+						placeholder="https://maps.app.goo.gl/... or https://www.google.com/maps/..."
 						className={inputClass}
 					/>
 				</label>
