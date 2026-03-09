@@ -21,9 +21,9 @@ const poppins = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Savaal Guide | Cultural Hospitality in Africa",
+  title: "Savaal Guide | Cultural Hospitality in Zimbabwe",
   description:
-    "The Savaal Guide celebrates cultural hospitality excellence across Zimbabwe and Africa with curated listings, consultancy, and curated experiences.",
+    "The Savaal Guide celebrates cultural hospitality excellence across Zimbabwe with curated listings, consultancy, and curated experiences.",
 };
 
 export default function RootLayout({

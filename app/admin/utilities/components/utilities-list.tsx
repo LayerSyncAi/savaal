@@ -14,6 +14,10 @@ import {
 	createCityAction,
 	deleteCityAction,
 	toggleCityAction,
+	createGoodForAction,
+	updateGoodForAction,
+	deleteGoodForAction,
+	toggleGoodForAction,
 	seedUtilitiesAction,
 } from "../actions";
 import { SOUTHERN_AFRICA_COUNTRIES } from "@/lib/southern-africa";
@@ -23,6 +27,7 @@ type ActionResult = { success: true } | { success: false; error: string };
 type Cuisine = Doc<"utilities_cuisines">;
 type Country = Doc<"utilities_countries">;
 type CityWithCountry = Doc<"utilities_cities"> & { countryName: string };
+type GoodFor = Doc<"utilities_goodFor">;
 
 const inputClass =
 	"flex-1 rounded-xl border border-amber-200 px-3 py-2 text-sm shadow-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-200";
@@ -55,7 +60,7 @@ function SeedButton() {
 						try {
 							const res = await seedUtilitiesAction();
 							setResult(
-								`Seeded: ${res.cuisinesAdded} cuisines, ${res.countriesAdded} countries, ${res.citiesAdded} cities`
+								`Seeded: ${res.cuisinesAdded} cuisines, ${res.countriesAdded} countries, ${res.citiesAdded} cities, ${res.goodForAdded} good for options`
 							);
 						} catch (err: unknown) {
 							const msg =
@@ -236,7 +241,7 @@ function CountriesSection({
 				Countries ({countries.length})
 			</h2>
 			<p className="text-xs text-neutral-500">
-				Limited to Southern Africa only.
+				Limited to Southern Zimbabwe region only.
 			</p>
 
 			{state && !state.success && (
@@ -311,7 +316,7 @@ function CountriesSection({
 				))}
 				{countries.length === 0 && (
 					<div className="rounded-xl border border-dashed border-amber-200 p-8 text-center text-sm text-neutral-500">
-						No countries yet. Click &ldquo;Seed defaults&rdquo; above to add Southern Africa countries.
+						No countries yet. Click &ldquo;Seed defaults&rdquo; above to add countries.
 					</div>
 				)}
 			</div>
@@ -432,19 +437,157 @@ function CitiesSection({
 	);
 }
 
+function GoodForSection({
+	goodFor,
+}: {
+	goodFor: GoodFor[];
+}) {
+	const [editingId, setEditingId] = useState<string | null>(null);
+	const [state, formAction, pending] = useActionState<
+		ActionResult | null,
+		FormData
+	>(createGoodForAction, null);
+
+	return (
+		<div className={sectionClass}>
+			<h2 className="text-lg font-semibold text-neutral-900">
+				Good For ({goodFor.length})
+			</h2>
+
+			{state && !state.success && (
+				<ErrorBanner message={state.error} />
+			)}
+
+			<form action={formAction} className="flex gap-3">
+				<input
+					name="name"
+					placeholder="New good for option"
+					required
+					className={inputClass}
+				/>
+				<button
+					type="submit"
+					disabled={pending}
+					className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-50"
+				>
+					{pending ? "Adding..." : "Add"}
+				</button>
+			</form>
+
+			<div className="grid gap-2">
+				{goodFor.map((item) => (
+					<div
+						key={item._id}
+						className={`flex items-center gap-4 rounded-2xl border p-4 ${
+							item.isActive
+								? "border-amber-100 bg-amber-50/40"
+								: "border-neutral-200 bg-neutral-50 opacity-60"
+						}`}
+					>
+						{editingId === item._id ? (
+							<form
+								action={updateGoodForAction.bind(null, item._id)}
+								className="flex flex-1 gap-3"
+								onSubmit={() => setEditingId(null)}
+							>
+								<input
+									name="name"
+									defaultValue={item.name}
+									required
+									autoFocus
+									className={inputClass}
+								/>
+								<button
+									type="submit"
+									className="rounded-full bg-neutral-900 px-4 py-2 text-xs font-semibold text-white"
+								>
+									Save
+								</button>
+								<button
+									type="button"
+									onClick={() => setEditingId(null)}
+									className="rounded-full border border-neutral-300 px-4 py-2 text-xs font-semibold text-neutral-700"
+								>
+									Cancel
+								</button>
+							</form>
+						) : (
+							<>
+								<span className="flex-1 text-sm font-medium text-neutral-900">
+									{item.name}
+								</span>
+								<div className="flex gap-2">
+									<button
+										type="button"
+										onClick={() =>
+											toggleGoodForAction(
+												item._id,
+												!item.isActive
+											)
+										}
+										className={`rounded-full border px-4 py-2 text-xs font-semibold transition ${
+											item.isActive
+												? "border-amber-300 text-amber-700 hover:bg-amber-50"
+												: "border-green-300 text-green-700 hover:bg-green-50"
+										}`}
+									>
+										{item.isActive
+											? "Deactivate"
+											: "Activate"}
+									</button>
+									<button
+										type="button"
+										onClick={() =>
+											setEditingId(item._id)
+										}
+										className="rounded-full border border-neutral-300 px-4 py-2 text-xs font-semibold text-neutral-800 transition hover:border-neutral-900 hover:bg-neutral-900 hover:text-white"
+									>
+										Edit
+									</button>
+									<form
+										action={deleteGoodForAction.bind(
+											null,
+											item._id
+										)}
+									>
+										<button
+											type="submit"
+											className="rounded-full border border-red-200 px-4 py-2 text-xs font-semibold text-red-600 transition hover:border-red-300 hover:bg-red-50"
+										>
+											Delete
+										</button>
+									</form>
+								</div>
+							</>
+						)}
+					</div>
+				))}
+				{goodFor.length === 0 && (
+					<div className="rounded-xl border border-dashed border-amber-200 p-8 text-center text-sm text-neutral-500">
+						No good for options yet. Click &ldquo;Seed defaults&rdquo; above or add one manually.
+					</div>
+				)}
+			</div>
+		</div>
+	);
+}
+
 export function UtilitiesList({
 	cuisines,
 	countries,
 	cities,
+	goodFor,
 }: {
 	cuisines: Cuisine[];
 	countries: Country[];
 	cities: CityWithCountry[];
+	goodFor: GoodFor[];
 }) {
 	return (
 		<div className="space-y-8">
 			<SeedButton />
 			<CuisinesSection cuisines={cuisines} />
+			<GoodForSection goodFor={goodFor} />
 			<CountriesSection countries={countries} />
 			<CitiesSection cities={cities} countries={countries} />
 		</div>

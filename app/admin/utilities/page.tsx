@@ -3,10 +3,11 @@ import { convexClient, api } from "@/lib/convex";
 import { UtilitiesList } from "./components/utilities-list";
 
 export default async function UtilitiesAdminPage() {
-	const [cuisines, countries, cities] = await Promise.all([
+	const [cuisines, countries, cities, goodFor] = await Promise.all([
 		convexClient.query(api.utilities.listCuisines, {}),
 		convexClient.query(api.utilities.listCountries, {}),
 		convexClient.query(api.utilities.listCities, {}),
+		convexClient.query(api.utilities.listGoodFor, {}),
 	]);
 
 	return (
@@ -32,6 +33,7 @@ export default async function UtilitiesAdminPage() {
 				cuisines={cuisines}
 				countries={countries}
 				cities={cities}
+				goodFor={goodFor}
 			/>
 		</section>
 	);

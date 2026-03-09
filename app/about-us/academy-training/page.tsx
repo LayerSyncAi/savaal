@@ -40,7 +40,7 @@ export default function AcademyTrainingPage() {
 					About us · Academy + Training
 				</p>
 				<h1 className="text-4xl font-bold text-neutral-900">
-					Cultivating the Future of <span className="text-(--tertiary)">African Excellence</span>
+					Cultivating the Future of <span className="text-(--tertiary)">Zimbabwean Excellence</span>
 				</h1>
 				<p className="max-w-3xl text-lg text-neutral-700">
 					The Savaal Academy underpins the integrity of the Guide by training assessors, chefs, and service professionals.

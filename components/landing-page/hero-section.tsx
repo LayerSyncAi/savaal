@@ -104,14 +104,14 @@ const Copy = ({
                         className="relative z-20 flex flex-col items-center justify-center gap-5 text-center rounded-3xl bg-white/90 px-6 py-12 md:absolute md:h-screen md:w-full md:bg-transparent md:px-8 md:py-0"
                 >
                         <p className="text-xs uppercase tracking-[0.4em] text-white/80">
-                                Zimbabwe · Africa · Hospitality
+                                Zimbabwe · Hospitality
                         </p>
                         <h1 className="text-stone-900 md:text-stone-50 text-3xl md:text-6xl font-bold max-w-2xl mt-2 md:mt-6">
-                                Elevating  <span className="text-(--tertiary)"> cultural hospitality </span> experiences across Africa.
+                                Elevating  <span className="text-(--tertiary)"> cultural hospitality </span> experiences across Zimbabwe.
                         </h1>
                         <p className="text-stone-700 md:text-stone-200 text-base md:text-lg max-w-2xl my-4 md:my-6">
                                 Savaal curates the most exceptional stays, dining rooms, and experiences across Zimbabwe and
-                                beyond—helping travelers connect with authentic African luxury and local artisans.
+                                beyond—helping travelers connect with authentic Zimbabwean luxury and local artisans.
                         </p>
                         <div className="flex flex-wrap items-center justify-center gap-4">
                                 <RoundedSlideButtonLight
