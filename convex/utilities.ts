@@ -39,10 +39,14 @@ const DEFAULT_CUISINES = [
 
 const DEFAULT_GOOD_FOR = [
 	"Business Meetings",
+	"Brunch",
+	"Date Night",
 	"Families",
+	"Groups",
+	"Quick Bite",
 	"Romantic Occasions",
 	"Solo Dining",
-	"Groups",
+	"Special Occasions",
 ] as const;
 
 const DEFAULT_CITIES: Record<string, string[]> = {
