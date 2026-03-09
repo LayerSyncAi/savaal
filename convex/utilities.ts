@@ -18,7 +18,7 @@ const SOUTHERN_AFRICA_COUNTRIES = [
 
 const DEFAULT_CUISINES = [
 	"Contemporary",
-	"African",
+	"Zimbabwean",
 	"Italian",
 	"Seafood",
 	"Steakhouse",
@@ -35,6 +35,18 @@ const DEFAULT_CUISINES = [
 	"Fine Dining",
 	"Bistro",
 	"Gastropub",
+] as const;
+
+const DEFAULT_GOOD_FOR = [
+	"Business Meetings",
+	"Brunch",
+	"Date Night",
+	"Families",
+	"Groups",
+	"Quick Bite",
+	"Romantic Occasions",
+	"Solo Dining",
+	"Special Occasions",
 ] as const;
 
 const DEFAULT_CITIES: Record<string, string[]> = {
@@ -366,6 +378,73 @@ export const deleteCity = mutation({
 	},
 });
 
+// ── Good For queries & mutations ─────────────────────────────────────
+
+export const listGoodFor = query({
+	args: { activeOnly: v.optional(v.boolean()) },
+	handler: async (ctx, args) => {
+		const items = await ctx.db.query("utilities_goodFor").collect();
+		const filtered = args.activeOnly
+			? items.filter((c) => c.isActive)
+			: items;
+		return filtered.sort((a, b) => a.name.localeCompare(b.name));
+	},
+});
+
+export const createGoodFor = mutation({
+	args: { name: v.string(), adminToken: v.string() },
+	handler: async (ctx, args) => {
+		assertAdmin(args.adminToken);
+		const name = args.name.trim();
+		if (!name) throw new Error("Good For option name is required");
+		const slug = slugify(name);
+		const existing = await ctx.db
+			.query("utilities_goodFor")
+			.withIndex("by_slug", (q) => q.eq("slug", slug))
+			.first();
+		if (existing) throw new Error("Good For option already exists");
+		return ctx.db.insert("utilities_goodFor", {
+			name,
+			slug,
+			isActive: true,
+			createdAt: Date.now(),
+		});
+	},
+});
+
+export const updateGoodFor = mutation({
+	args: {
+		id: v.id("utilities_goodFor"),
+		name: v.optional(v.string()),
+		isActive: v.optional(v.boolean()),
+		adminToken: v.string(),
+	},
+	handler: async (ctx, args) => {
+		assertAdmin(args.adminToken);
+		const existing = await ctx.db.get(args.id);
+		if (!existing) throw new Error("Good For option not found");
+		const patch: Record<string, unknown> = {};
+		if (args.name !== undefined) {
+			const name = args.name.trim();
+			if (!name) throw new Error("Good For option name is required");
+			patch.name = name;
+			patch.slug = slugify(name);
+		}
+		if (args.isActive !== undefined) {
+			patch.isActive = args.isActive;
+		}
+		return ctx.db.patch(args.id, patch);
+	},
+});
+
+export const deleteGoodFor = mutation({
+	args: { id: v.id("utilities_goodFor"), adminToken: v.string() },
+	handler: async (ctx, args) => {
+		assertAdmin(args.adminToken);
+		return ctx.db.delete(args.id);
+	},
+});
+
 // ── Seed mutation (idempotent) ───────────────────────────────────────
 
 export const seedUtilities = mutation({
@@ -377,6 +456,7 @@ export const seedUtilities = mutation({
 		let cuisinesAdded = 0;
 		let countriesAdded = 0;
 		let citiesAdded = 0;
+		let goodForAdded = 0;
 
 		// Seed cuisines (idempotent by slug)
 		for (const name of DEFAULT_CUISINES) {
@@ -440,7 +520,25 @@ export const seedUtilities = mutation({
 			}
 		}
 
-		return { cuisinesAdded, countriesAdded, citiesAdded };
+		// Seed good for options (idempotent by slug)
+		for (const name of DEFAULT_GOOD_FOR) {
+			const slug = slugify(name);
+			const existing = await ctx.db
+				.query("utilities_goodFor")
+				.withIndex("by_slug", (q) => q.eq("slug", slug))
+				.first();
+			if (!existing) {
+				await ctx.db.insert("utilities_goodFor", {
+					name,
+					slug,
+					isActive: true,
+					createdAt: now,
+				});
+				goodForAdded++;
+			}
+		}
+
+		return { cuisinesAdded, countriesAdded, citiesAdded, goodForAdded };
 	},
 });
 

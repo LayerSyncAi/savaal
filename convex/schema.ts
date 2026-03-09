@@ -124,4 +124,11 @@ export default defineSchema({
 	})
 		.index("by_slug", ["slug"])
 		.index("by_countryId", ["countryId"]),
+
+	utilities_goodFor: defineTable({
+		name: v.string(),
+		slug: v.string(),
+		isActive: v.boolean(),
+		createdAt: v.number(),
+	}).index("by_slug", ["slug"]),
 });

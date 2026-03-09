@@ -70,7 +70,7 @@ export const events: EventDetails[] = [
     image:
       "https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: [
-      "A sommelier-led tasting featuring boutique vineyards from across Southern Africa, spotlighting growers whose craft sustains rural economies.",
+      "A sommelier-led tasting featuring boutique vineyards from across Zimbabwe, spotlighting growers whose craft sustains rural economies.",
       "Guests move through stations of wine, charcuterie, and poetry that retell the stories of the valley. The night closes with a communal toast to independent producers.",
     ],
     highlights: [

@@ -262,7 +262,7 @@ function PartnershipsContent({ onNavigate }: FlyoutContentProps) {
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">Partnerships</h3>
           <p className="text-sm text-neutral-500">
-            Work with us to amplify cultural hospitality across Africa.
+            Work with us to amplify cultural hospitality across Zimbabwe.
           </p>
           <Link
             href="/partnerships"

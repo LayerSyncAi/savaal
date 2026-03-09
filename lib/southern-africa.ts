@@ -1,5 +1,5 @@
 /**
- * Southern Africa countries allowed in the system.
+ * Countries allowed in the system.
  * Shared between frontend components and Convex functions.
  * The authoritative server-side copy is inlined in convex/utilities.ts.
  */

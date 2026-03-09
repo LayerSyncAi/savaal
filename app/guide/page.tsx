@@ -4,12 +4,10 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { RoundedSlideButtonLight } from "@/components/rounded-slide-button-light";
-import { getSavaalDistinction, zimbabweRegions, type RestaurantInfo } from "@/content/restaurant-info";
+import { zimbabweRegions, type RestaurantInfo } from "@/content/restaurant-info";
 import {
 	GuideFilterBar,
-	type CategoryType,
 	type PriceFilter,
-	type DistinctionFilter,
 } from "./components/guide-filter-bar";
 import { HorizontalCardSection } from "./components/horizontal-card-section";
 import { useQuery } from "convex/react";
@@ -24,15 +22,26 @@ export default function GuidePage() {
 			? regionParam
 			: "All";
 	const [regionFilter, setRegionFilter] = useState<string>(initialRegion);
-	const [categoryTypeFilter, setCategoryTypeFilter] =
-		useState<CategoryType>("All");
+	const [cuisineFilter, setCuisineFilter] = useState<string>("All");
 	const [priceFilter, setPriceFilter] = useState<PriceFilter>("All");
-	const [distinctionFilter, setDistinctionFilter] =
-		useState<DistinctionFilter>("All");
+	const [goodForFilter, setGoodForFilter] = useState<string>("All");
 
 	const guideItems = useQuery(api.guideItems.listGuideItems, {
 		publishedOnly: true,
 	});
+
+	const cuisines = useQuery(api.utilities.listCuisines, { activeOnly: true });
+	const goodForItems = useQuery(api.utilities.listGoodFor, { activeOnly: true });
+
+	const cuisineOptions = useMemo(
+		() => (cuisines ?? []).map((c) => c.name),
+		[cuisines]
+	);
+
+	const goodForOptions = useMemo(
+		() => (goodForItems ?? []).map((g) => g.name),
+		[goodForItems]
+	);
 
 	const restaurants = useMemo(
 		() => (guideItems ?? []).map(mapGuideItemToRestaurantInfo),
@@ -45,33 +54,25 @@ export default function GuidePage() {
 			const matchesRegion =
 				regionFilter === "All" || restaurant.region === regionFilter;
 
-			// Category type filter (Restaurants = Restaurant + Bar, Stays = Hotel)
-			let matchesCategoryType = true;
-			if (categoryTypeFilter === "Restaurants") {
-				matchesCategoryType =
-					restaurant.category === "Restaurant" ||
-					restaurant.category === "Bar";
-			} else if (categoryTypeFilter === "Stays") {
-				matchesCategoryType = restaurant.category === "Hotel";
-			}
+			// Cuisine filter
+			const matchesCuisine =
+				cuisineFilter === "All" || restaurant.cuisine === cuisineFilter;
 
 			// Price filter
 			const matchesPrice =
 				priceFilter === "All" || restaurant.priceLevel === priceFilter;
 
-			// Savaal Distinction filter
-			const matchesDistinction =
-				distinctionFilter === "All" ||
-				getSavaalDistinction(restaurant.totalScore) === distinctionFilter;
+			// Good For filter - available for future use when guide items have goodFor tags
+			const matchesGoodFor = goodForFilter === "All";
 
 			return (
 				matchesRegion &&
-				matchesCategoryType &&
+				matchesCuisine &&
 				matchesPrice &&
-				matchesDistinction
+				matchesGoodFor
 			);
 		});
-	}, [restaurants, regionFilter, categoryTypeFilter, priceFilter, distinctionFilter]);
+	}, [restaurants, regionFilter, cuisineFilter, priceFilter, goodForFilter]);
 
 	const { restaurantItems, stayItems } = useMemo(() => {
 		const restaurantEntries = filteredRestaurants.filter(
@@ -110,13 +111,15 @@ export default function GuidePage() {
 			<GuideFilterBar
 				regionFilter={regionFilter}
 				setRegionFilter={setRegionFilter}
-				categoryTypeFilter={categoryTypeFilter}
-				setCategoryTypeFilter={setCategoryTypeFilter}
+				cuisineFilter={cuisineFilter}
+				setCuisineFilter={setCuisineFilter}
 				priceFilter={priceFilter}
 				setPriceFilter={setPriceFilter}
-				distinctionFilter={distinctionFilter}
-				setDistinctionFilter={setDistinctionFilter}
+				goodForFilter={goodForFilter}
+				setGoodForFilter={setGoodForFilter}
 				filteredCount={filteredRestaurants.length}
+				cuisineOptions={cuisineOptions}
+				goodForOptions={goodForOptions}
 			/>
 
 			{isLoading ? (

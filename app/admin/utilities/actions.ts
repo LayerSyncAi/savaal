@@ -173,6 +173,69 @@ export async function deleteCountryAction(
 	redirect("/admin/utilities");
 }
 
+// ── Good For ─────────────────────────────────────────────────────────
+
+export async function createGoodForAction(
+	_prevState: ActionResult | null,
+	formData: FormData
+): Promise<ActionResult> {
+	const name = String(formData.get("name") ?? "").trim();
+	if (!name) return { success: false, error: "Good For option name is required" };
+	const result = await safeAdminAction(() =>
+		convexClient.mutation(api.utilities.createGoodFor, {
+			name,
+			adminToken: requireAdminToken(),
+		})
+	);
+	if (result.success) {
+		revalidatePath("/admin/utilities");
+		redirect("/admin/utilities");
+	}
+	return result;
+}
+
+export async function updateGoodForAction(
+	id: Id<"utilities_goodFor">,
+	formData: FormData
+) {
+	await requireAdminSession();
+	const name = String(formData.get("name") ?? "").trim();
+	if (!name) throw new Error("Good For option name is required");
+	await convexClient.mutation(api.utilities.updateGoodFor, {
+		id,
+		name,
+		adminToken: requireAdminToken(),
+	});
+	revalidatePath("/admin/utilities");
+	redirect("/admin/utilities");
+}
+
+export async function toggleGoodForAction(
+	id: Id<"utilities_goodFor">,
+	isActive: boolean
+) {
+	await requireAdminSession();
+	await convexClient.mutation(api.utilities.updateGoodFor, {
+		id,
+		isActive,
+		adminToken: requireAdminToken(),
+	});
+	revalidatePath("/admin/utilities");
+}
+
+export async function deleteGoodForAction(
+	id: Id<"utilities_goodFor">,
+	_formData?: FormData
+) {
+	await requireAdminSession();
+	await convexClient.mutation(api.utilities.deleteGoodFor, {
+		id,
+		adminToken: requireAdminToken(),
+	});
+	revalidatePath("/admin/utilities");
+	redirect("/admin/utilities");
+}
+
 // ── Cities ───────────────────────────────────────────────────────────
 
 export async function createCityAction(
