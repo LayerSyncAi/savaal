@@ -94,9 +94,21 @@ function assertAdmin(adminToken?: string) {
 	}
 }
 
+const VALID_STAY_TYPES = [
+	"Hotel",
+	"Lodge",
+	"Resort",
+	"Guest House",
+	"Boutique Hotel",
+	"Bed & Breakfast",
+	"Safari Lodge",
+	"Villa",
+];
+
 /**
  * Validate cuisine, city, and country for a guide item.
- * - Cuisine must exist in utilities_cuisines (active).
+ * - For Restaurant/Bar: Cuisine must exist in utilities_cuisines (active).
+ * - For Hotel (Stay): cuisine field stores stay type and must be a valid stay type.
  * - City must exist in utilities_cities (active, Southern Africa).
  * - Country is derived from the city's country; the submitted country value is ignored.
  * Returns the corrected country name.
@@ -104,15 +116,23 @@ function assertAdmin(adminToken?: string) {
 async function validateAndResolveCityCountryCuisine(
 	db: DatabaseReader,
 	cuisine: string,
-	city: string
+	city: string,
+	category: string
 ): Promise<string> {
-	// Validate cuisine exists
-	const cuisines = await db.query("utilities_cuisines").collect();
-	const cuisineExists = cuisines.some(
-		(c) => c.name === cuisine && c.isActive
-	);
-	if (!cuisineExists) {
-		throw new Error(`Cuisine "${cuisine}" is not in the allowed list`);
+	if (category === "Hotel") {
+		// Validate stay type
+		if (!VALID_STAY_TYPES.includes(cuisine)) {
+			throw new Error(`Stay type "${cuisine}" is not in the allowed list`);
+		}
+	} else {
+		// Validate cuisine exists
+		const cuisines = await db.query("utilities_cuisines").collect();
+		const cuisineExists = cuisines.some(
+			(c) => c.name === cuisine && c.isActive
+		);
+		if (!cuisineExists) {
+			throw new Error(`Cuisine "${cuisine}" is not in the allowed list`);
+		}
 	}
 
 	// Validate city exists and resolve country
@@ -173,11 +193,12 @@ export const createGuideItem = mutation({
 	handler: async (ctx, args) => {
 		assertAdmin(args.adminToken);
 		validateScoresAndRating(args.payload);
-		// Server-side: derive country from city, validate cuisine
+		// Server-side: derive country from city, validate cuisine/stay type
 		const resolvedCountry = await validateAndResolveCityCountryCuisine(
 			ctx.db,
 			args.payload.cuisine,
-			args.payload.city
+			args.payload.city,
+			args.payload.category
 		);
 		const timestamp = Date.now();
 		return ctx.db.insert("guideItems", {
@@ -202,11 +223,12 @@ export const updateGuideItem = mutation({
 		if (!existing) {
 			throw new Error("Guide item not found");
 		}
-		// Server-side: derive country from city, validate cuisine
+		// Server-side: derive country from city, validate cuisine/stay type
 		const resolvedCountry = await validateAndResolveCityCountryCuisine(
 			ctx.db,
 			args.patch.cuisine,
-			args.patch.city
+			args.patch.city,
+			args.patch.category
 		);
 		return ctx.db.patch(args.id, {
 			...args.patch,

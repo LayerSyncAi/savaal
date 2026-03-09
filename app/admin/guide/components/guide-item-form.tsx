@@ -261,6 +261,11 @@ export function GuideItemForm({
 		);
 	};
 
+	const [selectedCategory, setSelectedCategory] = useState<string>(
+		initialValues?.category ?? "Restaurant"
+	);
+	const isStayCategory = selectedCategory === "Hotel";
+
 	const hasCuisines = cuisines.length > 0;
 	const hasCities = cities.length > 0;
 
@@ -289,7 +294,8 @@ export function GuideItemForm({
 						Category
 						<select
 							name="category"
-							defaultValue={initialValues?.category ?? "Restaurant"}
+							value={selectedCategory}
+							onChange={(e) => setSelectedCategory(e.target.value)}
 							className={inputClass}
 						>
 							<option value="Restaurant">Restaurant</option>
@@ -298,37 +304,59 @@ export function GuideItemForm({
 						</select>
 					</label>
 
-					{/* Cuisine dropdown */}
-					<label className="text-sm font-medium text-neutral-700">
-						Cuisine
-						{hasCuisines ? (
+					{/* Cuisine / Stay Type dropdown */}
+					{isStayCategory ? (
+						<label className="text-sm font-medium text-neutral-700">
+							Stay Type
 							<select
 								name="cuisine"
 								defaultValue={initialValues?.cuisine ?? ""}
 								required
 								className={inputClass}
 							>
-								<option value="">Select cuisine</option>
-								{cuisines.map((c) => (
-									<option key={c._id} value={c.name}>
-										{c.name}
-									</option>
-								))}
+								<option value="">Select stay type</option>
+								<option value="Hotel">Hotel</option>
+								<option value="Lodge">Lodge</option>
+								<option value="Resort">Resort</option>
+								<option value="Guest House">Guest House</option>
+								<option value="Boutique Hotel">Boutique Hotel</option>
+								<option value="Bed & Breakfast">Bed &amp; Breakfast</option>
+								<option value="Safari Lodge">Safari Lodge</option>
+								<option value="Villa">Villa</option>
 							</select>
-						) : (
-							<div className="mt-2 flex items-center gap-2">
-								<span className="text-xs text-neutral-500">
-									No cuisines configured.
-								</span>
-								<Link
-									href="/admin/utilities"
-									className="text-xs font-semibold text-amber-700 underline"
+						</label>
+					) : (
+						<label className="text-sm font-medium text-neutral-700">
+							Cuisine
+							{hasCuisines ? (
+								<select
+									name="cuisine"
+									defaultValue={initialValues?.cuisine ?? ""}
+									required
+									className={inputClass}
 								>
-									Manage Utilities
-								</Link>
-							</div>
-						)}
-					</label>
+									<option value="">Select cuisine</option>
+									{cuisines.map((c) => (
+										<option key={c._id} value={c.name}>
+											{c.name}
+										</option>
+									))}
+								</select>
+							) : (
+								<div className="mt-2 flex items-center gap-2">
+									<span className="text-xs text-neutral-500">
+										No cuisines configured.
+									</span>
+									<Link
+										href="/admin/utilities"
+										className="text-xs font-semibold text-amber-700 underline"
+									>
+										Manage Utilities
+									</Link>
+								</div>
+							)}
+						</label>
+					)}
 
 					{/* City dropdown */}
 					<label className="text-sm font-medium text-neutral-700">
