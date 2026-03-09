@@ -8,6 +8,7 @@ import { zimbabweRegions, type RestaurantInfo } from "@/content/restaurant-info"
 import {
 	GuideFilterBar,
 	type PriceFilter,
+	type CategoryTab,
 } from "./components/guide-filter-bar";
 import { HorizontalCardSection } from "./components/horizontal-card-section";
 import { useQuery } from "convex/react";
@@ -21,6 +22,7 @@ export default function GuidePage() {
 		regionParam && (zimbabweRegions as readonly string[]).includes(regionParam)
 			? regionParam
 			: "All";
+	const [activeTab, setActiveTab] = useState<CategoryTab>("Restaurants");
 	const [regionFilter, setRegionFilter] = useState<string>(initialRegion);
 	const [cuisineFilter, setCuisineFilter] = useState<string>("All");
 	const [priceFilter, setPriceFilter] = useState<PriceFilter>("All");
@@ -48,43 +50,30 @@ export default function GuidePage() {
 		[guideItems]
 	);
 
+	// Filter by active tab first
+	const tabFilteredItems = useMemo(() => {
+		if (activeTab === "Stays") {
+			return restaurants.filter((r: RestaurantInfo) => r.category === "Hotel");
+		}
+		if (activeTab === "Bars") {
+			return restaurants.filter((r: RestaurantInfo) => r.category === "Bar");
+		}
+		return restaurants.filter((r: RestaurantInfo) => r.category === "Restaurant");
+	}, [restaurants, activeTab]);
+
 	const filteredRestaurants = useMemo(() => {
-		return restaurants.filter((restaurant: RestaurantInfo) => {
-			// Region filter
+		return tabFilteredItems.filter((restaurant: RestaurantInfo) => {
 			const matchesRegion =
 				regionFilter === "All" || restaurant.region === regionFilter;
-
-			// Cuisine filter
 			const matchesCuisine =
 				cuisineFilter === "All" || restaurant.cuisine === cuisineFilter;
-
-			// Price filter
 			const matchesPrice =
 				priceFilter === "All" || restaurant.priceLevel === priceFilter;
-
-			// Good For filter - available for future use when guide items have goodFor tags
 			const matchesGoodFor = goodForFilter === "All";
 
-			return (
-				matchesRegion &&
-				matchesCuisine &&
-				matchesPrice &&
-				matchesGoodFor
-			);
+			return matchesRegion && matchesCuisine && matchesPrice && matchesGoodFor;
 		});
-	}, [restaurants, regionFilter, cuisineFilter, priceFilter, goodForFilter]);
-
-	const { restaurantItems, stayItems } = useMemo(() => {
-		const restaurantEntries = filteredRestaurants.filter(
-			(restaurant: RestaurantInfo) =>
-				restaurant.category === "Restaurant" || restaurant.category === "Bar"
-		);
-		const stayEntries = filteredRestaurants.filter(
-			(restaurant: RestaurantInfo) => restaurant.category === "Hotel"
-		);
-
-		return { restaurantItems: restaurantEntries, stayItems: stayEntries };
-	}, [filteredRestaurants]);
+	}, [tabFilteredItems, regionFilter, cuisineFilter, priceFilter, goodForFilter]);
 
 	const isLoading = guideItems === undefined;
 
@@ -109,6 +98,11 @@ export default function GuidePage() {
 			</div>
 
 			<GuideFilterBar
+				activeTab={activeTab}
+				setActiveTab={(tab) => {
+					setActiveTab(tab);
+					setCuisineFilter("All");
+				}}
 				regionFilter={regionFilter}
 				setRegionFilter={setRegionFilter}
 				cuisineFilter={cuisineFilter}
@@ -142,10 +136,9 @@ export default function GuidePage() {
 			) : filteredRestaurants.length > 0 ? (
 				<div className="flex flex-col gap-10">
 					<HorizontalCardSection
-						title="Restaurants"
-						items={restaurantItems}
+						title={activeTab}
+						items={filteredRestaurants}
 					/>
-					<HorizontalCardSection title="Stays" items={stayItems} />
 				</div>
 			) : (
 				<div className="flex flex-col items-center justify-center rounded-2xl border border-amber-100 bg-amber-50/50 px-6 py-16 text-center">
