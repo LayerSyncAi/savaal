@@ -7,6 +7,38 @@ type MenuSectionProps = {
   googleMapsUrl?: string;
 };
 
+function getEmbedUrl(url: string): string {
+  try {
+    const parsed = new URL(url);
+    // Already an embed URL
+    if (parsed.pathname.includes("/embed")) return url;
+    // Extract query param (e.g. ?q=...)
+    const query = parsed.searchParams.get("q");
+    if (query) {
+      return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+    }
+    // Extract coordinates from ll param
+    const ll = parsed.searchParams.get("ll");
+    if (ll) {
+      return `https://maps.google.com/maps?q=${encodeURIComponent(ll)}&z=16&output=embed`;
+    }
+    // Extract from @lat,lng in path (e.g. /maps/@-17.7,31.1,16z)
+    const atMatch = url.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
+    if (atMatch) {
+      return `https://maps.google.com/maps?q=${atMatch[1]},${atMatch[2]}&z=16&output=embed`;
+    }
+    // Extract place name from /place/ path
+    const placeMatch = parsed.pathname.match(/\/place\/([^/]+)/);
+    if (placeMatch) {
+      return `https://maps.google.com/maps?q=${encodeURIComponent(decodeURIComponent(placeMatch[1]))}&output=embed`;
+    }
+    // Fallback: use entire URL as query
+    return `https://maps.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
+  } catch {
+    return `https://maps.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
+  }
+}
+
 export function MenuSection({ menu, googleMapsUrl }: MenuSectionProps) {
   const hasMenu = menu.length > 0;
 
@@ -33,21 +65,25 @@ export function MenuSection({ menu, googleMapsUrl }: MenuSectionProps) {
           </div>
         </>
       )}
+      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-amber-700">
+        <FaLocationDot className="h-4 w-4" />
+        Location
+      </div>
       {googleMapsUrl ? (
-        <a
-          href={googleMapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-800 transition hover:bg-amber-100"
-        >
-          <FaLocationDot className="h-3 w-3" />
-          Open in Google Maps
-        </a>
+        <div className="overflow-hidden rounded-xl border border-orange-100">
+          <iframe
+            src={getEmbedUrl(googleMapsUrl)}
+            width="100%"
+            height="350"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Google Maps location"
+          />
+        </div>
       ) : (
-        <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-400">
-          <FaLocationDot className="h-3 w-3" />
-          Location unavailable
-        </p>
+        <p className="text-sm text-neutral-400">Location unavailable</p>
       )}
     </section>
   );
