@@ -99,6 +99,7 @@ function parseGuideItemForm(formData: FormData) {
 		judgeComments: parseJudgeComments(formData),
 		gallery: parseGallery(formData),
 		menu: parseMenu(formData),
+		googleMapsUrl: String(formData.get("googleMapsUrl") ?? "").trim() || undefined,
 		sortOrder: Number.isNaN(sortOrder) ? 0 : sortOrder,
 		published,
 	};

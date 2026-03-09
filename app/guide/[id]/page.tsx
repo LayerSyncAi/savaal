@@ -71,9 +71,11 @@ export default async function RestaurantPage({
         {guideItem.gallery && guideItem.gallery.length > 0 && (
           <RestaurantGallery gallery={guideItem.gallery} />
         )}
-        {guideItem.menu && guideItem.menu.length > 0 && (
-          <MenuSection menu={guideItem.menu} />
-        )}
+        {guideItem.menu && guideItem.menu.length > 0 ? (
+          <MenuSection menu={guideItem.menu} googleMapsUrl={guideItem.googleMapsUrl} />
+        ) : guideItem.googleMapsUrl ? (
+          <MenuSection menu={[]} googleMapsUrl={guideItem.googleMapsUrl} />
+        ) : null}
       </div>
     );
   } catch {

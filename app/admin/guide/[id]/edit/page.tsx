@@ -58,6 +58,7 @@ export default async function EditGuideItemPage({
 				scores: item.scores,
 				judgeComments: item.judgeComments,
 				gallery: item.gallery,
+				googleMapsUrl: item.googleMapsUrl,
 				menu: item.menu,
 			}}
 		>

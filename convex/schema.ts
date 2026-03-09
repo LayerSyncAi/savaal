@@ -41,6 +41,7 @@ export default defineSchema({
 			)
 		),
 		gallery: v.optional(v.array(v.string())),
+		googleMapsUrl: v.optional(v.string()),
 		menu: v.optional(
 			v.array(
 				v.object({

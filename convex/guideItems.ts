@@ -71,6 +71,7 @@ const guideItemPayload = {
 	totalScore: v.string(),
 	judgeComments: v.optional(v.array(judgeCommentValidator)),
 	gallery: v.optional(v.array(v.string())),
+	googleMapsUrl: v.optional(v.string()),
 	menu: v.optional(v.array(menuItemValidator)),
 	sortOrder: v.number(),
 	published: v.boolean(),

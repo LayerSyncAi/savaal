@@ -52,6 +52,7 @@ type GuideItemFormValues = {
 	}[];
 	judgeComments?: JudgeComment[];
 	gallery?: string[];
+	googleMapsUrl?: string;
 	menu?: MenuItem[];
 };
 
@@ -844,6 +845,17 @@ export function GuideItemForm({
 					))}
 					<input type="hidden" name="menuCount" value={menuItems.length} />
 				</div>
+
+				{/* Google Maps URL */}
+				<label className="text-sm font-medium text-neutral-700">
+					Google Maps URL
+					<input
+						name="googleMapsUrl"
+						defaultValue={initialValues?.googleMapsUrl ?? ""}
+						placeholder="https://maps.google.com/..."
+						className={inputClass}
+					/>
+				</label>
 
 				<label className="flex items-center gap-2 text-sm font-medium text-neutral-700">
 					<input
