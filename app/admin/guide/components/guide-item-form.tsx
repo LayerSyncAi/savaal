@@ -82,6 +82,17 @@ const MAX_COMMENTS = 3;
 const inputClass =
 	"mt-2 w-full rounded-xl border border-amber-200 px-3 py-2 text-sm shadow-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-200";
 
+function SectionHeader({ title, description }: { title: string; description?: string }) {
+	return (
+		<div className="border-b border-amber-100 pb-2">
+			<h2 className="text-base font-semibold text-neutral-900">{title}</h2>
+			{description && (
+				<p className="mt-0.5 text-xs text-neutral-500">{description}</p>
+			)}
+		</div>
+	);
+}
+
 export function GuideItemForm({
 	title,
 	subtitle,
@@ -94,9 +105,7 @@ export function GuideItemForm({
 }: GuideItemFormProps) {
 	const initialImage = initialValues?.coverImage ?? "";
 	const [imageUrl, setImageUrl] = useState(initialImage);
-	const [imageMode, setImageMode] = useState<"url" | "upload">(
-		initialImage ? "url" : "url"
-	);
+	const [imageMode, setImageMode] = useState<"url" | "upload">("url");
 	const [uploading, setUploading] = useState(false);
 	const [uploadError, setUploadError] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -118,8 +127,11 @@ export function GuideItemForm({
 	const [menuItems, setMenuItems] = useState<MenuItem[]>(
 		initialValues?.menu ?? []
 	);
+	const [selectedCategory, setSelectedCategory] = useState<string>(
+		initialValues?.category ?? "Restaurant"
+	);
+	const isStayCategory = selectedCategory === "Hotel";
 
-	// Build a city→country lookup
 	const cityCountryMap = useMemo(() => {
 		const map = new Map<string, string>();
 		for (const city of cities) {
@@ -128,7 +140,6 @@ export function GuideItemForm({
 		return map;
 	}, [cities]);
 
-	// Derive country from selected city
 	const derivedCountry = selectedCity
 		? cityCountryMap.get(selectedCity) ?? ""
 		: initialValues?.country ?? "";
@@ -178,7 +189,6 @@ export function GuideItemForm({
 			setUploadError("File must be under 10 MB");
 			return;
 		}
-
 		setUploading(true);
 		setUploadError(null);
 		try {
@@ -190,8 +200,6 @@ export function GuideItemForm({
 			});
 			if (!result.ok) throw new Error("Upload failed");
 			const { storageId } = await result.json();
-			// Build the Convex HTTP action URL for serving the image.
-			// Convex storage URLs are served via the site URL.
 			const siteUrl = process.env.NEXT_PUBLIC_CONVEX_URL!.replace(
 				".cloud",
 				".site"
@@ -261,11 +269,6 @@ export function GuideItemForm({
 		);
 	};
 
-	const [selectedCategory, setSelectedCategory] = useState<string>(
-		initialValues?.category ?? "Restaurant"
-	);
-	const isStayCategory = selectedCategory === "Hotel";
-
 	const hasCuisines = cuisines.length > 0;
 	const hasCities = cities.length > 0;
 
@@ -278,74 +281,126 @@ export function GuideItemForm({
 
 			<form
 				action={action}
-				className="space-y-6 rounded-2xl border border-amber-100 bg-white p-6 shadow-sm"
+				className="space-y-8 rounded-2xl border border-amber-100 bg-white p-6 shadow-sm"
 			>
-				<div className="grid gap-4 sm:grid-cols-2">
-					<label className="text-sm font-medium text-neutral-700">
-						Name
-						<input
-							name="name"
-							defaultValue={initialValues?.name ?? ""}
-							required
-							className={inputClass}
-						/>
-					</label>
-					<label className="text-sm font-medium text-neutral-700">
-						Category
-						<select
-							name="category"
-							value={selectedCategory}
-							onChange={(e) => setSelectedCategory(e.target.value)}
-							className={inputClass}
-						>
-							<option value="Restaurant">Restaurant</option>
-							<option value="Hotel">Stay</option>
-							<option value="Bar">Bar</option>
-						</select>
-					</label>
-
-					{/* Cuisine / Stay Type dropdown */}
-					{isStayCategory ? (
+				{/* ── Section 1: Basic Details ── */}
+				<div className="space-y-4">
+					<SectionHeader title="Basic Details" description="Name, category, and type" />
+					<div className="grid gap-4 sm:grid-cols-2">
 						<label className="text-sm font-medium text-neutral-700">
-							Stay Type
-							<select
-								name="cuisine"
-								defaultValue={initialValues?.cuisine ?? ""}
+							Name
+							<input
+								name="name"
+								defaultValue={initialValues?.name ?? ""}
 								required
 								className={inputClass}
+							/>
+						</label>
+						<label className="text-sm font-medium text-neutral-700">
+							Category
+							<select
+								name="category"
+								value={selectedCategory}
+								onChange={(e) => setSelectedCategory(e.target.value)}
+								className={inputClass}
 							>
-								<option value="">Select stay type</option>
-								<option value="Hotel">Hotel</option>
-								<option value="Lodge">Lodge</option>
-								<option value="Resort">Resort</option>
-								<option value="Guest House">Guest House</option>
-								<option value="Boutique Hotel">Boutique Hotel</option>
-								<option value="Bed & Breakfast">Bed &amp; Breakfast</option>
-								<option value="Safari Lodge">Safari Lodge</option>
-								<option value="Villa">Villa</option>
+								<option value="Restaurant">Restaurant</option>
+								<option value="Hotel">Stay</option>
+								<option value="Bar">Bar</option>
 							</select>
 						</label>
-					) : (
-						<label className="text-sm font-medium text-neutral-700">
-							Cuisine
-							{hasCuisines ? (
+
+						{isStayCategory ? (
+							<label className="text-sm font-medium text-neutral-700">
+								Stay Type
 								<select
 									name="cuisine"
 									defaultValue={initialValues?.cuisine ?? ""}
 									required
 									className={inputClass}
 								>
-									<option value="">Select cuisine</option>
-									{cuisines.map((c) => (
+									<option value="">Select stay type</option>
+									<option value="Hotel">Hotel</option>
+									<option value="Lodge">Lodge</option>
+									<option value="Resort">Resort</option>
+									<option value="Guest House">Guest House</option>
+									<option value="Boutique Hotel">Boutique Hotel</option>
+									<option value="Bed & Breakfast">Bed &amp; Breakfast</option>
+									<option value="Safari Lodge">Safari Lodge</option>
+									<option value="Villa">Villa</option>
+								</select>
+							</label>
+						) : (
+							<label className="text-sm font-medium text-neutral-700">
+								Cuisine
+								{hasCuisines ? (
+									<select
+										name="cuisine"
+										defaultValue={initialValues?.cuisine ?? ""}
+										required
+										className={inputClass}
+									>
+										<option value="">Select cuisine</option>
+										{cuisines.map((c) => (
+											<option key={c._id} value={c.name}>
+												{c.name}
+											</option>
+										))}
+									</select>
+								) : (
+									<div className="mt-2 flex items-center gap-2">
+										<span className="text-xs text-neutral-500">
+											No cuisines configured.
+										</span>
+										<Link
+											href="/admin/utilities"
+											className="text-xs font-semibold text-amber-700 underline"
+										>
+											Manage Utilities
+										</Link>
+									</div>
+								)}
+							</label>
+						)}
+
+						<label className="text-sm font-medium text-neutral-700">
+							Description
+							<textarea
+								name="description"
+								defaultValue={initialValues?.description ?? ""}
+								required
+								rows={3}
+								className={inputClass}
+							/>
+						</label>
+					</div>
+				</div>
+
+				{/* ── Section 2: Location ── */}
+				<div className="space-y-4">
+					<SectionHeader title="Location" description="City, region, and map embed" />
+					<div className="grid gap-4 sm:grid-cols-2">
+						<label className="text-sm font-medium text-neutral-700">
+							City
+							{hasCities ? (
+								<select
+									name="city"
+									value={selectedCity}
+									onChange={(e) => setSelectedCity(e.target.value)}
+									required
+									className={inputClass}
+								>
+									<option value="">Select city</option>
+									{cities.map((c) => (
 										<option key={c._id} value={c.name}>
-											{c.name}
+											{c.name} ({c.countryName})
 										</option>
 									))}
 								</select>
 							) : (
 								<div className="mt-2 flex items-center gap-2">
 									<span className="text-xs text-neutral-500">
-										No cuisines configured.
+										No cities configured.
 									</span>
 									<Link
 										href="/admin/utilities"
@@ -356,82 +411,107 @@ export function GuideItemForm({
 								</div>
 							)}
 						</label>
-					)}
 
-					{/* City dropdown */}
-					<label className="text-sm font-medium text-neutral-700">
-						City
-						{hasCities ? (
+						<label className="text-sm font-medium text-neutral-700">
+							Country
+							<input
+								value={derivedCountry}
+								readOnly
+								disabled
+								className={`${inputClass} bg-neutral-100 text-neutral-500 cursor-not-allowed`}
+							/>
+							<input type="hidden" name="country" value={derivedCountry} />
+						</label>
+
+						<label className="text-sm font-medium text-neutral-700">
+							Region
 							<select
-								name="city"
-								value={selectedCity}
-								onChange={(e) => setSelectedCity(e.target.value)}
-								required
+								name="region"
+								defaultValue={initialValues?.region ?? zimbabweRegions[0]}
 								className={inputClass}
 							>
-								<option value="">Select city</option>
-								{cities.map((c) => (
-									<option key={c._id} value={c.name}>
-										{c.name} ({c.countryName})
+								{zimbabweRegions.map((region) => (
+									<option key={region} value={region}>
+										{region}
 									</option>
 								))}
 							</select>
-						) : (
-							<div className="mt-2 flex items-center gap-2">
-								<span className="text-xs text-neutral-500">
-									No cities configured.
+						</label>
+
+						<label className="text-sm font-medium text-neutral-700">
+							Location
+							<input
+								name="location"
+								defaultValue={initialValues?.location ?? ""}
+								required
+								className={inputClass}
+							/>
+						</label>
+
+						<div className="sm:col-span-2">
+							<label className="text-sm font-medium text-neutral-700">
+								Google Maps Embed URL
+								<span className="ml-1 text-xs font-normal text-neutral-500">
+									(Share → Embed a map → copy src URL)
 								</span>
-								<Link
-									href="/admin/utilities"
-									className="text-xs font-semibold text-amber-700 underline"
-								>
-									Manage Utilities
-								</Link>
-							</div>
-						)}
-					</label>
+								<input
+									name="googleMapsUrl"
+									defaultValue={initialValues?.googleMapsUrl ?? ""}
+									placeholder="https://www.google.com/maps/embed?pb=..."
+									className={inputClass}
+								/>
+							</label>
+						</div>
+					</div>
+				</div>
 
-					{/* Country (auto-populated, disabled) */}
-					<label className="text-sm font-medium text-neutral-700">
-						Country
-						<input
-							value={derivedCountry}
-							readOnly
-							disabled
-							className={`${inputClass} bg-neutral-100 text-neutral-500 cursor-not-allowed`}
-						/>
-						{/* Hidden input so country is included in FormData */}
-						<input type="hidden" name="country" value={derivedCountry} />
-					</label>
+				{/* ── Section 3: Rating & Pricing ── */}
+				<div className="space-y-4">
+					<SectionHeader title="Rating & Pricing" />
+					<div className="grid gap-4 sm:grid-cols-3">
+						<label className="text-sm font-medium text-neutral-700">
+							Rating <span className="text-xs text-neutral-400">(max 5)</span>
+							<input
+								type="number"
+								step="0.1"
+								min="0"
+								max="5"
+								name="rating"
+								defaultValue={initialValues?.rating ?? 0}
+								required
+								className={inputClass}
+							/>
+						</label>
+						<label className="text-sm font-medium text-neutral-700">
+							Price level
+							<select
+								name="priceLevel"
+								defaultValue={initialValues?.priceLevel ?? 1}
+								className={inputClass}
+							>
+								<option value={1}>$ — Budget</option>
+								<option value={2}>$$ — Moderate</option>
+								<option value={3}>$$$ — Upscale</option>
+								<option value={4}>$$$$ — Fine dining</option>
+							</select>
+						</label>
+						<label className="text-sm font-medium text-neutral-700">
+							Sort order
+							<input
+								type="number"
+								name="sortOrder"
+								defaultValue={initialValues?.sortOrder ?? 0}
+								className={inputClass}
+							/>
+						</label>
+					</div>
+				</div>
 
-					<label className="text-sm font-medium text-neutral-700">
-						Region
-						<select
-							name="region"
-							defaultValue={initialValues?.region ?? zimbabweRegions[0]}
-							className={inputClass}
-						>
-							{zimbabweRegions.map((region) => (
-								<option key={region} value={region}>
-									{region}
-								</option>
-							))}
-						</select>
-					</label>
-					<label className="text-sm font-medium text-neutral-700">
-						Location
-						<input
-							name="location"
-							defaultValue={initialValues?.location ?? ""}
-							required
-							className={inputClass}
-						/>
-					</label>
-
-					{/* Cover Image: URL or Upload */}
-					<div className="text-sm font-medium text-neutral-700 sm:col-span-2">
-						Cover Image
-						<div className="mt-1 mb-2 flex gap-2">
+				{/* ── Section 4: Cover Image ── */}
+				<div className="space-y-4">
+					<SectionHeader title="Cover Image" />
+					<div className="space-y-3">
+						<div className="flex gap-2">
 							<button
 								type="button"
 								onClick={() => setImageMode("url")}
@@ -484,119 +564,78 @@ export function GuideItemForm({
 								{uploadError && (
 									<p className="text-xs text-red-600">{uploadError}</p>
 								)}
-								{/* Hidden input carries the resolved URL into FormData */}
 								<input type="hidden" name="imageUrl" value={imageUrl} />
 							</div>
 						)}
 
 						{imageUrl && (
-							<p className="mt-1 truncate text-xs text-neutral-400">
-								{imageUrl}
-							</p>
+							<div className="relative h-48 w-full overflow-hidden rounded-2xl border border-amber-100">
+								<Image
+									src={imageUrl}
+									alt="Preview"
+									fill
+									className="object-cover"
+									unoptimized
+								/>
+							</div>
 						)}
 					</div>
-
-					<label className="text-sm font-medium text-neutral-700">
-						Rating{" "}
-						<span className="text-xs text-neutral-400">(max 5)</span>
-						<input
-							type="number"
-							step="0.1"
-							min="0"
-							max="5"
-							name="rating"
-							defaultValue={initialValues?.rating ?? 0}
-							required
-							className={inputClass}
-						/>
-					</label>
-					<label className="text-sm font-medium text-neutral-700">
-						Price level (1-4)
-						<select
-							name="priceLevel"
-							defaultValue={initialValues?.priceLevel ?? 1}
-							className={inputClass}
-						>
-							<option value={1}>$</option>
-							<option value={2}>$$</option>
-							<option value={3}>$$$</option>
-							<option value={4}>$$$$</option>
-						</select>
-					</label>
-					<label className="text-sm font-medium text-neutral-700">
-						Total score{" "}
-						<span className="text-xs text-neutral-400">(auto-calculated, max 100)</span>
-						<input
-							value={String(totalScore)}
-							readOnly
-							disabled
-							className={`${inputClass} bg-neutral-100 text-neutral-500 cursor-not-allowed`}
-						/>
-						<input type="hidden" name="totalScore" value={String(totalScore)} />
-					</label>
-					<label className="text-sm font-medium text-neutral-700">
-						Sort order
-						<input
-							type="number"
-							name="sortOrder"
-							defaultValue={initialValues?.sortOrder ?? 0}
-							className={inputClass}
-						/>
-					</label>
 				</div>
 
-				<label className="text-sm font-medium text-neutral-700">
-					Description
-					<textarea
-						name="description"
-						defaultValue={initialValues?.description ?? ""}
-						required
-						rows={4}
-						className={inputClass}
+				{/* ── Section 5: Score Breakdown ── */}
+				<div className="space-y-4">
+					<SectionHeader
+						title="Score Breakdown"
+						description={`Total: ${totalScore} / 100`}
 					/>
-				</label>
-
-				<div className="space-y-3">
-					<p className="text-sm font-semibold text-neutral-800">
-						Score breakdown{" "}
-						<span className="text-xs font-normal text-neutral-400">
-							(total: {totalScore} / 100)
-						</span>
-					</p>
 					<div className="grid gap-4 sm:grid-cols-2">
-						{scoreFields.map(({ name, label, maxScore }) => {
-							return (
-								<label
-									key={label}
-									className="text-sm font-medium text-neutral-700"
-								>
-									{label}{" "}
-									<span className="text-xs text-neutral-400">
-										(max {maxScore})
-									</span>
-									<input
-										type="number"
-										step="0.1"
-										min="0"
-										max={maxScore}
-										name={name}
-										value={scoreValues[name]}
-										onChange={(e) => updateScore(name, e.target.value)}
-										required
-										className={inputClass}
-									/>
-								</label>
-							);
-						})}
+						{scoreFields.map(({ name, label, maxScore }) => (
+							<label
+								key={label}
+								className="text-sm font-medium text-neutral-700"
+							>
+								{label}{" "}
+								<span className="text-xs text-neutral-400">
+									(max {maxScore})
+								</span>
+								<input
+									type="number"
+									step="0.1"
+									min="0"
+									max={maxScore}
+									name={name}
+									value={scoreValues[name]}
+									onChange={(e) => updateScore(name, e.target.value)}
+									required
+									className={inputClass}
+								/>
+							</label>
+						))}
+						<label className="text-sm font-medium text-neutral-700">
+							Total score{" "}
+							<span className="text-xs text-neutral-400">(auto-calculated)</span>
+							<input
+								value={String(totalScore)}
+								readOnly
+								disabled
+								className={`${inputClass} bg-neutral-100 text-neutral-500 cursor-not-allowed`}
+							/>
+							<input type="hidden" name="totalScore" value={String(totalScore)} />
+						</label>
 					</div>
 				</div>
 
-				{/* Judge Comments Section */}
-				<div className="space-y-3">
-					<div className="flex items-center justify-between">
-						<p className="text-sm font-semibold text-neutral-800">
-							Judge comments ({comments.length}/{MAX_COMMENTS})
-						</p>
+				{/* ── Section 6: Judge Comments ── */}
+				<div className="space-y-4">
+					<div className="flex items-center justify-between border-b border-amber-100 pb-2">
+						<div>
+							<h2 className="text-base font-semibold text-neutral-900">
+								Judge Comments
+							</h2>
+							<p className="mt-0.5 text-xs text-neutral-500">
+								{comments.length}/{MAX_COMMENTS} added
+							</p>
+						</div>
 						{comments.length < MAX_COMMENTS && (
 							<button
 								type="button"
@@ -679,7 +718,6 @@ export function GuideItemForm({
 									className={inputClass}
 								/>
 							</label>
-							{/* Hidden inputs to serialize into FormData */}
 							<input type="hidden" name={`judgeComment_${index}_judgeName`} value={comment.judgeName} />
 							<input type="hidden" name={`judgeComment_${index}_comment`} value={comment.comment} />
 							<input type="hidden" name={`judgeComment_${index}_rating`} value={comment.rating} />
@@ -688,13 +726,12 @@ export function GuideItemForm({
 					<input type="hidden" name="judgeCommentCount" value={comments.length} />
 				</div>
 
-				{/* Gallery Section */}
-				<div className="space-y-3">
-					<div className="flex items-center justify-between">
-						<p className="text-sm font-semibold text-neutral-800">
-							Gallery images ({gallery.length})
-						</p>
-					</div>
+				{/* ── Section 7: Gallery ── */}
+				<div className="space-y-4">
+					<SectionHeader
+						title="Gallery"
+						description={`${gallery.length} image${gallery.length !== 1 ? "s" : ""}`}
+					/>
 
 					<div className="space-y-2">
 						<div className="flex gap-2">
@@ -800,12 +837,17 @@ export function GuideItemForm({
 					<input type="hidden" name="galleryCount" value={gallery.length} />
 				</div>
 
-				{/* Menu Section */}
-				<div className="space-y-3">
-					<div className="flex items-center justify-between">
-						<p className="text-sm font-semibold text-neutral-800">
-							Menu highlights ({menuItems.length})
-						</p>
+				{/* ── Section 8: Menu Highlights ── */}
+				<div className="space-y-4">
+					<div className="flex items-center justify-between border-b border-amber-100 pb-2">
+						<div>
+							<h2 className="text-base font-semibold text-neutral-900">
+								Menu Highlights
+							</h2>
+							<p className="mt-0.5 text-xs text-neutral-500">
+								{menuItems.length} item{menuItems.length !== 1 ? "s" : ""}
+							</p>
+						</div>
 						<button
 							type="button"
 							onClick={addMenuItem}
@@ -874,53 +916,22 @@ export function GuideItemForm({
 					<input type="hidden" name="menuCount" value={menuItems.length} />
 				</div>
 
-				{/* Google Maps Embed URL */}
-				<label className="text-sm font-medium text-neutral-700">
-					Google Maps Embed URL
-					<span className="block text-xs font-normal text-neutral-500">
-						To get this URL: open Google Maps → find the location → click
-						&quot;Share&quot; → select &quot;Embed a map&quot; → copy the
-						iframe code → paste only the URL from the src=&quot;...&quot;
-						part (starts with https://www.google.com/maps/embed?pb=...)
-					</span>
-					<input
-						name="googleMapsUrl"
-						defaultValue={initialValues?.googleMapsUrl ?? ""}
-						placeholder="https://www.google.com/maps/embed?pb=..."
-						className={inputClass}
-					/>
-				</label>
+				{/* ── Section 9: Publishing ── */}
+				<div className="flex items-center justify-between border-t border-amber-100 pt-6">
+					<label className="flex items-center gap-2 text-sm font-medium text-neutral-700">
+						<input
+							type="checkbox"
+							name="published"
+							defaultChecked={initialValues?.published ?? true}
+							className="h-4 w-4 rounded border-neutral-300 text-neutral-900 focus:ring-amber-400"
+						/>
+						Published
+					</label>
 
-				<label className="flex items-center gap-2 text-sm font-medium text-neutral-700">
-					<input
-						type="checkbox"
-						name="published"
-						defaultChecked={initialValues?.published ?? false}
-						className="h-4 w-4 rounded border-neutral-300 text-neutral-900 focus:ring-amber-400"
-					/>
-					Published
-				</label>
-
-				{imageUrl ? (
-					<div className="space-y-2">
-						<p className="text-sm font-medium text-neutral-700">
-							Image preview
-						</p>
-						<div className="relative h-48 w-full overflow-hidden rounded-2xl border border-amber-100">
-							<Image
-								src={imageUrl}
-								alt="Preview"
-								fill
-								className="object-cover"
-								unoptimized
-							/>
-						</div>
+					<div className="flex flex-wrap gap-3">
+						<SubmitButton uploading={uploading} />
+						{children}
 					</div>
-				) : null}
-
-				<div className="flex flex-wrap gap-3">
-					<SubmitButton uploading={uploading} />
-					{children}
 				</div>
 			</form>
 		</section>
