@@ -68,48 +68,37 @@ function parseMenu(formData: FormData) {
 	return items.length > 0 ? items : undefined;
 }
 
-async function resolveGoogleMapsEmbedUrl(raw: string): Promise<string | undefined> {
+/**
+ * Validates and returns a Google Maps embed URL.
+ *
+ * The URL must be obtained from Google Maps by:
+ * 1. Opening the location on Google Maps
+ * 2. Clicking "Share" → "Embed a map"
+ * 3. Copying the iframe code
+ * 4. Extracting just the URL from the src="..." attribute
+ *
+ * Expected format: https://www.google.com/maps/embed?pb=...
+ */
+function resolveGoogleMapsEmbedUrl(raw: string): string | undefined {
 	if (!raw) return undefined;
 
-	// Already a proper embed URL
-	if (raw.includes("/maps/embed")) return raw;
+	const trimmed = raw.trim();
 
-	// Resolve the URL to get the final destination (handles short links like maps.app.goo.gl)
-	let resolvedUrl = raw;
-	try {
-		const res = await fetch(raw, { method: "HEAD", redirect: "follow" });
-		resolvedUrl = res.url;
-	} catch {
-		// If fetch fails, try to work with the original URL
+	// Accept Google Maps embed URLs (the proper embed format)
+	if (trimmed.startsWith("https://www.google.com/maps/embed")) {
+		return trimmed;
 	}
 
-	// Extract coordinates from @lat,lng in URL
-	const atMatch = resolvedUrl.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
-	if (atMatch) {
-		return `https://www.google.com/maps?q=${atMatch[1]},${atMatch[2]}&z=16&output=embed`;
+	// Also accept the older maps.google.com embed format
+	if (trimmed.startsWith("https://maps.google.com/maps") && trimmed.includes("output=embed")) {
+		return trimmed;
 	}
 
-	// Extract place name from /place/ path
-	try {
-		const parsed = new URL(resolvedUrl);
-		const placeMatch = parsed.pathname.match(/\/place\/([^/@]+)/);
-		if (placeMatch) {
-			return `https://www.google.com/maps?q=${encodeURIComponent(decodeURIComponent(placeMatch[1].replace(/\+/g, " ")))}&z=16&output=embed`;
-		}
-		// Extract query param
-		const query = parsed.searchParams.get("q");
-		if (query) {
-			return `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=16&output=embed`;
-		}
-	} catch {
-		// Invalid URL
-	}
-
-	// Fallback: use as search query
-	return `https://www.google.com/maps?q=${encodeURIComponent(raw)}&z=16&output=embed`;
+	// Reject other URL formats — they won't work in iframes
+	return undefined;
 }
 
-async function parseGuideItemForm(formData: FormData) {
+function parseGuideItemForm(formData: FormData) {
 	const published = formData.get("published") === "on";
 	const rating = Number(formData.get("rating"));
 	const priceLevel = Number(formData.get("priceLevel"));
@@ -140,7 +129,7 @@ async function parseGuideItemForm(formData: FormData) {
 		judgeComments: parseJudgeComments(formData),
 		gallery: parseGallery(formData),
 		menu: parseMenu(formData),
-		googleMapsUrl: await resolveGoogleMapsEmbedUrl(String(formData.get("googleMapsUrl") ?? "").trim()),
+		googleMapsUrl: resolveGoogleMapsEmbedUrl(String(formData.get("googleMapsUrl") ?? "").trim()),
 		sortOrder: Number.isNaN(sortOrder) ? 0 : sortOrder,
 		published,
 	};
@@ -166,7 +155,7 @@ export async function loginAdminAction(formData: FormData) {
 
 export async function createGuideItemAction(formData: FormData) {
 	await requireAdminSession();
-	const payload = await parseGuideItemForm(formData);
+	const payload = parseGuideItemForm(formData);
 	await convexClient.mutation(api.guideItems.createGuideItem, {
 		payload,
 		adminToken: requireAdminToken(),
@@ -180,7 +169,7 @@ export async function updateGuideItemAction(
 	formData: FormData
 ) {
 	await requireAdminSession();
-	const patch = await parseGuideItemForm(formData);
+	const patch = parseGuideItemForm(formData);
 	await convexClient.mutation(api.guideItems.updateGuideItem, {
 		id,
 		patch,
