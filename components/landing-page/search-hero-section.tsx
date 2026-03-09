@@ -96,7 +96,7 @@ export function SearchHeroSection() {
                 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent"
               aria-label="Select a region to explore"
             >
-              <option value="">Select a region</option>
+              <option value="">Where would you like to go?</option>
               {zimbabweRegions.map((region) => (
                 <option key={region} value={region}>
                   {region}
