@@ -7,38 +7,6 @@ type MenuSectionProps = {
   googleMapsUrl?: string;
 };
 
-function getEmbedUrl(url: string): string {
-  try {
-    const parsed = new URL(url);
-    // Already an embed URL
-    if (parsed.pathname.includes("/embed")) return url;
-    // Extract query param (e.g. ?q=...)
-    const query = parsed.searchParams.get("q");
-    if (query) {
-      return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
-    }
-    // Extract coordinates from ll param
-    const ll = parsed.searchParams.get("ll");
-    if (ll) {
-      return `https://maps.google.com/maps?q=${encodeURIComponent(ll)}&z=16&output=embed`;
-    }
-    // Extract from @lat,lng in path (e.g. /maps/@-17.7,31.1,16z)
-    const atMatch = url.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
-    if (atMatch) {
-      return `https://maps.google.com/maps?q=${atMatch[1]},${atMatch[2]}&z=16&output=embed`;
-    }
-    // Extract place name from /place/ path
-    const placeMatch = parsed.pathname.match(/\/place\/([^/]+)/);
-    if (placeMatch) {
-      return `https://maps.google.com/maps?q=${encodeURIComponent(decodeURIComponent(placeMatch[1]))}&output=embed`;
-    }
-    // Fallback: use entire URL as query
-    return `https://maps.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
-  } catch {
-    return `https://maps.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
-  }
-}
-
 export function MenuSection({ menu, googleMapsUrl }: MenuSectionProps) {
   const hasMenu = menu.length > 0;
 
@@ -72,7 +40,7 @@ export function MenuSection({ menu, googleMapsUrl }: MenuSectionProps) {
       {googleMapsUrl ? (
         <div className="overflow-hidden rounded-xl border border-orange-100">
           <iframe
-            src={getEmbedUrl(googleMapsUrl)}
+            src={googleMapsUrl}
             width="100%"
             height="350"
             style={{ border: 0 }}
