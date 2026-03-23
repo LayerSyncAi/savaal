@@ -73,47 +73,51 @@ export function SearchHeroSection() {
           onSubmit={handleSubmit}
           className="w-full max-w-[600px] md:max-w-[700px] lg:max-w-[800px]"
         >
-          <div className="relative group">
+          {/* Stacked layout on mobile, inline on md+ */}
+          <div className="flex flex-col sm:flex-row sm:relative gap-3 sm:gap-0">
             {/* Search Icon */}
-            <Search
-              className="absolute left-5 md:left-6 top-1/2 -translate-y-1/2 text-stone-400 group-focus-within:text-stone-600 transition-colors z-10 pointer-events-none"
-              size={22}
-              strokeWidth={2}
-            />
+            <div className="relative flex-1 group">
+              <Search
+                className="absolute left-5 md:left-6 top-1/2 -translate-y-1/2 text-stone-400 group-focus-within:text-stone-600 transition-colors z-10 pointer-events-none"
+                size={22}
+                strokeWidth={2}
+              />
 
-            {/* Region Dropdown */}
-            <select
-              value={selectedRegion}
-              onChange={(e) => setSelectedRegion(e.target.value)}
-              className="w-full py-4 md:py-5 pl-14 md:pl-16 pr-44 md:pr-52
-                text-base md:text-lg text-stone-800
-                bg-white/90 backdrop-blur-md
-                rounded-full border-0
-                shadow-lg shadow-black/10
-                outline-none appearance-none
-                transition-all duration-300 ease-out
-                focus:bg-white focus:shadow-xl focus:shadow-black/15
-                focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent"
-              aria-label="Select a region to explore"
-            >
-              <option value="">Where would you like to go?</option>
-              {zimbabweRegions.map((region) => (
-                <option key={region} value={region}>
-                  {region}
-                </option>
-              ))}
-            </select>
+              {/* Region Dropdown */}
+              <select
+                value={selectedRegion}
+                onChange={(e) => setSelectedRegion(e.target.value)}
+                className="w-full py-4 md:py-5 pl-14 md:pl-16 pr-6 sm:pr-44 md:pr-52
+                  text-base md:text-lg text-stone-800
+                  bg-white/90 backdrop-blur-md
+                  rounded-full border-0
+                  shadow-lg shadow-black/10
+                  outline-none appearance-none
+                  transition-all duration-300 ease-out
+                  focus:bg-white focus:shadow-xl focus:shadow-black/15
+                  focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent"
+                aria-label="Select a region to explore"
+              >
+                <option value="">Where would you like to go?</option>
+                {zimbabweRegions.map((region) => (
+                  <option key={region} value={region}>
+                    {region}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-            {/* Submit Button */}
+            {/* Submit Button - full width on mobile, absolute positioned on sm+ */}
             <button
               type="submit"
-              className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2
-                px-4 md:px-6 py-2 md:py-2.5
+              className="w-full sm:w-auto sm:absolute sm:right-2 md:right-3 sm:top-1/2 sm:-translate-y-1/2
+                px-6 py-3 sm:py-2 md:py-2.5
                 bg-stone-900 hover:bg-stone-800 active:bg-stone-950
-                text-white text-sm md:text-base font-medium
+                text-white text-base sm:text-sm md:text-base font-medium
                 rounded-full
                 transition-all duration-300 ease-out
-                focus:outline-none focus:ring-2 focus:ring-white/50"
+                focus:outline-none focus:ring-2 focus:ring-white/50
+                shadow-lg sm:shadow-none"
               aria-label="Submit search"
             >
               Start your journey
