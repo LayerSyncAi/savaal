@@ -66,7 +66,7 @@ export const Navbar = () => {
 const Logo = ({ color = "white" }: { color?: string }) => {
   return (
     <Link href="/" className="flex items-center gap-2">
-      <span className="text-2xl font-bold" style={{ color }}>
+      <span className="text-2xl font-bold font-[family-name:var(--font-playfair-display)]" style={{ color }}>
         Savaal
       </span>
       <svg

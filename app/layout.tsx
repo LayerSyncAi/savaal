@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { PageFade } from "@/components/page-fade";
@@ -20,6 +21,13 @@ const poppins = localFont({
   ],
 });
 
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair-display",
+  subsets: ["latin"],
+  weight: "700",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Savaal Guide | Cultural Hospitality in Zimbabwe",
   description:
@@ -34,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} antialiased bg-[--foreground] text-[#1f1f1f]`}
+        className={`${poppins.variable} ${playfairDisplay.variable} antialiased bg-[--foreground] text-[#1f1f1f]`}
       >
         <ConvexClientProvider>
           <NavigationProgress />
