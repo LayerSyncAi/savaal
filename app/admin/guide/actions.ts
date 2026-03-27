@@ -161,6 +161,7 @@ export async function createGuideItemAction(formData: FormData) {
 		adminToken: requireAdminToken(),
 	});
 	revalidatePath("/admin/guide");
+	revalidatePath("/guide");
 	redirect("/admin/guide");
 }
 
@@ -176,6 +177,7 @@ export async function updateGuideItemAction(
 		adminToken: requireAdminToken(),
 	});
 	revalidatePath("/admin/guide");
+	revalidatePath("/guide");
 	redirect("/admin/guide");
 }
 
@@ -189,5 +191,6 @@ export async function deleteGuideItemAction(
 		adminToken: requireAdminToken(),
 	});
 	revalidatePath("/admin/guide");
+	revalidatePath("/guide");
 	redirect("/admin/guide");
 }
