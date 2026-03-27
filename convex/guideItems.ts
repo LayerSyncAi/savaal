@@ -70,6 +70,7 @@ const guideItemPayload = {
 	scores: v.array(scoreValidator),
 	totalScore: v.string(),
 	judgeComments: v.optional(v.array(judgeCommentValidator)),
+	goodFor: v.optional(v.array(v.string())),
 	gallery: v.optional(v.array(v.string())),
 	googleMapsUrl: v.optional(v.string()),
 	menu: v.optional(v.array(menuItemValidator)),

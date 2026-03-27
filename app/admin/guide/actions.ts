@@ -98,6 +98,18 @@ function resolveGoogleMapsEmbedUrl(raw: string): string | undefined {
 	return undefined;
 }
 
+function parseGoodFor(formData: FormData): string[] | undefined {
+	const count = Number(formData.get("goodForCount") ?? 0);
+	if (count === 0) return undefined;
+
+	const tags: string[] = [];
+	for (let i = 0; i < count; i++) {
+		const tag = String(formData.get(`goodFor_${i}`) ?? "").trim();
+		if (tag) tags.push(tag);
+	}
+	return tags.length > 0 ? tags : undefined;
+}
+
 function parseGuideItemForm(formData: FormData) {
 	const published = formData.get("published") === "on";
 	const rating = Number(formData.get("rating"));
@@ -127,6 +139,7 @@ function parseGuideItemForm(formData: FormData) {
 		],
 		totalScore: String(formData.get("totalScore") ?? ""),
 		judgeComments: parseJudgeComments(formData),
+		goodFor: parseGoodFor(formData),
 		gallery: parseGallery(formData),
 		menu: parseMenu(formData),
 		googleMapsUrl: resolveGoogleMapsEmbedUrl(String(formData.get("googleMapsUrl") ?? "").trim()),

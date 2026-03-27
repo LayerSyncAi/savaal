@@ -31,6 +31,11 @@ type MenuItem = {
 	price: string;
 };
 
+type GoodForOption = {
+	_id: string;
+	name: string;
+};
+
 type GuideItemFormValues = {
 	name: string;
 	category: "Restaurant" | "Hotel" | "Bar";
@@ -51,6 +56,7 @@ type GuideItemFormValues = {
 		score: string;
 	}[];
 	judgeComments?: JudgeComment[];
+	goodFor?: string[];
 	gallery?: string[];
 	googleMapsUrl?: string;
 	menu?: MenuItem[];
@@ -65,6 +71,7 @@ type GuideItemFormProps = {
 	judgeNames: string[];
 	cuisines?: CuisineOption[];
 	cities?: CityOption[];
+	goodForOptions?: GoodForOption[];
 };
 
 const scoreFields = [
@@ -102,6 +109,7 @@ export function GuideItemForm({
 	judgeNames,
 	cuisines = [],
 	cities = [],
+	goodForOptions = [],
 }: GuideItemFormProps) {
 	const initialImage = initialValues?.coverImage ?? "";
 	const [imageUrl, setImageUrl] = useState(initialImage);
@@ -124,6 +132,9 @@ export function GuideItemForm({
 	const [galleryUploading, setGalleryUploading] = useState(false);
 	const [galleryUploadError, setGalleryUploadError] = useState<string | null>(null);
 	const galleryFileRef = useRef<HTMLInputElement>(null);
+	const [selectedGoodFor, setSelectedGoodFor] = useState<string[]>(
+		initialValues?.goodFor ?? []
+	);
 	const [menuItems, setMenuItems] = useState<MenuItem[]>(
 		initialValues?.menu ?? []
 	);
@@ -464,6 +475,42 @@ export function GuideItemForm({
 						</div>
 					</div>
 				</div>
+
+				{/* ── Section: Good For ── */}
+				{goodForOptions.length > 0 && (
+					<div className="space-y-4">
+						<SectionHeader title="Good For" description="Select tags that describe this venue" />
+						<div className="flex flex-wrap gap-2">
+							{goodForOptions.map((option) => {
+								const isSelected = selectedGoodFor.includes(option.name);
+								return (
+									<button
+										key={option._id}
+										type="button"
+										onClick={() => {
+											setSelectedGoodFor((prev) =>
+												isSelected
+													? prev.filter((t) => t !== option.name)
+													: [...prev, option.name]
+											);
+										}}
+										className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+											isSelected
+												? "bg-amber-600 text-white"
+												: "border border-amber-200 text-neutral-600 hover:border-amber-400 hover:bg-amber-50"
+										}`}
+									>
+										{option.name}
+									</button>
+								);
+							})}
+						</div>
+						{selectedGoodFor.map((tag, index) => (
+							<input key={tag} type="hidden" name={`goodFor_${index}`} value={tag} />
+						))}
+						<input type="hidden" name="goodForCount" value={selectedGoodFor.length} />
+					</div>
+				)}
 
 				{/* ── Section 3: Rating & Pricing ── */}
 				<div className="space-y-4">

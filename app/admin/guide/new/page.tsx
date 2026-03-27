@@ -5,10 +5,11 @@ import { createGuideItemAction } from "../actions";
 import { GuideItemForm } from "../components/guide-item-form";
 
 export default async function NewGuideItemPage() {
-	const [judges, cuisines, cities] = await Promise.all([
+	const [judges, cuisines, cities, goodForOptions] = await Promise.all([
 		convexClient.query(api.judges.listJudges, {}),
 		convexClient.query(api.utilities.listCuisines, { activeOnly: true }),
 		convexClient.query(api.utilities.listCities, { activeOnly: true }),
+		convexClient.query(api.utilities.listGoodFor, { activeOnly: true }),
 	]);
 	const judgeNames = judges.map((j: Doc<"judges">) => j.name);
 
@@ -21,6 +22,7 @@ export default async function NewGuideItemPage() {
 				judgeNames={judgeNames}
 				cuisines={cuisines}
 				cities={cities}
+				goodForOptions={goodForOptions}
 			>
 				<Link
 					href="/admin/guide"

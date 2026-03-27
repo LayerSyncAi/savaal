@@ -36,6 +36,7 @@ export type RestaurantInfo = {
 	description: string;
 	scores: ScoreBreakdown[];
 	totalScore: string;
+	goodFor?: string[];
 };
 
 // Helper to convert totalScore to Savaal Distinction (1-3 stars)

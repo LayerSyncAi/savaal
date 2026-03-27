@@ -40,6 +40,7 @@ export default defineSchema({
 				})
 			)
 		),
+		goodFor: v.optional(v.array(v.string())),
 		gallery: v.optional(v.array(v.string())),
 		googleMapsUrl: v.optional(v.string()),
 		menu: v.optional(
