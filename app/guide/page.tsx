@@ -69,7 +69,9 @@ export default function GuidePage() {
 				cuisineFilter === "All" || restaurant.cuisine === cuisineFilter;
 			const matchesPrice =
 				priceFilter === "All" || restaurant.priceLevel === priceFilter;
-			const matchesGoodFor = goodForFilter === "All";
+			const matchesGoodFor =
+				goodForFilter === "All" ||
+				(restaurant.goodFor ?? []).includes(goodForFilter);
 
 			return matchesRegion && matchesCuisine && matchesPrice && matchesGoodFor;
 		});

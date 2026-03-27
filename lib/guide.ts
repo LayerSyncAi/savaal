@@ -21,5 +21,6 @@ export function mapGuideItemToRestaurantInfo(
 		description: item.description,
 		scores: item.scores,
 		totalScore: item.totalScore,
+		goodFor: item.goodFor,
 	};
 }
