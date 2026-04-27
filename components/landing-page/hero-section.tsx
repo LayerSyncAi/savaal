@@ -9,7 +9,7 @@ export function HeroSection() {
 	return (
 		<>
 			<Nav />
-			<section className="bg-white pt-12">
+			<section className="bg-white pt-12 overflow-hidden">
 				<div className="relative grid grid-cols-1 gap-6 p-6 md:h-screen md:grid-cols-3 md:grid-rows-3 md:gap-4 md:p-4">
 					<Copy />
 					<Images />
