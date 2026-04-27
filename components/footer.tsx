@@ -35,20 +35,20 @@ export const Footer = () => {
 								</Link>
 							</li>
 							<li>
-								<a
-									href="http://localhost:3000/events"
+								<Link
+									href="/events"
 									className="transition hover:text-[var(--primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-strong)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--secondary)]"
 								>
 									Experiences
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a
-									href="http://localhost:3000/partnerships"
+								<Link
+									href="/partnerships"
 									className="transition hover:text-[var(--primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-strong)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--secondary)]"
 								>
 									Partnerships
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</div>
@@ -58,28 +58,28 @@ export const Footer = () => {
 						</p>
 						<ul className="space-y-3 text-[var(--muted-dark)]">
 							<li>
-								<a
-									href="http://localhost:3000/judging"
+								<Link
+									href="/judging"
 									className="transition hover:text-[var(--primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-strong)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--secondary)]"
 								>
 									The Standard
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a
-									href="http://localhost:3000/about-us/academy-training"
+								<Link
+									href="/about-us/academy-training"
 									className="transition hover:text-[var(--primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-strong)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--secondary)]"
 								>
 									The Academy
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a
-									href="http://localhost:3000/contact"
+								<Link
+									href="/contact"
 									className="transition hover:text-[var(--primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-strong)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--secondary)]"
 								>
 									Contact
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</div>
