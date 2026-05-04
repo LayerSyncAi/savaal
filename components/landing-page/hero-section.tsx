@@ -23,7 +23,7 @@ export function HeroSection() {
 	return (
 		<>
 			<Nav scrollYProgress={scrollYProgress} />
-                        <section ref={targetRef} className="bg-white md:h-[350vh] pt-12">
+                        <section ref={targetRef} className="bg-white md:h-[350vh] pt-12 overflow-hidden">
                                 <div
                                         className="relative grid grid-cols-1 gap-6 p-6 md:h-screen md:sticky md:top-0 md:z-0 md:grid-cols-3 md:grid-rows-3 md:gap-4 md:p-4"
                                 >
